@@ -6,11 +6,15 @@ from django.shortcuts import reverse
 from django_countries.fields import CountryField
 from django.template.defaultfilters import slugify
 
-
+# CATEGORY_CHOICES = (
+#     ('S', 'Shirt'),
+#     ('SW', 'Sport wear'),
+#     ('OW', 'Outwear')
+# )
 CATEGORY_CHOICES = (
-    ('S', 'Shirt'),
-    ('SW', 'Sport wear'),
-    ('OW', 'Outwear')
+    ('Electronics', 'Electronics'),
+    ('Clothes', 'Clothes'),
+    ('Food', 'Food')
 )
 
 LABEL_CHOICES = (
@@ -39,11 +43,11 @@ class Item(models.Model):
     title = models.CharField(max_length=100)
     price = models.FloatField()
     discount_price = models.FloatField(blank=True, null=True)
-    category = models.CharField(choices=CATEGORY_CHOICES, max_length=2)
+    category = models.CharField(choices=CATEGORY_CHOICES, max_length=50)
     label = models.CharField(choices=LABEL_CHOICES, max_length=1)
-    slug = models.SlugField(null=False,unique=True)
+    slug = models.SlugField(null=False, unique=True)
     description = models.TextField()
-    image = models.ImageField()
+    image = models.ImageField(upload_to='media_root')
 
     def __str__(self):
         return self.title
@@ -62,10 +66,11 @@ class Item(models.Model):
         return reverse("core:remove-from-cart", kwargs={
             'slug': self.slug
         })
-    def save(self,*args,**kwargs):
+
+    def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug=slugify(self.title)
-        return super().save(*args,**kwargs)        
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
 
 
 class OrderItem(models.Model):

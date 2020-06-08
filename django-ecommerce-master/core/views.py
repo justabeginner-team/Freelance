@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, View
 from django.shortcuts import redirect
 from django.utils import timezone
-from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm
+from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddItemForm
 from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile
 
 import random
@@ -515,3 +515,17 @@ class RequestRefundView(View):
             except ObjectDoesNotExist:
                 messages.info(self.request, "This order does not exist.")
                 return redirect("core:request-refund")
+
+
+def add_item(request):
+    form = AddItemForm()
+    if request.method == 'POST':
+        form = AddItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            print('form is valid')
+            form.save()
+            return redirect('/')
+    context_dict = {
+        'form': form,
+    }
+    return render(request, 'add_item.html', context=context_dict)

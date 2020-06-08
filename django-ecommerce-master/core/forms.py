@@ -1,6 +1,8 @@
 from django import forms
+from django.forms import ModelForm
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
+from .models import Item
 
 
 PAYMENT_CHOICES = (
@@ -59,3 +61,10 @@ class PaymentForm(forms.Form):
     stripeToken = forms.CharField(required=False)
     save = forms.BooleanField(required=False)
     use_default = forms.BooleanField(required=False)
+
+
+class AddItemForm(ModelForm):
+    class Meta:
+        model = Item
+        fields = '__all__'  # [takes in a list of fields to use]
+        exclude = ['slug']
