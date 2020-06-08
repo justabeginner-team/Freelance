@@ -529,3 +529,8 @@ def add_item(request):
         'form': form,
     }
     return render(request, 'add_item.html', context=context_dict)
+
+
+def retailer_dash(request):
+    return render(request, 'retailer_dash.html')
+
