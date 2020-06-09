@@ -57,8 +57,9 @@
             <br>
             <div class="card card-body">
 
-                <table class="table table-md">
-                    <tr>
+                <table class="table table-striped w-5">
+                    <thead>
+                         <tr>
                         <th>Item</th>
                          <th>Price</th>
                          <th>Discount Price</th>
@@ -66,7 +67,9 @@
                         <th></th>
                         <th></th>
                     </tr>
-                    {% for item in items %}
+                    </thead>
+                   <tbody>
+                       {% for item in items %}
                     <tr>
                         <td>{{item.title}}</td>
                         <td>{{item.price}}</td>
@@ -76,6 +79,8 @@
                         <td><a style="color: red;" href="{% url 'core:delete_item' item.slug %}"><i class="far fa-trash-alt float-right"></i></a></td>
                     </tr>
                     {% endfor %}
+                   </tbody>
+                    
                 </table>
             </div>
         </div>
@@ -84,3 +89,12 @@
 <br>
 
 {% endblock %}
+{% block extra_scripts %}
+    
+<script type="text/javascript" >
+    $(document).ready(function () {
+  $('#dtBasicExample').DataTable();
+  $('.dataTables_length').addClass('bs-select');
+  });
+  </script>
+  {% endblock extra_scripts %}
