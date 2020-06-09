@@ -7,8 +7,10 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, View
 from django.shortcuts import redirect
 from django.utils import timezone
+
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddItemForm
 from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile
+from .filters import ItemFilter
 
 import random
 import string
@@ -560,7 +562,12 @@ def update_item(request, slug):
 
 def retailer_dash(request):
     items = Item.objects.all()
+
+    myfilter = ItemFilter(request.GET, queryset=items)
+    items = myfilter.qs
+
     context_dict = {
         'items': items,
+        'myfilter': myfilter,
     }
     return render(request, 'retailer_dash.html', context=context_dict)

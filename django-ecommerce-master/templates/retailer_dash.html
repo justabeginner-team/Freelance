@@ -16,12 +16,26 @@
        </div>
     </div>
 
+<br>
+
+    <div class="row">
+        <div class="col">
+            <div class="card card-body">
+                <form method="get">
+                    {{myfilter.form}}
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<br>
+
     <div class="row">
         <div class="col-md">
             <h5>LAST 5 ORDERS:</h5>
             <br>
             <div class="card card-body">
-
                 <table class="table table-sm">
                     <tr>
                         <th>Product</th>
@@ -34,6 +48,9 @@
             </div>
         </div>
     </div>
+
+<br>
+
 <div class="row">
         <div class="col-md">
             <h5>ITEMS ADDED</h5>
@@ -63,5 +80,7 @@
             </div>
         </div>
     </div>
+
+<br>
 
 {% endblock %}
