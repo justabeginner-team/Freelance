@@ -2,52 +2,30 @@
 
 {% block content %}
 {% include 'status.html' %}
-    <br>
-
-    <div class="row">
-
-        <div class="col-md-5">
-
-         <div class="card card-body">
-           <h5>Items</h5>
-             <br>
-             <a class="btn btn-outline-info btn-md btn-block" href="{% url 'core:add_item' %}">Add Item</a>
-         </div>
-       </div>
-    </div>
-
 <br>
 
-    <div class="row">
-        <div class="col">
-            <div class="card card-body">
-                <form method="get">
-                    {{myfilter.form}}
+<div class="btn-group">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Search Items</button>
+
+    <div class="dropdown-menu">
+         <form method="get">
+             <span class="dropdown-item">Title: {{myfilter.form.title}}</span>
+             <div class="dropdown-divider"></div>
+             <span class="dropdown-item">Description: {{myfilter.form.description}}</span>
+             <div class="dropdown-divider"></div>
+             <span class="dropdown-item">Price: {{myfilter.form.price}}</span>
+             <div class="dropdown-divider"></div>
+             <span class="dropdown-item">Discount price: {{myfilter.form.discount_price}}</span>
+             <div class="dropdown-divider"></div>
+             <span class="dropdown-item">Label: {{myfilter.form.label}}</span>
+             <div class="dropdown-divider"></div>
+             <span class="dropdown-item">Category: {{myfilter.form.category}}</span>
+             <div class="dropdown-divider"></div>
                     <button class="btn btn-primary" type="submit">Search</button>
                 </form>
-            </div>
-        </div>
     </div>
 
-<br>
-
-    <div class="row">
-        <div class="col-md">
-            <h5>LAST 5 ORDERS:</h5>
-            <br>
-            <div class="card card-body">
-                <table class="table table-sm">
-                    <tr>
-                        <th>Product</th>
-                         <th>Date Ordered</th>
-                         <th>Status</th>
-                        <th>Update</th>
-                        <th>Remove</th>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
+</div>
 
 <br>
 
@@ -76,6 +54,40 @@
                         <td><a style="color: red;" href="{% url 'core:delete_item' item.slug %}"><i class="far fa-trash-alt float-right"></i></a></td>
                     </tr>
                     {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+<br>
+
+    <div class="row">
+
+        <div class="col-md-5">
+
+         <div class="card card-body">
+           <h5>Items</h5>
+             <br>
+             <a class="btn btn-outline-info btn-md btn-block" href="{% url 'core:add_item' %}">Add Item</a>
+         </div>
+       </div>
+    </div>
+
+<br>
+
+    <div class="row">
+        <div class="col-md">
+            <h5>LAST 5 ORDERS:</h5>
+            <br>
+            <div class="card card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <th>Product</th>
+                         <th>Date Ordered</th>
+                         <th>Status</th>
+                        <th>Update</th>
+                        <th>Remove</th>
+                    </tr>
                 </table>
             </div>
         </div>
