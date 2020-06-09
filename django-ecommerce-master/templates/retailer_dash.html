@@ -12,7 +12,6 @@
            <h5>Items</h5>
              <br>
              <a class="btn btn-outline-info btn-md btn-block" href="{% url 'core:add_item' %}">Add Item</a>
-             <a class="btn btn-outline-danger btn-md btn-block" href="">Update Item</a>
          </div>
        </div>
     </div>
@@ -31,6 +30,35 @@
                         <th>Update</th>
                         <th>Remove</th>
                     </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+<div class="row">
+        <div class="col-md">
+            <h5>ITEMS ADDED</h5>
+            <br>
+            <div class="card card-body">
+
+                <table class="table table-md">
+                    <tr>
+                        <th>Item</th>
+                         <th>Price</th>
+                         <th>Discount Price</th>
+                        <th>Category</th>
+                        <th>Update</th>
+                        <th>Remove</th>
+                    </tr>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{item.title}}</td>
+                        <td>{{item.price}}</td>
+                        <td>{{item.discount_price}}</td>
+                        <td>{{item.category}}</td>
+                        <td><a class="btn btn-sm btn-info" href="{% url 'core:update_item' item.slug %}">Update</a></td>
+                        <td><a class="btn btn-sm btn-danger" href="{% url 'core:delete_item' item.slug %}">Remove</a></td>
+                    </tr>
+                    {% endfor %}
                 </table>
             </div>
         </div>

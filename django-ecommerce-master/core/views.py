@@ -13,6 +13,7 @@ from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, Us
 import random
 import string
 import stripe
+
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
@@ -524,7 +525,33 @@ def add_item(request):
         if form.is_valid():
             print('form is valid')
             form.save()
-            return redirect('/')
+            return redirect('core:retailer_dash')
+    context_dict = {
+        'form': form,
+    }
+    return render(request, 'add_item.html', context=context_dict)
+
+
+def delete_item(request, slug):
+    item = Item.objects.get(slug=slug)
+    if request.method == 'POST':
+        item.delete()
+        return redirect('core:retailer_dash')
+    context_dict = {
+        'item': item,
+    }
+    return render(request, 'delete_item.html', context=context_dict)
+
+
+def update_item(request, slug):
+    item = Item.objects.get(slug=slug)
+    form = AddItemForm(instance=item)  # prefills the form to be updated
+    if request.method == 'POST':
+        form = AddItemForm(request.POST, instance=item)  # this enables the form to be saved only in this instance
+        # not as a new form
+        if form.is_valid():
+            form.save()
+            return redirect('core:retailer_dash')
     context_dict = {
         'form': form,
     }
@@ -532,5 +559,8 @@ def add_item(request):
 
 
 def retailer_dash(request):
-    return render(request, 'retailer_dash.html')
-
+    items = Item.objects.all()
+    context_dict = {
+        'items': items,
+    }
+    return render(request, 'retailer_dash.html', context=context_dict)
