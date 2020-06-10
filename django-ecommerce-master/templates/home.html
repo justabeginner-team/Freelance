@@ -23,11 +23,11 @@
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
               <a class="nav-link" href="#">All
-                <span class="sr-only">(current)</span>
+                
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Shirts</a>
+              <a class="nav-link" href="#elec">Electronics</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Sport wears</a>
@@ -54,11 +54,11 @@
       <section class="text-center mb-4">
 
         <div class="row wow fadeIn">
-
           {% for item in object_list %}
-          <div class="col-lg-3 col-md-6 mb-4">
-
-            <div class="card">
+          {%  if item.category == "Electronics" %}
+         <div id="elec" class="col-lg-3 col-md-6 mb-4">
+             <div  >
+               <div class="card">
 
               <div class="view overlay">
                 {% comment %} <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="card-img-top" {% endcomment %}
@@ -92,9 +92,13 @@
 
               </div>
 
-            </div>
-
+               </div>
+             </div>
           </div>
+          
+          {% endif %}
+          {% elif %}
+          hurray
           {% endfor %}
         </div>
 

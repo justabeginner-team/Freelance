@@ -22,8 +22,9 @@ INSTALLED_APPS = [
     'django_countries',
 
     'django_filters',
+    'django_extensions',
 
-    'core'
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +54,11 @@ TEMPLATES = [
         },
     },
 ]
+
+GRAPH_MODELS={
+    'all_applications':True,
+    'group_models':True,
+}
 
 WSGI_APPLICATION = 'djecommerce.wsgi.application'
 
