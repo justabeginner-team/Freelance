@@ -144,6 +144,28 @@ class CheckoutView(View):
                     order.billing_address = billing_address
                     order.save()
 
+                    # create the payment
+                    payment = Payment()
+                    payment.stripe_charge_id = 'gsdafhdghdagahs'
+                    payment.user = self.request.user
+                    payment.amount = order.get_total()
+                    payment.save()
+
+                    # assign the payment to the order
+
+                    order_items = order.items.all()
+                    order_items.update(ordered=True)
+                    for item in order_items:
+                        item.save()
+
+                    order.ordered = True
+                    order.payment = payment
+                    order.ref_code = create_ref_code()
+                    order.save()
+
+                    messages.success(self.request, "Your order was successful!")
+                    return redirect("/")
+
                 elif use_default_billing:
                     print("Using the defualt billing address")
                     address_qs = Address.objects.filter(
@@ -562,6 +584,7 @@ def update_item(request, slug):
 
 def retailer_dash(request):
     items = Item.objects.all()
+    orders = Order.objects.all()
 
     myfilter = ItemFilter(request.GET, queryset=items)
     items = myfilter.qs
@@ -569,5 +592,6 @@ def retailer_dash(request):
     context_dict = {
         'items': items,
         'myfilter': myfilter,
+        'orders': orders,
     }
     return render(request, 'retailer_dash.html', context=context_dict)

@@ -1,3 +1,7 @@
 # Freelance
 
-oyah alex hii view mpya ya ku update items tumia the link /add_item/
+follow these steps to make a successful order
+select a product
+proceed to checkout
+enter a shipping address
+select the option billing address same as shipping address

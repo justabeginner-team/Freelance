@@ -41,8 +41,8 @@
                          <th>Price</th>
                          <th>Discount Price</th>
                         <th>Category</th>
-                        <th></th>
-                        <th></th>
+                        <th>Update</th>
+                        <th>Remove</th>
                     </tr>
                     {% for item in items %}
                     <tr>
@@ -84,10 +84,17 @@
                     <tr>
                         <th>Product</th>
                          <th>Date Ordered</th>
-                         <th>Status</th>
-                        <th>Update</th>
-                        <th>Remove</th>
+                         <th>Owner</th>
+                        <th>Reference Code</th>
                     </tr>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{order.items}}</td>
+                        <td>{{order.ordered_date}}</td>
+                        <td>{{order.user}}</td>
+                        <td>{{order.ref_code}}</td>
+                    </tr>
+                    {% endfor %}
                 </table>
             </div>
         </div>
