@@ -10,7 +10,7 @@ from django.utils import timezone
 
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddItemForm
 from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile
-from .filters import ItemFilter
+from .filters import ItemFilter, CategoryFilter
 
 import random
 import string
@@ -368,10 +368,22 @@ class PaymentView(View):
         return redirect("/payment/stripe/")
 
 
-class HomeView(ListView):
-    model = Item
-    paginate_by = 10
-    template_name = "home.html"
+# class HomeView(ListView):
+#     model = Item
+#     paginate_by = 10
+#     template_name = "home.html"
+def HomeView(request):
+    items = Item.objects.all()
+
+    myfilter = CategoryFilter(request.GET, queryset=items)
+    items = myfilter.qs
+
+    context_dict = {
+        'items': items,
+        'myfilter': myfilter,
+
+    }
+    return render(request, 'home.html', context=context_dict)
 
 
 class OrderSummaryView(LoginRequiredMixin, View):

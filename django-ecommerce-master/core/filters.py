@@ -13,3 +13,9 @@ class ItemFilter(django_filters.FilterSet):
         model = Item
         fields = '__all__'
         exclude = ['slug', 'image', 'date_created']
+
+
+class CategoryFilter(django_filters.FilterSet):
+    class Meta:
+        model = Item
+        fields = ['category']
