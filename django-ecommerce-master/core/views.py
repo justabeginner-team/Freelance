@@ -43,11 +43,13 @@ class CheckoutView(View):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
             form = CheckoutForm()
+            user=self.request.user
             context = {
                 'form': form,
                 'couponform': CouponForm(),
                 'order': order,
-                'DISPLAY_COUPON_FORM': True
+                'DISPLAY_COUPON_FORM': True,
+                'usr':user,
             }
 
             shipping_address_qs = Address.objects.filter(

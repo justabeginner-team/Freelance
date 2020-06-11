@@ -54,13 +54,16 @@ TEMPLATES = [
         },
     },
 ]
+ACCOUNT_ADAPTER='core.forms.MyAccountAdapter'
+AUTH_USER_MODEL = 'core.EcommerceUser'
+ACCOUNT_SIGNUP_FORM_CLASS = 'core.forms.SignupForm'
 
 GRAPH_MODELS = {
     'all_applications': True,
     'group_models': True,
 }
 
-ACCOUNT_FORMS={'signup':'core.forms.MyCustomForm'}
+
 WSGI_APPLICATION = 'djecommerce.wsgi.application'
 
 LANGUAGE_CODE = 'en-us'
@@ -89,3 +92,5 @@ LOGIN_REDIRECT_URL = '/'
 # CRISPY FORMS
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+ACCOUNT_ENAIL_VERIFICATION='none'

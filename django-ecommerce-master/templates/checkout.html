@@ -11,8 +11,9 @@
           <div class="card">
             <form method="POST" class="card-body">
               {% csrf_token %}
-
+               {% if usr.is_retailer%}
               <h3>Shipping address</h3>
+              {%endif%}
 
               <div class='hideable_shipping_form'>
 
