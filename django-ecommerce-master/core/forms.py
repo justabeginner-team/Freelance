@@ -2,13 +2,27 @@ from django import forms
 from django.forms import ModelForm
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
-from .models import Item
+from .models import Item,UserProfile
+from allauth.account.forms import SignupForm
 
 
 PAYMENT_CHOICES = (
     ('S', 'Stripe'),
     ('P', 'PayPal')
 )
+
+
+class MyCustomForm(SignupForm):
+    def __init__(self,*args,**kwargs):
+        super(MyCustomForm,self).__init__(*args,**kwargs)
+        self.fields['fistrname']=forms.CharField(required=True)
+
+   
+    def save(self,request):
+         user=super(MyCustomForm,self).save(request)
+         UserProfile.is_customer = True
+         
+         return user
 
 
 class CheckoutForm(forms.Form):

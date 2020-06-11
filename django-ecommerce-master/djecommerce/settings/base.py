@@ -60,6 +60,7 @@ GRAPH_MODELS = {
     'group_models': True,
 }
 
+ACCOUNT_FORMS={'signup':'core.forms.MyCustomForm'}
 WSGI_APPLICATION = 'djecommerce.wsgi.application'
 
 LANGUAGE_CODE = 'en-us'
