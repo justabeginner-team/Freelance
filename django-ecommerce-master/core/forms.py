@@ -3,37 +3,36 @@ from django.forms import ModelForm
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
 from .models import Item
-from allauth.account.adapter import DefaultAccountAdapter,get_adapter
+from allauth.account.adapter import DefaultAccountAdapter, get_adapter
 from django.contrib.auth import get_user_model
 from allauth.account.forms import SetPasswordField, PasswordField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
-
-
 
 PAYMENT_CHOICES = (
     ('S', 'Stripe'),
     ('P', 'PayPal')
 )
 
+
 class SignupForm(forms.Form):
-    email = forms.EmailField(required=True,)
-    username = forms.CharField(max_length=80,required=True,)
+    email = forms.EmailField(required=True, )
+    username = forms.CharField(max_length=80, required=True, )
     password1 = SetPasswordField()
     password2 = PasswordField()
-    first_name = forms.CharField(max_length=100,required=False,)
-    last_name = forms.CharField(max_length=100, required=False,)
-    
+    first_name = forms.CharField(max_length=100, required=False, )
+    last_name = forms.CharField(max_length=100, required=False, )
+    is_retailer = forms.BooleanField(required=False)
 
     class Meta:
-        model = get_user_model() # use this function for swapping user model
-        fields = ('email', 'username', 'password1',  'password2', 'first_name', 'last_name',)
+        model = get_user_model()  # use this function for swapping user model
+        fields = ('email', 'username', 'password1', 'password2', 'first_name', 'last_name', 'is_retailer')
 
     def signup(self, request, user):
         user.username = self.cleaned_data['username']
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
-        user.is_retailer=True
+        user.is_retailer = self.cleaned_data['is_retailer']
         user.save()
 
 
@@ -43,8 +42,8 @@ class MyAccountAdapter(DefaultAccountAdapter):
         user.email = data.get('email')
         user.username = data.get('username')
         # all your custom fields
-        #user.date_of_birth = data.get('date_of_birth')
-        #user.gender = data.get('gender')
+        # user.date_of_birth = data.get('date_of_birth')
+        # user.gender = data.get('gender')
         if 'password1' in data:
             user.set_password(data["password1"])
         else:
@@ -53,6 +52,7 @@ class MyAccountAdapter(DefaultAccountAdapter):
         if commit:
             user.save()
         return user
+
 
 class CheckoutForm(forms.Form):
     shipping_address = forms.CharField(required=False)

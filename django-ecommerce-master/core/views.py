@@ -11,6 +11,7 @@ from django.utils import timezone
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddItemForm
 from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile
 from .filters import ItemFilter, CategoryFilter
+from .decorators import retailer_required
 
 import random
 import string
@@ -43,13 +44,13 @@ class CheckoutView(View):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
             form = CheckoutForm()
-            user=self.request.user
+            user = self.request.user
             context = {
                 'form': form,
                 'couponform': CouponForm(),
                 'order': order,
                 'DISPLAY_COUPON_FORM': True,
-                'usr':user,
+                'usr': user,
             }
 
             shipping_address_qs = Address.objects.filter(
@@ -556,6 +557,7 @@ class RequestRefundView(View):
                 return redirect("core:request-refund")
 
 
+@retailer_required
 def add_item(request):
     form = AddItemForm()
     if request.method == 'POST':
@@ -570,6 +572,7 @@ def add_item(request):
     return render(request, 'add_item.html', context=context_dict)
 
 
+@retailer_required
 def delete_item(request, slug):
     item = Item.objects.get(slug=slug)
     if request.method == 'POST':
@@ -581,6 +584,7 @@ def delete_item(request, slug):
     return render(request, 'delete_item.html', context=context_dict)
 
 
+@retailer_required
 def update_item(request, slug):
     item = Item.objects.get(slug=slug)
     form = AddItemForm(instance=item)  # prefills the form to be updated
@@ -596,6 +600,7 @@ def update_item(request, slug):
     return render(request, 'add_item.html', context=context_dict)
 
 
+@retailer_required
 def retailer_dash(request):
     items = Item.objects.all()
     orders = Order.objects.all()

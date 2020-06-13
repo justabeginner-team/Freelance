@@ -32,7 +32,7 @@ ADDRESS_CHOICES = (
 
 class EcommerceUser(AbstractUser):
     is_retailer = models.BooleanField(default=False)
-    is_customer = models.BooleanField(default=False)
+    # is_customer = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
@@ -195,9 +195,3 @@ class Refund(models.Model):
         return f"{self.pk}"
 
 
-def userprofile_receiver(sender, instance, created, *args, **kwargs):
-    if created:
-        userprofile = UserProfile.objects.create(user=instance)
-
-
-post_save.connect(userprofile_receiver, sender=settings.AUTH_USER_MODEL)
