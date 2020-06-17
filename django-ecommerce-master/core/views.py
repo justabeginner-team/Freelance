@@ -379,13 +379,14 @@ class PaymentView(View):
 #     template_name = "home.html"
 def HomeView(request):
     items = Item.objects.all()
-
+    lst=items.all().order_by('-created_on')[:3]
     myfilter = CategoryFilter(request.GET, queryset=items)
     items = myfilter.qs
 
     context_dict = {
         'items': items,
         'myfilter': myfilter,
+        'latest':lst,
 
     }
     return render(request, 'home.html', context=context_dict)
