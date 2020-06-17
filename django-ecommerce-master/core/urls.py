@@ -13,7 +13,7 @@ from .views import (
     add_item,
     delete_item,
     update_item,
-    retailer_dash,
+    retailer_dash
 )
 
 app_name = 'core'
@@ -36,4 +36,5 @@ urlpatterns = [
     path('delete_item/<slug>', delete_item, name='delete_item'),
     path('update_item/<slug>', update_item, name='update_item'),
     path('retailer_dash/', retailer_dash, name='retailer_dash'),
+    
 ]

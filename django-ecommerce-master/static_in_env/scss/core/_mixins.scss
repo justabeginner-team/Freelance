@@ -19,11 +19,13 @@
 // Makes the @content apply to the given breakpoint and wider.
 @mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
   $min: breakpoint-min($name, $breakpoints);
+
   @if $min {
     @media (min-width: $min) {
       @content;
     }
   }
+
   @else {
     @content;
   }
@@ -33,11 +35,13 @@
 // Makes the @content apply to the given breakpoint and narrower.
 @mixin media-breakpoint-down($name, $breakpoints: $grid-breakpoints) {
   $max: breakpoint-max($name, $breakpoints);
+
   @if $max {
     @media (max-width: $max) {
       @content;
     }
   }
+
   @else {
     @content;
   }
@@ -48,16 +52,19 @@
 @mixin media-breakpoint-between($lower, $upper, $breakpoints: $grid-breakpoints) {
   $min: breakpoint-min($lower, $breakpoints);
   $max: breakpoint-max($upper, $breakpoints);
+
   @if $min !=null and $max !=null {
     @media (min-width: $min) and (max-width: $max) {
       @content;
     }
   }
+
   @else if $max==null {
     @include media-breakpoint-up($lower, $breakpoints) {
       @content;
     }
   }
+
   @else if $min==null {
     @include media-breakpoint-down($upper, $breakpoints) {
       @content;
@@ -71,16 +78,19 @@
 @mixin media-breakpoint-only($name, $breakpoints: $grid-breakpoints) {
   $min: breakpoint-min($name, $breakpoints);
   $max: breakpoint-max($name, $breakpoints);
+
   @if $min !=null and $max !=null {
     @media (min-width: $min) and (max-width: $max) {
       @content;
     }
   }
+
   @else if $max==null {
     @include media-breakpoint-up($name, $breakpoints) {
       @content;
     }
   }
+
   @else if $min==null {
     @include media-breakpoint-down($name, $breakpoints) {
       @content;
@@ -90,6 +100,10 @@
 
 @function breakpoint-infix($name, $breakpoints: $grid-breakpoints) {
   @return if(breakpoint-min($name, $breakpoints)==null, "", "-#{$name}");
+}
+
+@mixin hover {
+  &:hover { @content; }
 }
 
 @mixin hover-focus {
@@ -104,6 +118,7 @@
   #{$parent} {
     background-color: $color !important;
   }
+
   a#{$parent},
   button#{$parent} {
     @include hover-focus {
@@ -117,6 +132,7 @@
   #{$parent} {
     color: $color !important;
   }
+
   a#{$parent} {
     @include hover-focus {
       color: darken($color, 10%) !important;
@@ -145,7 +161,9 @@
 
 // For each breakpoint, define the maximum width of the container in a media query
 @mixin make-container-max-widths($max-widths: $container-max-widths, $breakpoints: $grid-breakpoints) {
-  @each $breakpoint, $container-max-width in $max-widths {
+
+  @each $breakpoint,
+    $container-max-width in $max-widths {
     @include media-breakpoint-up($breakpoint, $breakpoints) {
       max-width: $container-max-width;
     }
@@ -180,7 +198,7 @@
 
 @mixin make-col-offset($size, $columns: $grid-columns) {
   $num: $size / $columns;
-  margin-left: if($num == 0, 0, percentage($num));
+  margin-left: if($num==0, 0, percentage($num));
 }
 
 @mixin clearfix() {
@@ -194,9 +212,11 @@
 @mixin float-left {
   float: left !important;
 }
+
 @mixin float-right {
   float: right !important;
 }
+
 @mixin float-none {
   float: none !important;
 }
@@ -210,7 +230,7 @@
   background-color: transparent;
   border: 0;
 
-  @if ($ignore-warning != true) {
+  @if ($ignore-warning !=true) {
     @warn "The `text-hide()` mixin has been deprecated as of v4.1.0. It will be removed entirely in v5.";
   }
 }
@@ -238,6 +258,7 @@
 // Credit: HTML5 Boilerplate
 
 @mixin sr-only-focusable {
+
   &:active,
   &:focus {
     position: static;
@@ -254,11 +275,20 @@
 }
 
 // MDB Mixins
+@mixin hover-focus-active {
+  &:hover,
+  &:focus,
+  &:active {
+    @content;
+  }
+}
+
 // Set the color of the button and badge
 @function set-notification-text-color($color) {
   @if (lightness($color) > 80) {
     @return $black-base; // Lighter backgorund, return dark color
   }
+
   @else {
     @return $white-base; // Darker background, return light color
   }
@@ -267,83 +297,108 @@
 // Make button
 @mixin make-button ($name, $color) {
   .btn-#{$name} {
-    background-color: $color !important;
     color: set-notification-text-color($color);
+    background-color: $color !important;
+
     &:hover {
-      background-color: lighten($color, 5%);
       color: set-notification-text-color($color);
+      background-color: lighten($color, 5%);
     }
+
     &:focus,
     &.focus {
       box-shadow: $z-depth-1-half;
     }
+
     &:focus,
     &:active,
     &.active {
       background-color: darken($color, 20%);
     }
+
     &.dropdown-toggle {
       background-color: $color !important;
+
       &:hover,
       &:focus {
         background-color: lighten($color, 5%) !important;
       }
     }
+
     &:not([disabled]):not(.disabled):active,
     &:not([disabled]):not(.disabled).active,
-    .show>&.dropdown-toggle {
-      box-shadow: $z-depth-1-half;
+    .show > &.dropdown-toggle {
       background-color: darken($color, 20%) !important;
+      box-shadow: $z-depth-1-half;
     }
+
     &:not([disabled]):not(.disabled):active:focus,
     &:not([disabled]):not(.disabled).active:focus,
-    .show>&.dropdown-toggle:focus {
+    .show > &.dropdown-toggle:focus {
       box-shadow: $z-depth-1-half;
     }
   }
+
   .#{$name}-ic {
     color: $color !important;
+
     &:hover,
     &:focus {
       color: $color;
     }
   }
-  a.btn:not([href]):not([tabindex]), 
-  a.btn:not([href]):not([tabindex]):focus, 
+
+  a.btn:not([href]):not([tabindex]),
+  a.btn:not([href]):not([tabindex]):focus,
   a.btn:not([href]):not([tabindex]):hover {
     color: set-notification-text-color($color);
+  }
+  table {
+    &.table {
+      a {
+        &.btn {
+          &.btn-#{$name} {
+            color: set-notification-text-color($color);
+          }
+        }
+      }
+    }
   }
 }
 
 // Make outline button
 @mixin make-outline-button ($name, $color) {
   .btn-outline-#{$name} {
-    border: 2px solid $color !important;
-    background-color: transparent !important;
     color: $color !important;
+    background-color: transparent !important;
+    border: 2px solid $color !important;
+
     &:hover,
     &:focus,
     &:active,
     &:active:focus,
     &.active {
-      border-color: $color !important;
-      background-color: transparent !important;
       color: $color !important;
+      background-color: transparent !important;
+      border-color: $color !important;
     }
+
     &:not([disabled]):not(.disabled):active,
     &:not([disabled]):not(.disabled).active,
-    .show>&.dropdown-toggle {
-      box-shadow: $z-depth-1-half;
+    .show > &.dropdown-toggle {
       background-color: transparent !important;
       border-color: $color !important;
+      box-shadow: $z-depth-1-half;
     }
+
     &:not([disabled]):not(.disabled):active:focus,
     &:not([disabled]):not(.disabled).active:focus,
-    .show>&.dropdown-toggle:focus {
+    .show > &.dropdown-toggle:focus {
       box-shadow: $z-depth-1-half;
     }
   }
 }
+
 // Make gradient
 @mixin make-gradient($name, $value) {
   .#{$name}-gradient {
@@ -351,7 +406,8 @@
   }
 }
 
-$opacity: .9;
+$opacity: .9 !default;
+
 // Make gradient
 @mixin make-gradient-rgba($name, $value) {
   .#{$name}-gradient-rgba {
@@ -363,8 +419,9 @@ $opacity: .9;
 @mixin make-gradient-button($name, $value) {
   .btn {
     &.#{$name}-gradient {
-      transition: .5s ease;
       color: $white-base;
+      transition: .5s ease;
+
       &:hover,
       &:focus,
       &:active,
@@ -383,8 +440,8 @@ $opacity: .9;
 
 @mixin make-badge($name, $color) {
   .badge-#{$name} {
-    background-color: $color !important;
     color: set-notification-text-color($color) !important;
+    background-color: $color !important;
   }
 }
 
@@ -393,24 +450,30 @@ $opacity: .9;
   .validate {
     margin-bottom: $margin-bottom;
   }
+
   label {
     font-size: $label-font-size;
+
     &.active {
       font-size: $label-active-font-size;
     }
   }
+
   .prefix {
     top: $top;
     font-size: $prefix-font-size;
-    ~input,
-    ~textarea {
-      margin-left: $margin-left;
+
+    ~ input,
+    ~ textarea {
       width: $width;
-    }
-    ~label {
       margin-left: $margin-left;
     }
-    ~.form-text {
+
+    ~ label {
+      margin-left: $margin-left;
+    }
+
+    ~ .form-text {
       margin-left: $margin-left-2;
     }
   }
@@ -423,6 +486,7 @@ $opacity: .9;
       .nav-link {
         &.disbled {
           color: $color-0;
+
           &:hover {
             color: $color-0;
           }
@@ -430,44 +494,54 @@ $opacity: .9;
       }
     }
   }
+
   .navbar-toggler-icon {
-    background-image: $background-image;
     cursor: pointer;
+    background-image: $background-image;
   }
+
   .breadcrumb,
   .navbar-nav {
     .nav-item {
       .nav-link {
         color: $color;
         transition: $navbar-nav-transition;
+
         &:hover {
           color: $color-2;
         }
       }
-      &.active>.nav-link {
+
+      &.active > .nav-link {
         background-color: $color-3;
+
         &:hover {
           color: $color;
         }
       }
     }
   }
+
   .navbar-toggler {
     color: $color;
   }
+
   form {
     .md-form {
       input {
         border-bottom: 1px solid $color;
+
         &:focus:not([readonly]) {
           border-color: $input-md-focus-color;
         }
       }
+
       .form-control {
         color: $color;
+
         @include placeholder {
-          color: $color;
           font-weight: $navbar-font-weight;
+          color: $color;
         }
       }
     }
@@ -478,6 +552,7 @@ $opacity: .9;
 @mixin make-btn-floating($width, $height, $font-size, $line-height) {
   width: $width;
   height: $height;
+
   i {
     font-size: $font-size;
     line-height: $line-height;
@@ -532,10 +607,11 @@ $opacity: .9;
 }
 
 //Make animation for progresss
-@mixin progress-animation-default($animation...){
+@mixin progress-animation-default($animation...) {
   animation: $animation;
 }
+
 //Make transform
-@mixin transform($transform...){
+@mixin transform($transform...) {
   transform: $transform;
 }

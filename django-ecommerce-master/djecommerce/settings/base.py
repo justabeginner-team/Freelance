@@ -54,9 +54,7 @@ TEMPLATES = [
         },
     },
 ]
-ACCOUNT_ADAPTER='core.forms.MyAccountAdapter'
-AUTH_USER_MODEL = 'core.EcommerceUser'
-ACCOUNT_SIGNUP_FORM_CLASS = 'core.forms.SignupForm'
+
 
 GRAPH_MODELS = {
     'all_applications': True,
@@ -86,6 +84,20 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'
 )
+EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
+
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION=True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION="mandatory"
+LOGOUT_URL = 'account_logout'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
+ACCOUNT_SIGNUP_REDIRECT_URL='account_login'
+LOGIN_REDIRECT_URL ='retailer_dash'
+
+ACCOUNT_UNIQUE_EMAIL = True
+
+
+
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 

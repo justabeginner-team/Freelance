@@ -13,15 +13,20 @@ from django.contrib.auth.models import AbstractUser
 #     ('OW', 'Outwear')
 # )
 CATEGORY_CHOICES = (
-    ('Electronics', 'Electronics'),
-    ('Clothes', 'Clothes'),
-    ('Food', 'Food')
+ 
+    ('Laptops', 'Laptops'),
+    ('Smartphones', 'Smartphones'),
+    ('Tablets','Tablets'),
+    ('Headphones', 'Headphones'),
+    ('Camera', 'Camera'),
+    ('Accesories', 'Accesories'),
+    ('Tv', 'Tv'),
 )
 
 LABEL_CHOICES = (
-    ('P', 'primary'),
-    ('S', 'secondary'),
-    ('D', 'danger')
+    ('new', 'new'),
+    ('best rated', 'best rated'),
+    ('best seller', 'best seller')
 )
 
 ADDRESS_CHOICES = (
@@ -30,11 +35,7 @@ ADDRESS_CHOICES = (
 )
 
 
-class EcommerceUser(AbstractUser):
-    is_retailer = models.BooleanField(default=False)
-    # is_customer = models.BooleanField(default=False)
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
+
 
 
 class UserProfile(models.Model):
@@ -51,7 +52,7 @@ class Item(models.Model):
     price = models.FloatField()
     discount_price = models.FloatField(blank=True, null=True)
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=50)
-    label = models.CharField(choices=LABEL_CHOICES, max_length=1)
+    label = models.CharField(choices=LABEL_CHOICES, max_length=15)
     slug = models.SlugField(null=False, unique=True)
     description = models.TextField()
     image = models.ImageField(upload_to='media_root')

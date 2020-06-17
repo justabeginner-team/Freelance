@@ -13,11 +13,13 @@ from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, Us
 from .filters import ItemFilter, CategoryFilter
 from .decorators import retailer_required
 
+
 import random
 import string
 import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
 
 
 def create_ref_code():
@@ -557,7 +559,7 @@ class RequestRefundView(View):
                 return redirect("core:request-refund")
 
 
-@retailer_required
+
 def add_item(request):
     form = AddItemForm()
     if request.method == 'POST':
@@ -600,7 +602,7 @@ def update_item(request, slug):
     return render(request, 'add_item.html', context=context_dict)
 
 
-@retailer_required
+
 def retailer_dash(request):
     items = Item.objects.all()
     orders = Order.objects.all()

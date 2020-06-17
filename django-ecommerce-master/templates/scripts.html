@@ -12,6 +12,19 @@
   // Animations initialization
   new WOW().init();
 
+  // Tooltips Initialization
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+
+  // Material Select Initialization
+  $(document).ready(function () {
+    $('.mdb-select').materialSelect();
+  });
+
+  // SideNav Initialization
+  $(".button-collapse").sideNav();
+
 </script>
 
 

@@ -1,0 +1,351 @@
+body {
+  font-weight: 400;
+}
+
+p {
+  font-weight: 400;
+  font-size: .9rem;
+}
+
+.font-small {
+  font-size: .9rem;
+}
+
+label {
+  margin-bottom: 0rem;
+}
+
+input[type=range].no-border {
+  border: none;
+}
+
+.nav-link.active {
+  background-color: rgba(163, 163, 163, .2);
+}
+
+h2 {
+  &.font-smaller {
+    @media (max-width: 330px) {
+      font-size: 1rem;
+    }
+  }
+}
+
+.carousel {
+  @media (max-width: 450px) {
+    height: 600px;
+  }
+}
+
+
+.divider {
+  height: 3px;
+  display: block;
+  background-color: rgba(0, 0, 0, .1);
+  margin: 1em 0 1em;
+  width: 30px;
+}
+
+.navbar {
+
+  .mega-dropdown {
+    position: static !important;
+  }
+
+  .dropdown-menu.mega-menu {
+    width: 100%;
+    border: none;
+    border-radius: 0;
+
+    &.v-2 {
+      a {
+        padding: 15px 10px 10px 35px;
+
+        &.news-title-2 {
+          font-weight: 500;
+          font-size: 1.1rem;
+          line-height: 1.5;
+          -webkit-transition: .2s;
+          transition: .2s;
+          color: #4f4f4f !important;
+        }
+
+        &.news-title-2:hover {
+          color: #d0d6e2 !important;
+        }
+      }
+
+      .sub-menu {
+        ul {
+          list-style: none;
+
+          &.caret-style {
+            li {
+              transition: .3s;
+
+              &:hover {
+                background-color: rgba(0, 0, 0, .2);
+                transition: .3s;
+              }
+
+              a::after {
+                content: '\f0da';
+                font-family: 'Font Awesome\ 5 Free';
+                position: absolute;
+                left: .5rem;
+                font-size: 12px;
+                top: 1rem;
+                font-weight: 900;
+              }
+            }
+          }
+        }
+
+        a.menu-item {
+          color: #4f4f4f !important;
+          font-weight: 400;
+
+          &:hover {
+            color: #4f4f4f !important;
+            font-weight: 400;
+          }
+        }
+      }
+
+      .sub-title {
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid;
+      }
+
+      .font-small {
+        font-size: .85rem;
+      }
+    }
+  }
+}
+
+.cart-v1,
+.cart-v2 {
+
+  .btn.btn-sm,
+  .btn.wishlist {
+    padding: .3rem .6rem;
+  }
+}
+
+.category-v1,
+.category-v2 {
+
+  [type=radio]:not(:checked)+label:after,
+  [type=radio]:not(:checked)+label:before {
+    border-color: #848a90;
+  }
+
+  [type=checkbox]+label,
+  [type=radio]+label {
+    font-size: .9rem;
+  }
+
+  input[type=range].no-border {
+    border: none;
+  }
+}
+
+.category-v4 {
+  .title-1 {
+    letter-spacing: 2px;
+  }
+
+  hr {
+    border-top: 3px solid rgba(0, 0, 0, .1);
+  }
+
+  input[type=range].no-border {
+    border: none;
+  }
+
+  @media only screen and (max-width: 670px) {
+    h1 {
+      font-size: 1rem;
+    }
+  }
+}
+
+.homepage-v1,
+.homepage-v2,
+.homepage-v3 {
+  @media only screen and (max-width: 768px) {
+    h2 {
+      font-size: 1.2rem;
+    }
+
+    .photo {
+      max-height: 300px;
+    }
+  }
+
+  .center-element {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.product-v1,
+.product-v2 {
+  @media only screen and (max-width: 1024px) {
+
+    .accordion,
+    .color {
+      margin-left: 2rem;
+      margin-right: 2rem;
+    }
+  }
+}
+
+.white-skin {
+  .navbar {
+    .navbar-nav {
+      .nav-item.mega-dropdown {
+        .dropdown-menu.mega-menu {
+
+          &:hover,
+          &:focus,
+          &:active {
+            background-color: transparent;
+          }
+        }
+      }
+    }
+  }
+
+  .side-nav .search-form input[type=text] {
+    color: #424242 !important;
+  }
+}
+
+
+.w-lg-100 {
+  @media (min-width: 500px) and (max-width: 750px), (min-width: 992px) {
+    width: 100% !important;
+  }
+}
+
+.table-cart-v-1,
+.table-cart-v-2 {
+
+  @media only screen and (max-width: 768px) {
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+      display: block;
+      text-align: center;
+    }
+
+    thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+
+    img {
+      display: block;
+      margin: 0 auto;
+    }
+
+    td {
+      position: relative;
+      padding-top: 1.5rem !important;
+      padding-bottom: .4rem !important;
+
+      &:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        white-space: nowrap;
+        font-weight: 500;
+        transform: translate(-50%);
+        left: 50%;
+      }
+
+      &:nth-of-type(1):before {
+        content: "Product";
+      }
+
+      &:nth-of-type(2):before {
+        content: "Color";
+      }
+
+      &:nth-of-type(3) {
+        position: absolute;
+        border: none !important;
+      }
+
+      &:nth-of-type(4):before {
+        content: "Price";
+      }
+
+      &:nth-of-type(5) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding-top: 1.9rem !important;
+
+        &:before {
+          content: "QTY";
+        }
+      }
+
+      &:nth-of-type(6):before {
+        content: "Amount";
+      }
+
+      &:nth-of-type(7):before {
+        content: "Remove item";
+      }
+    }
+
+    tr:nth-child(4) td {
+
+      &:nth-of-type(1):before,
+      &:nth-of-type(2):before,
+      &:nth-of-type(4):before {
+        content: "";
+      }
+
+      &:nth-of-type(1) {
+        position: absolute;
+        border: none !important;
+      }
+
+      &:nth-of-type(3) {
+        position: relative;
+        display: flex;
+        justify-content: center;
+      }
+
+      &:nth-of-type(4) {
+        border-top: none !important;
+        display: flex;
+        justify-content: center;
+        border-bottom: 1px solid #dee2e6;
+      }
+    }
+
+    .btn-group {
+      margin-left: 0 !important;
+    }
+  }
+}
+.white-skin .navbar .navbar-nav .nav-item .dropdown-menu.mega-menu a:active,
+.white-skin .navbar .navbar-nav .nav-item .dropdown-menu.mega-menu a:focus,
+.white-skin .navbar .navbar-nav .nav-item .dropdown-menu.mega-menu a:hover {
+  background-color: transparent;
+}
