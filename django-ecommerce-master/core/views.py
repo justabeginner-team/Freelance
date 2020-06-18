@@ -377,7 +377,6 @@ class PaymentView(View):
 #     template_name = "home.html"
 def HomeView(request):
     items = Item.objects.all()
-<<<<<<< HEAD
     laptop_count = items.filter(category='Laptops').count()
     smartphone_count = items.filter(category='Smartphones').count()
     tablet_count = items.filter(category='Tablets').count()
@@ -386,17 +385,13 @@ def HomeView(request):
     accesories_count = items.filter(category='Accesories').count()
     tv_count = items.filter(category='Tv').count()
     lst = items.all().order_by('-created_on')[:3]
-=======
-    lst=items.all().order_by('-created_on')[:3]
     rdm= items.all().order_by('?')[:3]
->>>>>>> 7bfcbc6b0e67b32d356af03d3b47110498d2a709
     myfilter = CategoryFilter(request.GET, queryset=items)
     items = myfilter.qs
 
     context_dict = {
         'items': items,
         'myfilter': myfilter,
-<<<<<<< HEAD
         'laptop_count': laptop_count,
         'smartphone_count': smartphone_count,
         'tablet_count': tablet_count,
@@ -405,11 +400,8 @@ def HomeView(request):
         'accesories_count': accesories_count,
         'tv_count': tv_count,
         'latest': lst,
-=======
-        'latest':lst,
         'randomprods':rdm,
 
->>>>>>> 7bfcbc6b0e67b32d356af03d3b47110498d2a709
     }
     return render(request, 'home.html', context=context_dict)
 

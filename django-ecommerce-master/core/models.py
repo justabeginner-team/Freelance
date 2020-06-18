@@ -6,6 +6,7 @@ from django.shortcuts import reverse
 from django_countries.fields import CountryField
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MinValueValidator, MaxValueValidator
 import random, string
 
 
@@ -79,11 +80,37 @@ class Item(models.Model):
         return reverse("core:remove-from-cart", kwargs={
             'slug': self.slug
         })
+    
+    def no_of_ratings(self):
+        ratings = Rating.objects.filter(item=self)
+        return len(ratings)
+    
+    def avg_rating(self):
+        sum = 0
+        ratings = Rating.objects.filter(item=self)
+        for rating in ratings:
+            sum += rating.stars
+        if len(ratings)>0:
+            return sum / len(ratings)
+        else:
+            return 0
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
+
+
+
+class Rating(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    stars = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+
+    class Meta:
+        unique_together = (('user', 'item'))
+        index_together = (('user', 'item'))
 
 
 class OrderItem(models.Model):

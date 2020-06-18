@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
+
+<script>
+    function evalSlider()
+    {
+        var sliderValue = document.getElementById('rating').value;
+        document.getElementById('sliderVal').innerHTML = sliderValue;
+    }
+</script>
+
 <div class="container">
     <div class="card">
         <div class="card-body">
@@ -8,11 +17,12 @@
                 <label for="comment">Review</label>
                 <textarea name="comment" id="comment" class="form-control"></textarea>
 
-                <label for="rating">Rating</label>
-                <input type="range" id="rangeInput"
+                <label for="rating">Rate out product(0-5):</label>
+                <input type="range" id="rating"
                        name="rating" min="0" max="5" step="0.5"
-                       value="0" oninput="amount.value-rangeInput.value">
-                <output name="amount" id="amount" for="rangeInput">0</output>
+                       value="0"
+                       onchange="evalSlider()">
+                <output  id="sliderVal" ></output>
                 <br>
                 <input type="submit" class="btn btn-danger" value="Add Review">
             </form>
