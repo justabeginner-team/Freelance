@@ -89,7 +89,6 @@ EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION="mandatory"
-
 LOGOUT_URL = 'account_logout'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_SIGNUP_REDIRECT_URL='account_login'
@@ -98,12 +97,12 @@ ACCOUNT_USERNAME_BLACKLIST = ['mike', 'alex']
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "[Alex Ian eccomerce web]"
 
-
-SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 
+
+SITE_ID = 1
 # CRISPY FORMS
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-ACCOUNT_ENAIL_VERIFICATION='none'
+

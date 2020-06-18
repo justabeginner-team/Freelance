@@ -380,6 +380,7 @@ class PaymentView(View):
 def HomeView(request):
     items = Item.objects.all()
     lst=items.all().order_by('-created_on')[:3]
+    rdm= items.all().order_by('?')[:3]
     myfilter = CategoryFilter(request.GET, queryset=items)
     items = myfilter.qs
 
@@ -387,6 +388,7 @@ def HomeView(request):
         'items': items,
         'myfilter': myfilter,
         'latest':lst,
+        'randomprods':rdm,
 
     }
     return render(request, 'home.html', context=context_dict)
