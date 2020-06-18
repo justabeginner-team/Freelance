@@ -619,3 +619,10 @@ def retailer_dash(request):
         'orders': orders,
     }
     return render(request, 'retailer_dash.html', context=context_dict)
+
+
+def account_settings(request):
+    context_dict = {
+
+    }
+    return render(request, 'account_settings.html', context=context_dict)
