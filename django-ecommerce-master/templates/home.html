@@ -329,6 +329,7 @@
 {% endblock mega%}
 {% block content %}
 <!-- Main Container -->
+
 <div class="container">
 
   <div class="row pt-4">
@@ -1103,19 +1104,19 @@
               <hr>
 
               <!-- First row -->
+              {% for randomitem in randomprods %}
               <div class="row mt-5 py-2 mb-4 hoverable align-items-center">
 
                 <div class="col-6">
 
-                  <a><img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/7.jpg"
-                      class="img-fluid"></a>
-
+                 
+                  <a href="{{ randomitem.get_absolute_url }}"><img src="{{randomitem.image.url}}" class="img-fluid"></a>
                 </div>
 
                 <div class="col-6">
 
                   <!-- Title -->
-                  <a><strong>Dell 786i</strong></a>
+                  <a><strong>{{latestitem.title}}</strong></a>
 
                   <!-- Rating -->
                   <ul class="rating inline-ul">
@@ -1133,91 +1134,22 @@
                   </ul>
 
                   <!-- Price -->
-                  <h6 class="h6-responsive font-weight-bold dark-grey-text"><strong>$749</strong> <span
-                      class="grey-text"><small><s>$889</s></small></span></h6>
+                  <h6 class="h6-responsive font-weight-bold dark-grey-text"><strong>
+                      {% if randomitem.discount_price %}
+                      <span class="mr-1">
+                        <small> <del style="color: red;">${{ randomitem.price }}</del> </small>
+                      </span>
+                      <span>${{ randomitem.discount_price }}</span>
+                      {% else %}
+                      <span>${{ randomitem.price }}</span>
+                      {% endif %}
+                    </strong></h6>
 
                 </div>
 
               </div>
+              {% endfor %}
               <!-- First row -->
-
-              <!-- Second row -->
-              <div class="row mt-2 py-2 mb-4 hoverable align-items-center">
-
-                <div class="col-6">
-
-                  <a><img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/8.jpg"
-                      class="img-fluid"></a>
-
-                </div>
-
-                <div class="col-6">
-
-                  <!-- Title -->
-                  <a><strong>Samsung V54</strong></a>
-
-                  <!-- Rating -->
-                  <ul class="rating inline-ul">
-
-                    <li><i class="fas fa-star blue-text"></i></li>
-
-                    <li><i class="fas fa-star blue-text"></i></li>
-
-                    <li><i class="fas fa-star blue-text"></i></li>
-
-                    <li><i class="fas fa-star blue-text"></i></li>
-
-                    <li><i class="fas fa-star blue-text"></i></li>
-
-                  </ul>
-
-                  <!-- Price -->
-                  <h6 class="h6-responsive font-weight-bold dark-grey-text"><strong>$249</strong> <span
-                      class="grey-text"><small><s>$489</s></small></span></h6>
-
-                </div>
-
-              </div>
-              <!-- Second row -->
-
-              <!-- Third row -->
-              <div class="row mt-2 py-2 mb-4 hoverable align-items-center">
-
-                <div class="col-6">
-
-                  <a><img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/9.jpg"
-                      class="img-fluid"></a>
-
-                </div>
-
-                <div class="col-6">
-
-                  <!-- Title -->
-                  <a><strong>Canon 675-D</strong></a>
-
-                  <!-- Rating -->
-                  <ul class="rating inline-ul">
-
-                    <li><i class="fas fa-star blue-text"></i></li>
-
-                    <li><i class="fas fa-star blue-text"></i></li>
-
-                    <li><i class="fas fa-star blue-text"></i></li>
-
-                    <li><i class="fas fa-star grey-text"></i></li>
-
-                    <li><i class="fas fa-star grey-text"></i></li>
-
-                  </ul>
-
-                  <!-- Price -->
-                  <h6 class="h6-responsive font-weight-bold dark-grey-text"><strong>$2149</strong> <span
-                      class="grey-text"><small><s>$2489</s></small></span></h6>
-
-                </div>
-
-              </div>
-              <!-- Third row -->
 
             </div>
             <!-- Random Products -->
