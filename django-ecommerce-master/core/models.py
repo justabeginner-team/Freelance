@@ -6,7 +6,8 @@ from django.shortcuts import reverse
 from django_countries.fields import CountryField
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import AbstractUser
-import random,string
+import random, string
+
 
 # CATEGORY_CHOICES = (
 #     ('S', 'Shirt'),
@@ -15,13 +16,14 @@ import random,string
 # )
 
 def randomslug():
-    return ''.join(random.choice(string.ascii_letters+string.digits)for _ in range(16))
+    return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(16))
+
 
 CATEGORY_CHOICES = (
- 
+
     ('Laptops', 'Laptops'),
     ('Smartphones', 'Smartphones'),
-    ('Tablets','Tablets'),
+    ('Tablets', 'Tablets'),
     ('Headphones', 'Headphones'),
     ('Camera', 'Camera'),
     ('Accesories', 'Accesories'),
@@ -40,14 +42,11 @@ ADDRESS_CHOICES = (
 )
 
 
-
-
-
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     stripe_customer_id = models.CharField(max_length=50, blank=True, null=True)
     one_click_purchasing = models.BooleanField(default=False)
-    
+
     def __str__(self):
         return self.user.username
 
@@ -58,10 +57,10 @@ class Item(models.Model):
     discount_price = models.FloatField(blank=True, null=True)
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=50)
     label = models.CharField(choices=LABEL_CHOICES, max_length=15)
-    slug = models.SlugField(null=False, unique=True,default=randomslug())
+    slug = models.SlugField(null=False, unique=True, default=randomslug())
     description = models.TextField()
     image = models.ImageField(upload_to='media_root')
-    created_on=models.DateTimeField(auto_now_add=True)
+    created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
@@ -200,5 +199,3 @@ class Refund(models.Model):
 
     def __str__(self):
         return f"{self.pk}"
-
-

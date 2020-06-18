@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="text-center">Make a review</h3>
+            <form action="" method="get">
+                <label for="comment">Review</label>
+                <textarea name="comment" id="comment" class="form-control"></textarea>
+
+                <label for="rating">Rating</label>
+                <input type="range" id="rangeInput"
+                       name="rating" min="0" max="5" step="0.5"
+                       value="0" oninput="amount.value-rangeInput.value">
+                <output name="amount" id="amount" for="rangeInput">0</output>
+                <br>
+                <input type="submit" class="btn btn-danger" value="Add Review">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

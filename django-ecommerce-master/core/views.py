@@ -13,13 +13,11 @@ from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, Us
 from .filters import ItemFilter, CategoryFilter
 from .decorators import retailer_required
 
-
 import random
 import string
 import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
-
 
 
 def create_ref_code():
@@ -379,15 +377,28 @@ class PaymentView(View):
 #     template_name = "home.html"
 def HomeView(request):
     items = Item.objects.all()
-    lst=items.all().order_by('-created_on')[:3]
+    laptop_count = items.filter(category='Laptops').count()
+    smartphone_count = items.filter(category='Smartphones').count()
+    tablet_count = items.filter(category='Tablets').count()
+    headphone_count = items.filter(category='Headphones').count()
+    camera_count = items.filter(category='Camera').count()
+    accesories_count = items.filter(category='Accesories').count()
+    tv_count = items.filter(category='Tv').count()
+    lst = items.all().order_by('-created_on')[:3]
     myfilter = CategoryFilter(request.GET, queryset=items)
     items = myfilter.qs
 
     context_dict = {
         'items': items,
         'myfilter': myfilter,
-        'latest':lst,
-
+        'laptop_count': laptop_count,
+        'smartphone_count': smartphone_count,
+        'tablet_count': tablet_count,
+        'headphone_count': headphone_count,
+        'camera_count': camera_count,
+        'accesories_count': accesories_count,
+        'tv_count': tv_count,
+        'latest': lst,
     }
     return render(request, 'home.html', context=context_dict)
 
@@ -560,7 +571,6 @@ class RequestRefundView(View):
                 return redirect("core:request-refund")
 
 
-
 def add_item(request):
     form = AddItemForm()
     if request.method == 'POST':
@@ -603,7 +613,6 @@ def update_item(request, slug):
     return render(request, 'add_item.html', context=context_dict)
 
 
-
 def retailer_dash(request):
     items = Item.objects.all()
     orders = Order.objects.all()
@@ -624,3 +633,10 @@ def account_settings(request):
 
     }
     return render(request, 'account_settings.html', context=context_dict)
+
+
+def add_review(request):
+    context_dict = {
+
+    }
+    return render(request, 'ratings.html', context=context_dict)

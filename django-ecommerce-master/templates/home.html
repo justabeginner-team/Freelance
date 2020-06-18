@@ -392,7 +392,7 @@
 
                     Laptops</a>
 
-                  <a href=""></a><span class="badge badge-danger badge-pill">43</span></a>
+                  <a href=""></a><span class="badge badge-danger badge-pill">{{laptop_count}}</span></a>
 
                 </li>
 
@@ -403,7 +403,7 @@
 
                     Smartphone</a>
 
-                  <span class="badge badge-danger badge-pill">32</span>
+                  <span class="badge badge-danger badge-pill">{{smartphone_count}}</span>
 
                 </li>
 
@@ -414,7 +414,7 @@
 
                     Tablet</a>
 
-                  <span class="badge badge-danger badge-pill">18</span>
+                  <span class="badge badge-danger badge-pill">{{tablet_count}}</span>
 
                 </li>
 
@@ -423,7 +423,7 @@
                   <a class="dark-grey-text font-small"><i class="fas fa-headphones-alt dark-grey-text mr-3"
                       aria-hidden="true"></i>Heahphones</a>
 
-                  <span class="badge badge-danger badge-pill">37</span>
+                  <span class="badge badge-danger badge-pill">{{headphone_count}}</span>
 
                 </li>
 
@@ -432,7 +432,7 @@
                   <a class="dark-grey-text font-small"><i class="fas fa-camera-retro dark-grey-text mr-3"
                       aria-hidden="true"></i>Camera</a>
 
-                  <span class="badge badge-danger badge-pill">15</span>
+                  <span class="badge badge-danger badge-pill">{{camera_count}}</span>
 
                 </li>
 
@@ -441,7 +441,7 @@
                   <a class="dark-grey-text font-small"><i class="fas fa-suitcase dark-grey-text mr-3"
                       aria-hidden="true"></i>Accesories</a>
 
-                  <span class="badge badge-danger badge-pill">64</span>
+                  <span class="badge badge-danger badge-pill">{{accesories_count}}</span>
 
                 </li>
 
@@ -450,7 +450,7 @@
                   <a class="dark-grey-text font-small"><i class="fas fa-tv dark-grey-text mr-3"
                       aria-hidden="true"></i>TV</a>
 
-                  <span class="badge badge-danger badge-pill">2</span>
+                  <span class="badge badge-danger badge-pill">{{tv_count}}</span>
 
                 </li>
 
@@ -466,18 +466,16 @@
         <!-- Grid row -->
 
         <!-- Section small products -->
+
         <section>
 
           <!-- Grid row -->
           <div class="row">
-                     
                       <!-- Grid column -->
                       <div class="col-12">
-                        
-                                <!-- Grid row -->
+                               <!-- Grid row -->
                                 <div class="row">
-                                    {% for item in items %}
-
+                                   {% for item in items %}
                                   <!-- Grid column -->
                                   <div class="col-lg-6 col-md-6 mb-4">
 
@@ -581,20 +579,19 @@
 
                                   </div>
                                   <!-- Grid column -->
-
-                                 {% endfor %}
+                                  {% endfor %}
                                 </div>
                                 <!-- Grid row -->
-                         
-                      </div>
-                      <!-- Grid column -->
+
+                        </div>
+                        <!-- Grid column -->
                       
 
-          </div>
-          <!-- Grid row -->
+              </div>
+              <!-- Grid row -->
 
-        </section>
-        <!-- Section small products -->
+            </section>
+            <!-- Section small products -->
 
         <!-- Section advertising 1 -->
         <section>

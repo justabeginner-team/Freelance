@@ -15,6 +15,7 @@ from .views import (
     update_item,
     retailer_dash,
     account_settings,
+    add_review,
 )
 
 app_name = 'core'
@@ -38,5 +39,6 @@ urlpatterns = [
     path('delete_item/<slug>', delete_item, name='delete_item'),
     path('update_item/<slug>', update_item, name='update_item'),
     path('retailer_dash/', retailer_dash, name='retailer_dash'),
+    path('reviews/', add_review, name='add_review'),
     
 ]
