@@ -92,6 +92,7 @@
                          <th>Owner</th>
                         <th>Reference Code</th>
                     </tr>
+                    
                     {% for order in orders %}
                     <tr>
                         <td>{{order.items}}</td>
@@ -100,6 +101,7 @@
                         <td>{{order.ref_code}}</td>
                     </tr>
                     {% endfor %}
+                   
                 </table>
             </div>
         </div>
