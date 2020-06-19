@@ -107,10 +107,14 @@ class Rating(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
     stars = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    review = models.TextField()
 
     class Meta:
         unique_together = (('user', 'item'))
         index_together = (('user', 'item'))
+
+    def __str__(self):
+        return f'{self.pk} {self.item}'
 
 
 class OrderItem(models.Model):

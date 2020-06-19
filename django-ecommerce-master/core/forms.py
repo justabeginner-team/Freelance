@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
-from .models import Item
+from .models import Item, Rating
 from allauth.account.adapter import DefaultAccountAdapter, get_adapter
 from django.contrib.auth import get_user_model
 from allauth.account.forms import SetPasswordField, PasswordField
@@ -73,3 +73,10 @@ class AddItemForm(ModelForm):
         model = Item
         fields = '__all__'  # [takes in a list of fields to use]
         exclude = ['slug']
+
+
+class AddReviewForm(ModelForm):
+    class Meta:
+        model = Rating
+        fields = ['review', 'stars']
+        

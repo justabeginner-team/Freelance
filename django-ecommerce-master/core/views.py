@@ -8,8 +8,8 @@ from django.views.generic import ListView, DetailView, View
 from django.shortcuts import redirect
 from django.utils import timezone
 
-from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddItemForm
-from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile
+from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddItemForm, AddReviewForm
+from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating
 from .filters import ItemFilter, CategoryFilter
 from .decorators import retailer_required
 
@@ -639,7 +639,15 @@ def account_settings(request):
 
 
 def add_review(request):
+    form = AddReviewForm()
+    if request.method == 'POST':
+        form = AddReviewForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('core:home')
+    
     context_dict = {
-
+        'form': form
+        
     }
     return render(request, 'ratings.html', context=context_dict)

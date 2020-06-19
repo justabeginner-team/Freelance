@@ -13,7 +13,9 @@
     <div class="card">
         <div class="card-body">
             <h3 class="text-center">Make a review</h3>
-            <form action="" method="get">
+
+            <form action="" method="post">
+                {% csrf_token %}
                 <label for="comment">Review</label>
                 <textarea name="comment" id="comment" class="form-control"></textarea>
 
@@ -25,6 +27,7 @@
                 <output  id="sliderVal" ></output>
                 <br>
                 <input type="submit" class="btn btn-danger" value="Add Review">
+
             </form>
         </div>
     </div>
