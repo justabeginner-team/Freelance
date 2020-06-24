@@ -378,13 +378,13 @@ class PaymentView(View):
 def HomeView(request):
     items = Item.objects.all()
     categories = Category.objects.all()
-    laptop_count = categories.filter(name='Laptops').count()
-    smartphone_count = categories.filter(name='Smartphones').count()
-    tablet_count = categories.filter(name='Tablets').count()
-    headphone_count = categories.filter(name='Headphones').count()
-    camera_count = categories.filter(name='Camera').count()
-    accesories_count = categories.filter(name='Accesories').count()
-    tv_count = categories.filter(name='Tv').count()
+    laptop_count = items.filter(category__name__contains='Laptops').count()
+    smartphone_count = items.filter(category__name__contains='Smartphones').count()
+    tablet_count = items.filter(category__name__contains='Tablets').count()
+    headphone_count = items.filter(category__name__contains='Headphones').count()
+    camera_count = items.filter(category__name__contains='Camera').count()
+    accesories_count = items.filter(category__name__contains='Accesories').count()
+    tv_count = items.filter(category__name__contains='Tv').count()
     lst = items.all().order_by('-created_on')[:3]
     rdm = items.all().order_by('?')[:3]
     myfilter = CategoryFilter(request.GET, queryset=items)
