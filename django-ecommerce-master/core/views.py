@@ -9,7 +9,7 @@ from django.shortcuts import redirect
 from django.utils import timezone
 
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddItemForm, AddReviewForm
-from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating
+from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Category
 from .filters import ItemFilter, CategoryFilter
 from .decorators import retailer_required
 
@@ -377,20 +377,22 @@ class PaymentView(View):
 #     template_name = "home.html"
 def HomeView(request):
     items = Item.objects.all()
-    laptop_count = items.filter(category='Laptops').count()
-    smartphone_count = items.filter(category='Smartphones').count()
-    tablet_count = items.filter(category='Tablets').count()
-    headphone_count = items.filter(category='Headphones').count()
-    camera_count = items.filter(category='Camera').count()
-    accesories_count = items.filter(category='Accesories').count()
-    tv_count = items.filter(category='Tv').count()
+    categories = Category.objects.all()
+    laptop_count = categories.filter(name='Laptops').count()
+    smartphone_count = categories.filter(name='Smartphones').count()
+    tablet_count = categories.filter(name='Tablets').count()
+    headphone_count = categories.filter(name='Headphones').count()
+    camera_count = categories.filter(name='Camera').count()
+    accesories_count = categories.filter(name='Accesories').count()
+    tv_count = categories.filter(name='Tv').count()
     lst = items.all().order_by('-created_on')[:3]
-    rdm= items.all().order_by('?')[:3]
+    rdm = items.all().order_by('?')[:3]
     myfilter = CategoryFilter(request.GET, queryset=items)
     items = myfilter.qs
 
     context_dict = {
         'items': items,
+        'categories': categories,
         'myfilter': myfilter,
         'laptop_count': laptop_count,
         'smartphone_count': smartphone_count,
@@ -404,6 +406,19 @@ def HomeView(request):
 
     }
     return render(request, 'home.html', context=context_dict)
+
+
+def category_view(request, category):
+    items = Item.objects.filter(
+        category__name__contains=category
+    ).order_by(
+        '-created_on'
+    )
+    context_dict = {
+        'category': category,
+        'items': items,
+    }
+    return render(request, 'category_view.html', context=context_dict)
 
 
 class OrderSummaryView(LoginRequiredMixin, View):

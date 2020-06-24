@@ -327,6 +327,7 @@
 </div>
 <!-- Mega menu -->
 {% endblock mega%}
+
 {% block content %}
 <!-- Main Container -->
 
@@ -388,7 +389,7 @@
 
                 <li class="list-group-item d-flex justify-content-between align-items-center">
 
-                  <a class="dark-grey-text font-small"><i class="fas fa-laptop dark-grey-text mr-2"
+                  <a href="" class="dark-grey-text font-small"><i class="fas fa-laptop dark-grey-text mr-2"
                       aria-hidden="true"></i>
 
                     Laptops</a>
@@ -514,6 +515,17 @@
 
                                             <!-- Category & Title -->
                                             <h5 class="card-title mb-1"><strong><a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}</a></strong>
+                                              <br>
+                                              <small>
+                                                  {{ item.created_on.date }} |&nbsp;
+                                                  Categories:&nbsp;
+                                                  {% for categor in item.category.all %}
+                                                  <a href="{% url 'core:category_view' categor.name %}">
+                                                      {{ categor.name }}
+                                                  </a>&nbsp;
+                                                  {% endfor %}
+                                              </small>
+                                              <br>
                                             </h5>
                                             {% if item.get_label_display == "best seller" %}
                                             <span class="badge badge-danger mb-2">{{ item.get_label_display }}</span>

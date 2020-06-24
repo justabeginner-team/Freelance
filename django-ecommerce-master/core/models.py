@@ -52,11 +52,21 @@ class UserProfile(models.Model):
         return self.user.username
 
 
+class Category(models.Model):
+    name = models.CharField(choices=CATEGORY_CHOICES, max_length=50)
+
+    class Meta:
+        verbose_name_plural = 'categories'
+
+    def __str__(self):
+        return self.name
+
+
 class Item(models.Model):
     title = models.CharField(max_length=100)
     price = models.FloatField()
     discount_price = models.FloatField(blank=True, null=True)
-    category = models.CharField(choices=CATEGORY_CHOICES, max_length=50)
+    category = models.ManyToManyField('Category', related_name='items')
     label = models.CharField(choices=LABEL_CHOICES, max_length=15)
     slug = models.SlugField(null=False, unique=True, default=randomslug())
     description = models.TextField()
