@@ -55,8 +55,8 @@
                         <td>{% for categor in item.category.all %}
                               |{{ categor.name }}|
                           {% endfor %}</td>
-                        <td><a style="color:blue;" href="{% url 'core:update_item' item.slug %}"><i class="fas fa-pen"></i></a></td>
-                        <td><a style="color: red;" href="{% url 'core:delete_item' item.slug %}"><i class="far fa-trash-alt float-right"></i></a></td>
+                        <td><a style="color:blue;" href="{% url 'seller:update_item' item.slug %}"><i class="fas fa-pen"></i></a></td>
+                        <td><a style="color: red;" href="{% url 'seller:delete_item' item.slug %}"><i class="far fa-trash-alt float-right"></i></a></td>
                     </tr>
                     {% endfor %}
                    </tbody>
@@ -75,7 +75,7 @@
          <div class="card card-body">
            <h5>Items</h5>
              <br>
-             <a class="btn btn-outline-info btn-md btn-block" href="{% url 'core:add_item' %}">Add Item</a>
+             <a class="btn btn-outline-info btn-md btn-block" href="{% url 'seller:add_item' %}">Add Item</a>
          </div>
        </div>
     </div>

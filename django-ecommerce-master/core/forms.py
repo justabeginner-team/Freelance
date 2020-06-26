@@ -68,13 +68,6 @@ class PaymentForm(forms.Form):
     use_default = forms.BooleanField(required=False)
 
 
-class AddItemForm(ModelForm):
-    class Meta:
-        model = Item
-        fields = '__all__'  # [takes in a list of fields to use]
-        exclude = ['slug']
-
-
 class AddReviewForm(ModelForm):
     class Meta:
         model = Rating

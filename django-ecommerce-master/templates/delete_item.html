@@ -8,9 +8,9 @@
         <div class="card card-body">
 
             <p>Are you sure you want to delete {{item}}</p>
-            <form method="post" action="{% url 'core:delete_item' item.slug %}">
+            <form method="post" action="{% url 'seller:delete_item' item.slug %}">
                 {% csrf_token %}
-                <a class="btn btn-warning" href="{% url 'core:retailer_dash' %}"> Cancel</a>
+                <a class="btn btn-warning" href="{% url 'seller:retailer_dash' %}"> Cancel</a>
                 <input class="btn btn-danger" type="submit" name="Confirm">
             </form>
 

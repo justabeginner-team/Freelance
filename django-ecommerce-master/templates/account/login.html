@@ -1,6 +1,6 @@
 {% extends "account/base.html" %}
 {% load i18n %}
-{% load account socialaccount %}
+{% load  account socialaccount %}
 {% load crispy_forms_tags %}
 
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
@@ -142,8 +142,30 @@
                       {% endif %}
                   
                       <form class="login" method="POST" action="{% url 'account_login' %}">
+                        
                         {% csrf_token %}
-                        {{ form|crispy }}
+                       <!--{{ form|crispy }}-->
+
+                        <div class="md-form">
+                          <i class="fas fa-user prefix white-text"></i>
+                          <input type="text" id="orangeForm-name" name="login"  class="form-control">
+                          <label for="orangeForm-name">Username</label>
+                        </div>
+                        <div class="md-form">
+                          <i class="fas fa-envelope prefix white-text"></i>
+                          <input type="password" id="orangeForm-email" name="password" class="form-control">
+                          <label for="orangeForm-email">Password</label>
+                        </div>
+                        
+                        
+                          <div class="custom-control custom-checkbox "  > 
+                            <input type="checkbox" name="remember" id="defaultUnchecked" class="custom-control-input">
+                            <label for="defaultUnchecked" class="custom-control-label">Remember Me</label>
+                          </div>
+                        
+
+
+
                         {% if redirect_field_value %}
                         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                         {% endif %}

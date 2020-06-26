@@ -8,10 +8,10 @@ from django.views.generic import ListView, DetailView, View
 from django.shortcuts import redirect
 from django.utils import timezone
 
-from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddItemForm, AddReviewForm
-from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Category
+from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm,AddReviewForm
+from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating
 from .filters import ItemFilter, CategoryFilter
-from .decorators import retailer_required
+
 
 import random
 import string
@@ -167,7 +167,7 @@ class CheckoutView(View):
                     order.save()
 
                     messages.success(self.request, "Your order was successful!")
-                    return redirect("/")
+                    return render(request,"invoice.html",)
 
                 elif use_default_billing:
                     print("Using the defualt billing address")
@@ -377,48 +377,33 @@ class PaymentView(View):
 #     template_name = "home.html"
 def HomeView(request):
     items = Item.objects.all()
-    categories = Category.objects.all()
-    laptop_count = items.filter(category__name__contains='Laptops').count()
-    smartphone_count = items.filter(category__name__contains='Smartphones').count()
-    tablet_count = items.filter(category__name__contains='Tablets').count()
-    headphone_count = items.filter(category__name__contains='Headphones').count()
-    camera_count = items.filter(category__name__contains='Camera').count()
-    accesories_count = items.filter(category__name__contains='Accesories').count()
-    tv_count = items.filter(category__name__contains='Tv').count()
+    #laptop_count = items.filter(category='Laptops').count()
+    #smartphone_count = items.filter(category='Smartphones')
+    #tablet_count = items.filter(category='Tablets').count()
+    #headphone_count = items.filter(category='Headphones').count()
+    #camera_count = items.filter(category='Camera').count()
+    #accesories_count = items.filter(category='Accesories').count()
+    #tv_count = items.filter(category='Tv').count()
     lst = items.all().order_by('-created_on')[:3]
-    rdm = items.all().order_by('?')[:3]
+    rdm= items.all().order_by('?')[:3]
     myfilter = CategoryFilter(request.GET, queryset=items)
     items = myfilter.qs
 
     context_dict = {
         'items': items,
-        'categories': categories,
         'myfilter': myfilter,
-        'laptop_count': laptop_count,
-        'smartphone_count': smartphone_count,
-        'tablet_count': tablet_count,
-        'headphone_count': headphone_count,
-        'camera_count': camera_count,
-        'accesories_count': accesories_count,
-        'tv_count': tv_count,
+        #'laptop_count': laptop_count,
+        #'smartphone_count': smartphone_count,
+        #'tablet_count': tablet_count,
+        #'headphone_count': headphone_count,
+        #'camera_count': camera_count,
+        #'accesories_count': accesories_count,
+        #'tv_count': tv_count,
         'latest': lst,
         'randomprods':rdm,
 
     }
     return render(request, 'home.html', context=context_dict)
-
-
-def category_view(request, category):
-    items = Item.objects.filter(
-        category__name__contains=category
-    ).order_by(
-        '-created_on'
-    )
-    context_dict = {
-        'category': category,
-        'items': items,
-    }
-    return render(request, 'category_view.html', context=context_dict)
 
 
 class OrderSummaryView(LoginRequiredMixin, View):
@@ -589,68 +574,6 @@ class RequestRefundView(View):
                 return redirect("core:request-refund")
 
 
-def add_item(request):
-    form = AddItemForm()
-    if request.method == 'POST':
-        form = AddItemForm(request.POST, request.FILES)
-        if form.is_valid():
-            print('form is valid')
-            form.save()
-            return redirect('core:retailer_dash')
-    context_dict = {
-        'form': form,
-    }
-    return render(request, 'add_item.html', context=context_dict)
-
-
-@retailer_required
-def delete_item(request, slug):
-    item = Item.objects.get(slug=slug)
-    if request.method == 'POST':
-        item.delete()
-        return redirect('core:retailer_dash')
-    context_dict = {
-        'item': item,
-    }
-    return render(request, 'delete_item.html', context=context_dict)
-
-
-@retailer_required
-def update_item(request, slug):
-    item = Item.objects.get(slug=slug)
-    form = AddItemForm(instance=item)  # prefills the form to be updated
-    if request.method == 'POST':
-        form = AddItemForm(request.POST, instance=item)  # this enables the form to be saved only in this instance
-        # not as a new form
-        if form.is_valid():
-            form.save()
-            return redirect('core:retailer_dash')
-    context_dict = {
-        'form': form,
-    }
-    return render(request, 'add_item.html', context=context_dict)
-
-
-def retailer_dash(request):
-    items = Item.objects.all()
-    orders = Order.objects.all()
-
-    myfilter = ItemFilter(request.GET, queryset=items)
-    items = myfilter.qs
-
-    context_dict = {
-        'items': items,
-        'myfilter': myfilter,
-        'orders': orders,
-    }
-    return render(request, 'retailer_dash.html', context=context_dict)
-
-
-def account_settings(request):
-    context_dict = {
-
-    }
-    return render(request, 'account_settings.html', context=context_dict)
 
 
 def add_review(request):
@@ -666,3 +589,10 @@ def add_review(request):
         
     }
     return render(request, 'ratings.html', context=context_dict)
+
+
+def account_settings(request):
+    context_dict = {
+
+    }
+    return render(request, 'account_settings.html', context=context_dict)
