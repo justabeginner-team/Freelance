@@ -8,10 +8,9 @@ from django.views.generic import ListView, DetailView, View
 from django.shortcuts import redirect
 from django.utils import timezone
 
-from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm,AddReviewForm
+from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddReviewForm
 from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating
 from .filters import ItemFilter, CategoryFilter
-
 
 import random
 import string
@@ -167,7 +166,7 @@ class CheckoutView(View):
                     order.save()
 
                     messages.success(self.request, "Your order was successful!")
-                    return render(request,"invoice.html",)
+                    return render(request, "invoice.html", )
 
                 elif use_default_billing:
                     print("Using the defualt billing address")
@@ -377,30 +376,30 @@ class PaymentView(View):
 #     template_name = "home.html"
 def HomeView(request):
     items = Item.objects.all()
-    #laptop_count = items.filter(category='Laptops').count()
-    #smartphone_count = items.filter(category='Smartphones')
-    #tablet_count = items.filter(category='Tablets').count()
-    #headphone_count = items.filter(category='Headphones').count()
-    #camera_count = items.filter(category='Camera').count()
-    #accesories_count = items.filter(category='Accesories').count()
-    #tv_count = items.filter(category='Tv').count()
+    laptop_count = items.filter(category__name__contains='Laptops').count()
+    smartphone_count = items.filter(category__name__contains='Smartphones').count()
+    tablet_count = items.filter(category__name__contains='Tablets').count()
+    headphone_count = items.filter(category__name__contains='Headphones').count()
+    camera_count = items.filter(category__name__contains='Camera').count()
+    accesories_count = items.filter(category__name__contains='Accesories').count()
+    tv_count = items.filter(category__name__contains='Tv').count()
     lst = items.all().order_by('-created_on')[:3]
-    rdm= items.all().order_by('?')[:3]
+    rdm = items.all().order_by('?')[:3]
     myfilter = CategoryFilter(request.GET, queryset=items)
     items = myfilter.qs
 
     context_dict = {
         'items': items,
         'myfilter': myfilter,
-        #'laptop_count': laptop_count,
-        #'smartphone_count': smartphone_count,
-        #'tablet_count': tablet_count,
-        #'headphone_count': headphone_count,
-        #'camera_count': camera_count,
-        #'accesories_count': accesories_count,
-        #'tv_count': tv_count,
+        'laptop_count': laptop_count,
+        'smartphone_count': smartphone_count,
+        'tablet_count': tablet_count,
+        'headphone_count': headphone_count,
+        'camera_count': camera_count,
+        'accesories_count': accesories_count,
+        'tv_count': tv_count,
         'latest': lst,
-        'randomprods':rdm,
+        'randomprods': rdm,
 
     }
     return render(request, 'home.html', context=context_dict)
@@ -574,8 +573,6 @@ class RequestRefundView(View):
                 return redirect("core:request-refund")
 
 
-
-
 def add_review(request):
     form = AddReviewForm()
     if request.method == 'POST':
@@ -583,10 +580,10 @@ def add_review(request):
         if form.is_valid():
             form.save()
             return redirect('core:home')
-    
+
     context_dict = {
         'form': form
-        
+
     }
     return render(request, 'ratings.html', context=context_dict)
 
@@ -596,3 +593,15 @@ def account_settings(request):
 
     }
     return render(request, 'account_settings.html', context=context_dict)
+
+
+def category_view(request, category):
+    items = Item.objects.filter(
+        category__name__contains=category
+    )
+    context_dict = {
+        'category': category,
+        'items': items,
+
+    }
+    return render(request, 'home.html', context=context_dict)

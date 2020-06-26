@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from .decorators import retailer_required
-from .forms import  AddItemForm
+from .forms import AddItemForm
 from core.models import Item, Order
 from core.filters import ItemFilter, CategoryFilter
+
 
 # Create your views here.
 
@@ -63,5 +64,3 @@ def retailer_dash(request):
         'orders': orders,
     }
     return render(request, 'retailer_dash.html', context=context_dict)
-
-

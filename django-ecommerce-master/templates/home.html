@@ -517,12 +517,13 @@
                                             <h5 class="card-title mb-1"><strong><a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}</a></strong>
                                               <br>
                                               <small>
-                                                  category:&nbsp;
-                                                  
+                                                  Category:&nbsp;&nbsp;
+
                                                   {% for categor in item.category.all %}
-                                                 
-                                                      {{ categor.name | lower}}
-                                                  </a>
+                                                   <a href="{% url 'core:category_view' categor.name %}">
+                                                        {{ categor.name | lower}}&nbsp;
+                                                   </a>&nbsp;
+
                                                   {% endfor %}
                                               </small>
                                               <br>

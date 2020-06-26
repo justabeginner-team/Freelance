@@ -10,7 +10,7 @@ from .views import (
     PaymentView,
     AddCouponView,
     RequestRefundView,
-    #category_view,
+    category_view,
     account_settings,
     add_review,
 )
@@ -32,7 +32,7 @@ urlpatterns = [
     path('request-refund/', RequestRefundView.as_view(), name='request-refund'),
     path('account_settings/', account_settings, name='account_settings'),
 
-    #path('category/<str:category>', category_view, name='category_view'),
+    path('category/<str:category>', category_view, name='category_view'),
     path('reviews/', add_review, name='add_review'),
     
 ]
