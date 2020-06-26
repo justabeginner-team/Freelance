@@ -2,6 +2,7 @@
 
 {% block content %}
 
+<br>
 <div class="container">
 
   <div class="row pt-4">
@@ -15,7 +16,7 @@
 
             <!-- Grid row -->
             <div class="row">
-              <h1>{{ category | title }}</h1>
+                <h1><strong>{{ category | title }}</strong></h1>
                         <!-- Grid column -->
                         <div class="col-12">
                                  <!-- Grid row -->
@@ -61,7 +62,6 @@
                                               </h5>
                                               <br>
                                               <small>
-                                                  {{ item.created_on.date }} |&nbsp;
                                                   Categories:&nbsp;
                                                   {% for categor in item.category.all %}
                                                   <a href="{% url 'core:category_view' categor.name %}">

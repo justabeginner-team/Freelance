@@ -517,7 +517,6 @@
                                             <h5 class="card-title mb-1"><strong><a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}</a></strong>
                                               <br>
                                               <small>
-                                                  {{ item.created_on.date }} |&nbsp;
                                                   Categories:&nbsp;
                                                   {% for categor in item.category.all %}
                                                   <a href="{% url 'core:category_view' categor.name %}">
