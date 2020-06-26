@@ -90,6 +90,7 @@
                 <table class="table table-sm">
                     <tr>
                         <th>Product</th>
+                        <th>Quantity</th>
                          <th>Date Ordered</th>
                          <th>Owner</th>
                         <th>Reference Code</th>
@@ -99,6 +100,9 @@
                     <tr>
                         <td>{% for order in order.items.all %}
                               {{ order.item.title }}
+                          {% endfor %}</td>
+                        <td>{% for order in order.items.all %}
+                              {{ order.quantity }}
                           {% endfor %}</td>
                         <td>{{order.ordered_date}}</td>
                         <td>{{order.user}}</td>
