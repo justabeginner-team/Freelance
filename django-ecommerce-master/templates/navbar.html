@@ -212,18 +212,16 @@
                       <span class="clearfix d-none d-sm-inline-block"> Cart </span>
                     </a>
                   </li>
+                  
                   {% comment %}
   
+                  
+  
                   <li class="nav-item ml-3">
-        
-                    <a class="nav-link waves-effect waves-light dark-grey-text font-weight-bold" href="#"><i
+        <a class="nav-link waves-effect waves-light dark-grey-text font-weight-bold" href="#"><i
                         class="fas fa-envelope blue-text"></i>
         
                       Contact <span class="sr-only">(current)</span></a>
-        
-                  </li>
-  
-                  <li class="nav-item ml-3">
         
                     <a class="nav-link waves-effect waves-light dark-grey-text font-weight-bold" href="#"><i
                         class="fas fa-cog blue-text"></i>
@@ -274,6 +272,7 @@
   
     <!-- Navbar -->
     <!-- Fixed button -->
+    {% if request.user.is_authenticated %}
     <div class="fixed-action-btn clearfix d-none d-xl-block" style="bottom: 45px; right: 24px;">
     
       <a class="btn-floating btn blue">
@@ -291,6 +290,7 @@
       </ul>
     
     </div>
+    {% endif %}
     <!-- Fixed button -->
 
   <!-- Navigation -->

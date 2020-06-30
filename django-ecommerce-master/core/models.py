@@ -43,6 +43,12 @@ ADDRESS_CHOICES = (
 )
 
 
+#class EcommerceUser(AbstractUser):
+    #is_retailer = models.BooleanField(default=False)
+
+    #created = models.DateTimeField(auto_now_add=True)
+    #modified = models.DateTimeField(auto_now=True)
+
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     stripe_customer_id = models.CharField(max_length=50, blank=True, null=True)

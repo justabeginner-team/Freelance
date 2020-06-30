@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Item, OrderItem, Order, Payment, Coupon, Refund, Address, UserProfile
+from .models import Item, OrderItem, Order, Payment, Coupon, Refund, Address, UserProfile,Category   #,EcommerceUser,
 
 
 def make_refund_accepted(modeladmin, request, queryset):
@@ -58,6 +58,12 @@ class AddressAdmin(admin.ModelAdmin):
 class ItemAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
+
+#class EcommerceUserAdmin(admin.ModelAdmin):
+  #  pass
+
+
+admin.site.register(Category)
 
 admin.site.register(Item, ItemAdmin)
 admin.site.register(OrderItem)

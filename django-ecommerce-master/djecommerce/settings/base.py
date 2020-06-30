@@ -24,6 +24,8 @@ INSTALLED_APPS = [
     'django_filters',
     'django_extensions',
 
+    'webpush',
+
     'core',
 ]
 
@@ -56,13 +58,19 @@ TEMPLATES = [
     },
 ]
 
-
+#AUTH_USER_MODEL = 'core.EcommerceUser'
 
 GRAPH_MODELS = {
     'all_applications': True,
     'group_models': True,
 }
 
+
+WEBPUSH_SETTINGS = {
+    "VAPID_PUBLIC_KEY": "BIHPaqGVkzIePYMUOCoK61unJ2Qi3VGZRQ8ObINU1HQw1tQHGEbMvtDEY-wZNzphS-JPV7QI3UibvW0Scjxlfoo",
+    "VAPID_PRIVATE_KEY": "p2Bz6G20GRqShK_36k91YNcEFF2aFSLpLhwjZmKfNk8",
+    "VAPID_ADMIN_EMAIL": "alexgathua3@gmail.com",
+}
 
 WSGI_APPLICATION = 'djecommerce.wsgi.application'
 

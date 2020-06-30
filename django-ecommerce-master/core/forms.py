@@ -8,6 +8,9 @@ from django.contrib.auth import get_user_model
 from allauth.account.forms import SetPasswordField, PasswordField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from django.conf import settings
+
+
 
 PAYMENT_CHOICES = (
     ('S', 'Stripe'),
@@ -15,7 +18,35 @@ PAYMENT_CHOICES = (
 )
 
 
+class SignupForm(forms.Form):
+    email = forms.EmailField(required=True, )
+    username = forms.CharField(max_length=80, required=True, )
+    password1 = SetPasswordField()
+    password2 = PasswordField()
+    first_name = forms.CharField(max_length=100, required=False, )
+    last_name = forms.CharField(max_length=100, required=False, )
+    class Meta:
+        model = get_user_model()  # use this function for swapping user model
+        default_field_order = ( 'first_name', 'last_name','email', 'username', 'password1', 'password2',
+                  )
+    
+        
+    def signup(self, request, user):
+        user.username = self.cleaned_data['username']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.is_retailer=True
+        user.save()
 
+        return user
+
+class MySignupForm(SignupForm):
+    
+    settings.ACCOUNT_SIGNUP_FORM_CLASS = 'core.forms.SignupForm'
+    pass
+    
+    
+    
 class CheckoutForm(forms.Form):
     shipping_address = forms.CharField(required=False)
     shipping_address2 = forms.CharField(required=False)

@@ -13,6 +13,7 @@ from .views import (
     category_view,
     account_settings,
     add_review,
+    CustomerSignupView,
 )
 
 app_name = 'core'
@@ -34,5 +35,6 @@ urlpatterns = [
 
     path('category/<str:category>', category_view, name='category_view'),
     path('reviews/', add_review, name='add_review'),
+    path('log/',CustomerSignupView.as_view()),
     
 ]

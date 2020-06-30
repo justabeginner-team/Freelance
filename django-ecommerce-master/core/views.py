@@ -8,9 +8,11 @@ from django.views.generic import ListView, DetailView, View
 from django.shortcuts import redirect
 from django.utils import timezone
 
-from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddReviewForm
-from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating
+from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddReviewForm,MySignupForm
+from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating#,EcommerceUser
 from .filters import ItemFilter, CategoryFilter
+from .mixins import ProfileSignupView
+
 
 import random
 import string
@@ -21,6 +23,16 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def create_ref_code():
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
+
+
+class CustomerSignupView(ProfileSignupView):
+   
+   form_class = MySignupForm
+   success_url = 'account_login'
+   settings.ACCOUNT_SIGNUP_FORM_CLASS = 'core.forms.SignupForm'
+
+
+
 
 
 def products(request):
@@ -387,6 +399,7 @@ def HomeView(request):
     rdm = items.all().order_by('?')[:3]
     myfilter = CategoryFilter(request.GET, queryset=items)
     items = myfilter.qs
+    
 
     context_dict = {
         'items': items,
