@@ -444,7 +444,6 @@ def add_review(request, slug):
             return redirect('core:home')
 
     return render(request, 'ratings.html', {
-        'review_form': review_form,
         'new_comment': new_comment,
         'reviews': reviews,
     })
@@ -604,7 +603,7 @@ def account_settings(request):
     context_dict = {
 
     }
-    return render(request, 'account_settings.html', context=context_dict)
+    return render(request, 'profile/basic-1.html', context=context_dict)
 
 
 def category_view(request, category):
