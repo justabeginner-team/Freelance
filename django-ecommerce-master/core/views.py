@@ -423,6 +423,33 @@ class ItemDetailView(DetailView):
     template_name = "product.html"
 
 
+def add_review(request, slug):
+    item = get_object_or_404(Item, slug=slug)
+    reviews = Rating.objects.filter(item__slug=slug, status=True)
+    review_form = AddReviewForm()
+    new_comment = None
+
+    if request.method == 'POST':
+        review_form = AddReviewForm(data=request.POST)
+        if review_form.is_valid():
+            # data.ip = request.META.get('REMOTE_ADDR')
+            new_comment = review_form.save(commit=False)
+            # Assign the current post to the comment
+            new_comment.item = item
+            new_comment.user = request.user
+            # Save the comment to the database
+            new_comment.save()
+            messages.success(request,
+                             ' Thank you, your review has been successfully submitted and is awaiting moderation.')
+            return redirect('core:home')
+
+    return render(request, 'ratings.html', {
+        'review_form': review_form,
+        'new_comment': new_comment,
+        'reviews': reviews,
+    })
+
+
 @login_required
 def add_to_cart(request, slug):
     item = get_object_or_404(Item, slug=slug)
@@ -571,21 +598,6 @@ class RequestRefundView(View):
             except ObjectDoesNotExist:
                 messages.info(self.request, "This order does not exist.")
                 return redirect("core:request-refund")
-
-
-def add_review(request):
-    form = AddReviewForm()
-    if request.method == 'POST':
-        form = AddReviewForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('core:home')
-
-    context_dict = {
-        'form': form
-
-    }
-    return render(request, 'ratings.html', context=context_dict)
 
 
 def account_settings(request):

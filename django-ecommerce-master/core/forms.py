@@ -15,7 +15,6 @@ PAYMENT_CHOICES = (
 )
 
 
-
 class CheckoutForm(forms.Form):
     shipping_address = forms.CharField(required=False)
     shipping_address2 = forms.CharField(required=False)
@@ -71,4 +70,4 @@ class PaymentForm(forms.Form):
 class AddReviewForm(ModelForm):
     class Meta:
         model = Rating
-        fields = ['review', 'stars']
+        fields = ['subject', 'review', 'rate']
