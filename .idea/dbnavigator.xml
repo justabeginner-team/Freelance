@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DataExportManager">
@@ -25,7 +25,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="9b7ef272-2af7-4323-a212-c11700024899">
-        <schema name="main" object-types="constraint, column, index, dataset trigger, table, view" />
+        <schema name="main" object-types="column, view, index, constraint, dataset trigger, table" />
       </connection>
     </loaded-nodes>
   </component>

@@ -27,7 +27,7 @@
                                 <label for="review">Make a review</label>
                                 <textarea class="form-control" name="review" rows="9"></textarea>
                             </div>
-                            
+
                             <div class="form-group">
                                
                                 <div class="rate">
@@ -44,9 +44,10 @@
                                 </div>
 
                             </div>
+                            <br>
 
                             {% if request.user.is_authenticated %}
-                            <button class="primary-btn">Submit</button>
+                            <button class="btn btn-info btn-sm">Submit</button>
                             {% else %}
                             Log in to make a review
                             {% endif %}
