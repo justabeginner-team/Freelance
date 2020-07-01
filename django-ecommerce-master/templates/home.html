@@ -525,6 +525,10 @@
                                                    </a>&nbsp;
 
                                                   {% endfor %}
+                                                <br>
+                                                  <a href="{% url 'core:add_review' item.slug %}">
+                                                    Rate this product&nbsp;&nbsp;
+                                                  </a>
                                               </small>
                                               <br>
                                             </h5>
@@ -534,23 +538,19 @@
                                             <span class="badge badge-info mb-2">{{item.get_label_display}}</span>
                                             {% else %}
                                             <span class="badge badge-success mb-2">{{item.get_label_display}}</span>
-
-                                            {% endif %}
+                                              {% endif %}
 
                                             <!-- Rating -->
                                             <ul class="rating">
 
-                                              <li><i class="fas fa-star blue-text"></i></li>
-
-                                              <li><i class="fas fa-star blue-text"></i></li>
-
-                                              <li><i class="fas fa-star blue-text"></i></li>
-
-                                              <li><i class="fas fa-star blue-text"></i></li>
-
-                                              <li><i class="fas fa-star blue-text"></i></li>
+                                              <li><i class="fas fa-star {% if item.avg_rating < 1 %}grey-text{% endif %}"></i></li>
+                                              <li><i class="fas fa-star {% if item.avg_rating < 2 %}grey-text{% endif %}"></i></li>
+                                              <li><i class="fas fa-star {% if item.avg_rating < 3 %}grey-text{% endif %}"></i></li>
+                                              <li><i class="fas fa-star {% if item.avg_rating < 4 %}grey-text{% endif %}"></i></li>
+                                              <li><i class="fas fa-star {% if item.avg_rating < 5 %}grey-text{% endif %}"></i></li>
 
                                             </ul>
+
 
                                             <!-- Card footer -->
                                             <div class="card-footer pb-0">
@@ -667,7 +667,7 @@
 
                       <p class="">Lorem ipsum dolor sit amet, consectetur. </p>
 
-                      <a class="btn btn-info btn-sm btn-rounded"></i> Read more</a>
+                      <a class="btn btn-info btn-sm btn-rounded"> Read more </a>
 
                     </div>
 
@@ -944,15 +944,11 @@
                   <!-- Rating -->
                   <ul class="rating inline-ul">
 
-                    <li><i class="fas fa-star blue-text"></i></li>
-
-                    <li><i class="fas fa-star blue-text"></i></li>
-
-                    <li><i class="fas fa-star blue-text"></i></li>
-
-                    <li><i class="fas fa-star blue-text"></i></li>
-
-                    <li><i class="fas fa-star grey-text"></i></li>
+                    <li><i class="fas fa-star {% if latestitem.avg_rating < 1 %}grey-text{% endif %}"></i></li>
+                    <li><i class="fas fa-star {% if latestitem.avg_rating < 2 %}grey-text{% endif %}"></i></li>
+                    <li><i class="fas fa-star {% if latestitem.avg_rating < 3 %}grey-text{% endif %}"></i></li>
+                    <li><i class="fas fa-star {% if latestitem.avg_rating < 4 %}grey-text{% endif %}"></i></li>
+                    <li><i class="fas fa-star {% if latestitem.avg_rating < 5 %}grey-text{% endif %}"></i></li>
 
                   </ul>
 
@@ -1134,15 +1130,11 @@
                   <!-- Rating -->
                   <ul class="rating inline-ul">
 
-                    <li><i class="fas fa-star blue-text"></i></li>
-
-                    <li><i class="fas fa-star blue-text"></i></li>
-
-                    <li><i class="fas fa-star blue-text"></i></li>
-
-                    <li><i class="fas fa-star blue-text"></i></li>
-
-                    <li><i class="fas fa-star grey-text"></i></li>
+                    <li><i class="fas fa-star {% if randomitem.avg_rating < 1 %}grey-text{% endif %}"></i></li>
+                    <li><i class="fas fa-star {% if randomitem.avg_rating < 2 %}grey-text{% endif %}"></i></li>
+                    <li><i class="fas fa-star {% if randomitem.avg_rating < 3 %}grey-text{% endif %}"></i></li>
+                    <li><i class="fas fa-star {% if randomitem.avg_rating < 4 %}grey-text{% endif %}"></i></li>
+                    <li><i class="fas fa-star {% if randomitem.avg_rating < 5 %}grey-text{% endif %}"></i></li>
 
                   </ul>
 

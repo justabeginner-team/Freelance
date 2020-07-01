@@ -1,6 +1,7 @@
 from django.db.models.signals import post_save
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
 from django.db.models import Sum
 from django.shortcuts import reverse
 from django_countries.fields import CountryField
@@ -96,18 +97,18 @@ class Item(models.Model):
         return reverse("core:remove-from-cart", kwargs={
             'slug': self.slug
         })
-    
+
     def no_of_ratings(self):
         ratings = Rating.objects.filter(item=self)
         return len(ratings)
-    
+
     def avg_rating(self):
-        sum = 0
+        sum_of_ratings = 0
         ratings = Rating.objects.filter(item=self)
         for rating in ratings:
-            sum += rating.stars
-        if len(ratings)>0:
-            return sum / len(ratings)
+            sum_of_ratings += rating.rate
+        if len(ratings) > 0:
+            return sum_of_ratings / len(ratings)
         else:
             return 0
 
@@ -119,18 +120,23 @@ class Item(models.Model):
 
 
 class Rating(models.Model):
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.CASCADE)
-    stars = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='review')
+    # name = models.CharField(max_length=80)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    # validators=[MinValueValidator(1), MaxValueValidator(5)]
+    rate = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], null=True)
+    subject = models.CharField(max_length=50, blank=True)
     review = models.TextField()
+    # ip = models.CharField(max_length=20, blank=True)
+    status = models.BooleanField(default=False)
+    created_on = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = (('user', 'item'))
-        index_together = (('user', 'item'))
+        ordering = ['created_on']
 
     def __str__(self):
-        return f'{self.pk} {self.item}'
+        return 'Comment on  {} by {}'.format(self.subject, self.user)
 
 
 class OrderItem(models.Model):

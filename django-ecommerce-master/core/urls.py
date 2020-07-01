@@ -34,7 +34,6 @@ urlpatterns = [
     path('account_settings/', account_settings, name='account_settings'),
 
     path('category/<str:category>', category_view, name='category_view'),
-    path('reviews/', add_review, name='add_review'),
-    path('log/',CustomerSignupView.as_view()),
+    path('reviews/<str:slug>', add_review, name='add_review'),
     
 ]

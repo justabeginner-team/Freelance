@@ -38,11 +38,9 @@ class SignupForm(forms.Form):
         user.is_retailer=True
         user.save()
 
-        return user
-
 class MySignupForm(SignupForm):
     
-    settings.ACCOUNT_SIGNUP_FORM_CLASS = 'core.forms.SignupForm'
+    
     pass
     
     
@@ -102,4 +100,4 @@ class PaymentForm(forms.Form):
 class AddReviewForm(ModelForm):
     class Meta:
         model = Rating
-        fields = ['review', 'stars']
+        fields = ['review']

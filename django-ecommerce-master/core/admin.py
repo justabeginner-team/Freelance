@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Item, OrderItem, Order, Payment, Coupon, Refund, Address, UserProfile,Category   #,EcommerceUser,
+from .models import Item, OrderItem, Order, Payment, Coupon, Refund, Address, UserProfile, Rating, Category
 
 
 def make_refund_accepted(modeladmin, request, queryset):
@@ -59,13 +59,18 @@ class ItemAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 
-#class EcommerceUserAdmin(admin.ModelAdmin):
-  #  pass
+class RatingAdmin(admin.ModelAdmin):
+    list_display = ['subject', 'review', 'status', 'created_on']
+    list_filter = ['status', 'created_on']
+    readonly_fields = ('subject', 'review', 'user', 'item', 'rate', 'created_on')
+    actions = ['approve_comments']
 
+    def approve_comments(self, request, queryset):
+        queryset.update(status=True)
 
-admin.site.register(Category)
 
 admin.site.register(Item, ItemAdmin)
+admin.site.register(Category)
 admin.site.register(OrderItem)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Payment)
@@ -73,3 +78,4 @@ admin.site.register(Coupon)
 admin.site.register(Refund)
 admin.site.register(Address, AddressAdmin)
 admin.site.register(UserProfile)
+admin.site.register(Rating, RatingAdmin)
