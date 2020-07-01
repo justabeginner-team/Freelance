@@ -18,7 +18,8 @@ import random, string
 # )
 
 def randomslug():
-    return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(16))
+   
+    return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
 
 
 CATEGORY_CHOICES = (
@@ -75,7 +76,7 @@ class Item(models.Model):
     discount_price = models.FloatField(blank=True, null=True)
     category = models.ManyToManyField('Category', related_name='items')
     label = models.CharField(choices=LABEL_CHOICES, max_length=15)
-    slug = models.SlugField(null=False, unique=True, default=randomslug())
+    slug = models.SlugField(null=False,unique=True)
     description = models.TextField()
     image = models.ImageField(upload_to='media_root')
     created_on = models.DateTimeField(auto_now_add=True)

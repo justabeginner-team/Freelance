@@ -56,7 +56,7 @@ class AddressAdmin(admin.ModelAdmin):
 
 
 class ItemAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('title',)}
+    prepopulated_fields = {'slug': ('description',)}
 
 
 class RatingAdmin(admin.ModelAdmin):

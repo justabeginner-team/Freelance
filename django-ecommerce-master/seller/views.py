@@ -23,7 +23,7 @@ def add_item(request):
         if form.is_valid():
             print('form is valid')
             form.save()
-            return redirect('core:retailer_dash')
+            return redirect('seller:retailer_dash')
     context_dict = {
         'form': form,
     }
