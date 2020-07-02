@@ -100,4 +100,4 @@ class PaymentForm(forms.Form):
 class AddReviewForm(ModelForm):
     class Meta:
         model = Rating
-        fields = ['review']
+        fields = ['subject', 'review', 'rate']

@@ -24,7 +24,7 @@ INSTALLED_APPS = [
     'django_filters',
     'django_extensions',
 
-    'webpush',
+    # 'webpush',
 
     'core',
 ]
@@ -52,25 +52,24 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                
+
             ],
         },
     },
 ]
 
-#AUTH_USER_MODEL = 'core.EcommerceUser'
+# AUTH_USER_MODEL = 'core.EcommerceUser'
 
 GRAPH_MODELS = {
     'all_applications': True,
     'group_models': True,
 }
 
-
-WEBPUSH_SETTINGS = {
-    "VAPID_PUBLIC_KEY": "BIHPaqGVkzIePYMUOCoK61unJ2Qi3VGZRQ8ObINU1HQw1tQHGEbMvtDEY-wZNzphS-JPV7QI3UibvW0Scjxlfoo",
-    "VAPID_PRIVATE_KEY": "p2Bz6G20GRqShK_36k91YNcEFF2aFSLpLhwjZmKfNk8",
-    "VAPID_ADMIN_EMAIL": "alexgathua3@gmail.com",
-}
+# WEBPUSH_SETTINGS = {
+#     "VAPID_PUBLIC_KEY": "BIHPaqGVkzIePYMUOCoK61unJ2Qi3VGZRQ8ObINU1HQw1tQHGEbMvtDEY-wZNzphS-JPV7QI3UibvW0Scjxlfoo",
+#     "VAPID_PRIVATE_KEY": "p2Bz6G20GRqShK_36k91YNcEFF2aFSLpLhwjZmKfNk8",
+#     "VAPID_ADMIN_EMAIL": "alexgathua3@gmail.com",
+# }
 
 WSGI_APPLICATION = 'djecommerce.wsgi.application'
 
@@ -94,25 +93,21 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'
 )
-EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION="mandatory"
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 LOGOUT_URL = 'account_logout'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
-ACCOUNT_SIGNUP_REDIRECT_URL='account_login'
-LOGIN_REDIRECT_URL ='retailer_dash'
+ACCOUNT_SIGNUP_REDIRECT_URL = 'account_login'
+LOGIN_REDIRECT_URL = 'retailer_dash'
 ACCOUNT_USERNAME_BLACKLIST = ['mike', 'alex']
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "[Alex Ian eccomerce web]"
 
 LOGIN_REDIRECT_URL = '/'
 
-
 SITE_ID = 1
 # CRISPY FORMS
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-
