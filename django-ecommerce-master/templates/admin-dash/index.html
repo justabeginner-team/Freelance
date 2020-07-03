@@ -315,8 +315,8 @@
                         <td>{% for categor in item.category.all %}
                               {{ categor.name }}
                           {% endfor %}</td>
-                        <td><a style="color:blue;" href="{% url 'seller:update_item' item.slug %}"><i class="fas fa-pen"></i></a></td>
-                        <td><a style="color: red;" href="{% url 'seller:delete_item' item.slug %}"><i class="far fa-trash-alt float-right"></i></a></td>
+                        <td><a style="color:blue;" href="{% url 'seller:update_item' item.slug %}"><i class="mdi mdi-border-color"></i></a></td>
+                        <td><a style="color: red;" href="{% url 'seller:delete_item' item.slug %}"><i class="mdi mdi-delete"></i></a></td>
                     </tr>
                     {% endfor %}
                    </tbody>
