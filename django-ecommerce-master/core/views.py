@@ -432,7 +432,7 @@ class ItemDetailView(DetailView):
 
 def add_review(request, slug):
     item = get_object_or_404(Item, slug=slug)
-    reviews = Rating.objects.filter(item__slug=slug, status=True)
+    reviews = Rating.objects.filter(item__slug=slug)
     review_form = AddReviewForm()
     new_comment = None
 

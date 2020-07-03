@@ -105,7 +105,9 @@ def retailer_dash(request):
 
 def admin(request):
     orders = Order.objects.all()
-    rev = Rating.objects.all().order_by('-created_on')
+    ust=request.user
+    Item.user=ust
+    rev = Rating.objects.filter(user=Item.user.id).order_by('-created_on')
     return render(request, 'admin-dash/index.html', {
         'orders': orders,'reviews':rev,
     })
