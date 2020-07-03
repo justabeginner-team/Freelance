@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from .decorators import retailer_required
 from .forms import AddItemForm
-from core.models import Item, Order
+from core.models import Item, Order,Rating
 from core.filters import ItemFilter, CategoryFilter
 from core.mixins import ProfileSignupView
 
 from django.http.response import JsonResponse, HttpResponse
-# from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import require_GET, require_POST
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
@@ -61,7 +61,7 @@ def update_item(request, slug):
     return render(request, 'add_item.html', context=context_dict)
 
 
-# @require_GET
+#@require_GET
 def retailer_dash(request):
     items = Item.objects.all()
     orders = Order.objects.all()
@@ -69,16 +69,16 @@ def retailer_dash(request):
     myfilter = ItemFilter(request.GET, queryset=items)
     items = myfilter.qs
 
-    webpush_settings = getattr(settings, 'WEBPUSH_SETTINGS', {})
-    vapid_key = webpush_settings.get('VAPID_PUBLIC_KEY')
-    user = request.user
+    #webpush_settings = getattr(settings, 'WEBPUSH_SETTINGS', {})
+    #vapid_key = webpush_settings.get('VAPID_PUBLIC_KEY')
+    #user = request.user
 
     context_dict = {
         'items': items,
         'myfilter': myfilter,
         'orders': orders,
-        'user': user,
-        'vapid_key': vapid_key
+     #   'user': user,
+     #   'vapid_key': vapid_key
     }
     return render(request, 'retailer_dash.html', context=context_dict)
 
@@ -105,6 +105,7 @@ def retailer_dash(request):
 
 def admin(request):
     orders = Order.objects.all()
+    rev = Rating.objects.all().order_by('-created_on')
     return render(request, 'admin-dash/index.html', {
-        'orders': orders,
+        'orders': orders,'reviews':rev,
     })

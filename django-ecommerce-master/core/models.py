@@ -94,10 +94,10 @@ class Item(models.Model):
             'slug': self.slug
         })
 
-    def get_remove_from_cart_url(self):
-        return reverse("core:remove-from-cart", kwargs={
-            'slug': self.slug
-        })
+   # def get_remove_from_cart_url(self):
+        #return reverse("core:remove-from-cart", kwargs={
+       #     'slug': self.slug
+       # })
 
     def no_of_ratings(self):
         ratings = Rating.objects.filter(item=self)
@@ -136,6 +136,26 @@ class Rating(models.Model):
     class Meta:
         ordering = ['created_on']
 
+    def review_posted_when(self):
+        now=timezone.now()
+        duration=now - self.created_on 
+        seconds=duration.total_seconds()
+        mins= int((seconds % 3600)// 60)
+        hors=int(seconds//3600)
+
+        if hors>24:
+           return f"{duration.days} days ago"
+        elif hors<24:
+            if seconds>60:
+                if hors>0:
+                  return f"{hors} hrs {mins} mins ago"  
+                else:
+                    return f"{mins} mins ago"     
+            elif seconds<60:
+                return "just now"
+            
+        
+        
     def __str__(self):
         return 'Comment on  {} by {}'.format(self.subject, self.user)
 
