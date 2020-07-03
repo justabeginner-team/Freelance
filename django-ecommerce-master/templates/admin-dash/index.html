@@ -255,8 +255,8 @@
                 <div class="grid">
                   <div class="grid-body">
                     <div class="split-header">
-                      <p class="card-title">Available Balance</p>
-                      <span class="btn action-btn btn-xs component-flat" data-toggle="tooltip" data-placement="left" title="Available balance since the last week">
+                      <p class="card-title">Available Items</p>
+                      <span class="btn action-btn btn-xs component-flat" data-toggle="tooltip" data-placement="left" title="Available items since the last week">
                         <i class="mdi mdi-information-outline text-muted mdi-2x"></i>
                       </span>
                     </div>
@@ -275,55 +275,59 @@
                       </div>
                     </div>
                     <div class="d-flex flex-row mt-4 mb-4">
-                      <button class="btn btn-outline-light text-gray component-flat w-50 mr-2" type="button">SEND</button>
-                      <button class="btn btn-primary w-50 ml-2" type="button">RECEIVE</button>
+                      <a href="{% url 'seller:add_item' %}" ><button class="btn btn-outline-info btn-md btn-block" type="button">Add Item</button></a>
                     </div>
                     <div class="d-flex mt-5 mb-3">
-                      <small class="mb-0 text-primary">Recent Transaction (3)</small>
+                      <small class="mb-0 text-primary">Recenty Added Items </small>
                     </div>
+                    {% for item in recents %}
                     <div class="d-flex justify-content-between border-bottom py-2">
-                      <p class="text-black">Received Bitcoin</p>
-                      <p class="text-gray">+0.00005462 BTC</p>
+                      <p class="text-black">{{item.title}}</p>
+                      <p class="text-gray">${{item.price}}</p>
                     </div>
-                    <div class="d-flex justify-content-between border-bottom py-2">
-                      <p class="text-black">Sent Bitcoin</p>
-                      <p class="text-gray">-0.00001446 BTC</p>
-                    </div>
-                    <div class="d-flex justify-content-between pt-2">
-                      <p class="text-black">Sent Bitcoin</p>
-                      <p class="text-gray">-0.00003573 BTC</p>
-                    </div>
+                    {% endfor %}
                   </div>
                 </div>
               </div>
               <div class="col-lg-7 col-md-12 equel-grid">
-                <div class="grid widget-revenue-card">
-                  <div class="grid-body d-flex flex-column h-100">
-                    <div class="split-header">
-                      <p class="card-title">Server Load</p>
-                      <div class="content-wrapper v-centered">
-                        <small class="text-muted">2h ago</small>
-                        <span class="btn action-btn btn-refresh btn-xs component-flat">
-                          <i class="mdi mdi-autorenew text-muted mdi-2x"></i>
-                        </span>
-                      </div>
-                    </div>
-                    <div class="mt-auto">
-                      <canvas id="cpu-performance" height="80"></canvas>
-                      <h3 class="font-weight-medium mt-4">69.05%</h3>
-                      <p class="text-gray">Storage is getting full</p>
-                      <div class="w-50">
-                        <div class="d-flex justify-content-between text-muted mt-3">
-                          <small>Usage</small> <small>35.62 GB / 2TB</small>
-                        </div>
-                        <div class="progress progress-slim mt-2">
-                          <div class="progress-bar bg-primary" role="progressbar" style="width: 68%" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                <div class="grid">
+                  <div class="grid-body py-3">
+                    <p class="card-title ml-n1">Item History</p>
                   </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-sm">
+                    <thead>
+                         <tr>
+                        <th>Item</th>
+                         <th>Price</th>
+                         <th>Discount Price</th>
+                        <th>Category</th>
+                        <th>Update</th>
+                        <th>Remove</th>
+                    </tr>
+                    </thead>
+                   <tbody>
+                       {% for item in items %}
+                    <tr>
+                        <td>{{item.title}}</td>
+                        <td>{{item.price}}</td>
+                        <td>{{item.discount_price}}</td>
+                        <td>{% for categor in item.category.all %}
+                              {{ categor.name }}
+                          {% endfor %}</td>
+                        <td><a style="color:blue;" href="{% url 'seller:update_item' item.slug %}"><i class="mdi mdi-border-color"></i></a></td>
+                        <td><a style="color: red;" href="{% url 'seller:delete_item' item.slug %}"><i class="mdi mdi-delete"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                   </tbody>
+
+                </table>
                 </div>
+                  <a class="border-top px-3 py-2 d-block text-gray" href="#">
+                    <small class="font-weight-medium"><i class="mdi mdi-chevron-down mr-2"></i>View All Items</small>
+                  </a>
+                </div>
+
               </div>
 
               <div class="col-md-8 equel-grid">
@@ -350,7 +354,7 @@
                             <img class="profile-img img-sm" src="{% static 'assets/images/profile/male/image_4.png' %}" alt="profile image">
                           </td>
                           <td class="pl-md-0">
-                            <small class="text-black font-weight-medium d-block">{{order.user}} {{order.user.last_name}}</small>
+                            <small class="text-black font-weight-medium d-block">{{order.user.first_name}} {{order.user.last_name}}</small>
                             <span class="text-gray">
                               <span class="status-indicator rounded-indicator small bg-primary"></span>Account Deactivated </span>
                           </td>
