@@ -18,7 +18,6 @@ import random, string
 # )
 
 def randomslug():
-   
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
 
 
@@ -45,11 +44,11 @@ ADDRESS_CHOICES = (
 )
 
 
-#class EcommerceUser(AbstractUser):
-    #is_retailer = models.BooleanField(default=False)
+# class EcommerceUser(AbstractUser):
+# is_retailer = models.BooleanField(default=False)
 
-    #created = models.DateTimeField(auto_now_add=True)
-    #modified = models.DateTimeField(auto_now=True)
+# created = models.DateTimeField(auto_now_add=True)
+# modified = models.DateTimeField(auto_now=True)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -76,7 +75,7 @@ class Item(models.Model):
     discount_price = models.FloatField(blank=True, null=True)
     category = models.ManyToManyField('Category', related_name='items')
     label = models.CharField(choices=LABEL_CHOICES, max_length=15)
-    slug = models.SlugField(null=False,unique=True)
+    slug = models.SlugField(null=False, unique=True)
     description = models.TextField()
     image = models.ImageField(upload_to='media_root')
     created_on = models.DateTimeField(auto_now_add=True)
@@ -94,10 +93,10 @@ class Item(models.Model):
             'slug': self.slug
         })
 
-   # def get_remove_from_cart_url(self):
-        #return reverse("core:remove-from-cart", kwargs={
-       #     'slug': self.slug
-       # })
+    # def get_remove_from_cart_url(self):
+    # return reverse("core:remove-from-cart", kwargs={
+    #     'slug': self.slug
+    # })
 
     def no_of_ratings(self):
         ratings = Rating.objects.filter(item=self)
@@ -119,7 +118,6 @@ class Item(models.Model):
         return super().save(*args, **kwargs)
 
 
-
 class Rating(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='review')
     # name = models.CharField(max_length=80)
@@ -137,25 +135,23 @@ class Rating(models.Model):
         ordering = ['created_on']
 
     def review_posted_when(self):
-        now=timezone.now()
-        duration=now - self.created_on 
-        seconds=duration.total_seconds()
-        mins= int((seconds % 3600)// 60)
-        hors=int(seconds//3600)
+        now = timezone.now()
+        duration = now - self.created_on
+        seconds = duration.total_seconds()
+        mins = int((seconds % 3600) // 60)
+        hors = int(seconds // 3600)
 
-        if hors>24:
-           return f"{duration.days} days ago"
-        elif hors<24:
-            if seconds>60:
-                if hors>0:
-                  return f"{hors} hrs {mins} mins ago"  
+        if hors > 24:
+            return f"{duration.days} days ago"
+        elif hors < 24:
+            if seconds > 60:
+                if hors > 0:
+                    return f"{hors} hrs {mins} mins ago"
                 else:
-                    return f"{mins} mins ago"     
-            elif seconds<60:
+                    return f"{mins} mins ago"
+            elif seconds < 60:
                 return "just now"
-            
-        
-        
+
     def __str__(self):
         return 'Comment on  {} by {}'.format(self.subject, self.user)
 

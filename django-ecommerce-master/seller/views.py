@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .decorators import retailer_required
 from .forms import AddItemForm
-from core.models import Item, Order,Rating
+from core.models import Item, Order, Rating
 from core.filters import ItemFilter, CategoryFilter
 from core.mixins import ProfileSignupView
 
@@ -61,7 +61,7 @@ def update_item(request, slug):
     return render(request, 'add_item.html', context=context_dict)
 
 
-#@require_GET
+# @require_GET
 def retailer_dash(request):
     items = Item.objects.all()
     orders = Order.objects.all()
@@ -69,16 +69,16 @@ def retailer_dash(request):
     myfilter = ItemFilter(request.GET, queryset=items)
     items = myfilter.qs
 
-    #webpush_settings = getattr(settings, 'WEBPUSH_SETTINGS', {})
-    #vapid_key = webpush_settings.get('VAPID_PUBLIC_KEY')
-    #user = request.user
+    # webpush_settings = getattr(settings, 'WEBPUSH_SETTINGS', {})
+    # vapid_key = webpush_settings.get('VAPID_PUBLIC_KEY')
+    # user = request.user
 
     context_dict = {
         'items': items,
         'myfilter': myfilter,
         'orders': orders,
-     #   'user': user,
-     #   'vapid_key': vapid_key
+        #   'user': user,
+        #   'vapid_key': vapid_key
     }
     return render(request, 'retailer_dash.html', context=context_dict)
 
@@ -104,8 +104,13 @@ def retailer_dash(request):
 
 
 def admin(request):
+    items = Item.objects.all()
+    recents = items.all().order_by('-created_on')[:3]
     orders = Order.objects.all()
     rev = Rating.objects.all().order_by('-created_on')
     return render(request, 'admin-dash/index.html', {
-        'orders': orders,'reviews':rev,
+        'orders': orders,
+        'reviews': rev,
+        'items': items,
+        'recents': recents,
     })
