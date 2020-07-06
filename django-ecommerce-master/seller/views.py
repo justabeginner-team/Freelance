@@ -25,7 +25,7 @@ def add_item(request):
         if form.is_valid():
             print('form is valid')
             form.save()
-            return redirect('seller:retailer_dash')
+            return redirect('seller:admin_view')
     context_dict = {
         'form': form,
     }

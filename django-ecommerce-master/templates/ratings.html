@@ -20,17 +20,18 @@
 
                             <div class="form-group">
                                 <label for="subject">Subject</label>
-                                <input class="form-control" name="subject" type="text" required>
+                                <input class="form-control" id="subject" name="subject" type="text" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="review">Make a review</label>
-                                <textarea class="form-control" name="review" rows="9" required></textarea>
+                                <textarea class="form-control" id="review" name="review" rows="9" required></textarea>
                             </div>
 
                             <div class="form-group">
-                               
-                                <div class="rate">
+                                <label for="rate">Rate the product: </label>
+                                <br>
+                                <div id="rate" class="rate">
                                     <input type="radio" id="star5" name="rate" value="5" />
                                         <label for="star5" title="5 stars">5 stars</label>
                                     <input type="radio" id="star4" name="rate" value="4" />
