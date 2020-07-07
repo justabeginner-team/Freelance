@@ -1,6 +1,12 @@
-{% block content %}
+{% load inline_static_tags %}
+<html>
+    <head>
+        
+       <link rel="stylesheet" href="{% inline_staticfile 'css/mdb.min.css' %}">
 
-<body class="fixed-sn white-skin">
+    </head>
+   
+    <body class="fixed-sn white-skin">
 
     <!-- Main layout -->
     <main>
@@ -137,7 +143,9 @@
 
     </main>
     <!-- Main layout -->
-
+{% include 'scripts.html' %}
    
 </body>
-{% endblock content %}
+</html>
+
+

@@ -1,3 +1,6 @@
+from requests.auth import HTTPBasicAuth
+import requests
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .decorators import retailer_required
 from .forms import AddItemForm
@@ -13,6 +16,8 @@ from django.views.decorators.csrf import csrf_exempt
 # from webpush import send_user_notification
 import json
 from django.conf import settings
+
+
 
 
 # Create your views here.
@@ -116,3 +121,19 @@ def admin(request):
         'items': items,
         'recents': recents,
     })
+
+
+# your example view
+
+
+def getAccessToken(request):
+    consumer_key = 'J7t2QJ8reSz9Kqx5kBzfpCAhZ6ibbc4g'
+    consumer_secret = 'K9zQLBGiyNJxms2i'
+    api_URL = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials'
+    r = requests.get(api_URL, auth=HTTPBasicAuth(consumer_key, consumer_secret))
+    mpesa_access_token = json.loads(r.text)
+    validated_mpesa_access_token = mpesa_access_token['access_token']
+    return HttpResponse(validated_mpesa_access_token)
+
+
+

@@ -14,6 +14,8 @@ from .views import (
     account_settings,
     add_review,
     CustomerSignupView,
+    index,
+    stk_push_callback,
 )
 
 app_name = 'core'
@@ -35,5 +37,7 @@ urlpatterns = [
 
     path('category/<str:category>', category_view, name='category_view'),
     path('reviews/<str:slug>', add_review, name='add_review'),
-    
+    path('mpesa/',index, name='index'),
+    path('daraja/stk-push',stk_push_callback,
+         name='mpesa_stk_push_callback'),
 ]
