@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from .decorators import retailer_required
 from .forms import AddItemForm
@@ -25,6 +26,8 @@ def add_item(request):
         if form.is_valid():
             print('form is valid')
             form.save()
+            messages.success(request,
+                             ' Your product has been added successfully.')
             return redirect('seller:admin_view')
     context_dict = {
         'form': form,
