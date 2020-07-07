@@ -4,8 +4,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView, View
-from django.shortcuts import redirect
+from django.views.generic import ListView, DetailView, View, FormView
+from django.shortcuts import redirect, reverse
 from django.utils import timezone
 
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddReviewForm, MySignupForm
@@ -425,35 +425,43 @@ class OrderSummaryView(LoginRequiredMixin, View):
             return redirect("/")
 
 
-class ItemDetailView(DetailView):
+class ItemDisplayView(DetailView):
     model = Item
     template_name = "product.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(ItemDisplayView, self).get_context_data(**kwargs)
+        context['reviews'] = Rating.objects.filter(item=self.get_object())
+        # context['form'] = AddReviewForm
+        return context
 
-def add_review(request, slug):
-    item = get_object_or_404(Item, slug=slug)
-    reviews = Rating.objects.filter(item__slug=slug, status=True)
-    review_form = AddReviewForm()
-    new_comment = None
 
-    if request.method == 'POST':
-        review_form = AddReviewForm(data=request.POST)
-        if review_form.is_valid():
-            # data.ip = request.META.get('REMOTE_ADDR')
-            new_comment = review_form.save(commit=False)
-            # Assign the current post to the comment
-            new_comment.item = item
-            new_comment.user = request.user
-            # Save the comment to the database
-            new_comment.save()
-            messages.success(request,
+class ItemReview(FormView):
+    form_class = AddReviewForm
+    template_name = 'ratings.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        item = Item.objects.get(slug=self.kwargs['slug'])
+        form.instance.item = item
+        form.save()
+        messages.success(self.request,
                              ' Thank you, your review has been successfully submitted and is awaiting moderation.')
-            return redirect('core:home')
+        return super(ItemReview, self).form_valid(form)
 
-    return render(request, 'ratings.html', {
-        'new_comment': new_comment,
-        'reviews': reviews,
-    })
+    def get_success_url(self):
+        return reverse('core:product', kwargs={'slug': self.kwargs['slug']})
+
+
+class ItemDetailView(View):
+    def get(self, request, *args, **kwargs):
+        view=ItemDisplayView.as_view()
+        return view(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        view = ItemReview.as_view()
+        return view(request, *args, **kwargs)
+
 
 
 @login_required

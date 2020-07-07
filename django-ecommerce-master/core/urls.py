@@ -12,7 +12,6 @@ from .views import (
     RequestRefundView,
     category_view,
     account_settings,
-    add_review,
     CustomerSignupView,
 )
 
@@ -34,6 +33,5 @@ urlpatterns = [
     path('account_settings/', account_settings, name='account_settings'),
 
     path('category/<str:category>', category_view, name='category_view'),
-    path('reviews/<str:slug>', add_review, name='add_review'),
-    
+        
 ]
