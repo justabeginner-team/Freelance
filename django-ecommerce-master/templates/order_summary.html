@@ -71,7 +71,7 @@
                 </tr>
                 <tr>
                     <td colspan="5">
-                    <a class='btn btn-primary btn-rounded float-right' href='/'>
+                    <a class='btn btn-primary btn-rounded float-right' href="{% url 'core:home' %}">
                         <i class="fas fa-angle-left left"></i>Continue shopping</a>
                     </td>
                 </tr>
@@ -104,13 +104,14 @@
 
                   <tr>
                     <td colspan="5">
-                        <a href='/checkout/'>
-                          <button type="button" class="btn btn-warning btn-rounded float-right ml-2">PROCEED TO CHECKOUT
+                        <a href="{% url 'core:checkout' %}">
+                          <button type="button" class="btn btn-warning btn-rounded float-right ml-2">
+                              PROCEED TO CHECKOUT
                               <i class="fas fa-angle-right right"></i>
                           </button>
                         </a>
 
-                      <a href='/'>
+                      <a href="{% url 'core:home' %}">
                           <button type="button" class="btn btn-primary btn-rounded float-right ">
                               <i class="fas fa-angle-left left"></i>
                               CONTINUE SHOPPING

@@ -15,7 +15,6 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.conf import settings
 
-
 # Create your views here.
 
 
@@ -25,6 +24,9 @@ def add_item(request):
         form = AddItemForm(request.POST, request.FILES)
         if form.is_valid():
             print('form is valid')
+            # user = request.user
+            # obj = Item(user=user)
+            # obj.save()
             form.save()
             messages.success(request,
                              ' Your product has been added successfully.')
@@ -35,19 +37,19 @@ def add_item(request):
     return render(request, 'add_item.html', context=context_dict)
 
 
-@retailer_required
 def delete_item(request, slug):
     item = Item.objects.get(slug=slug)
     if request.method == 'POST':
         item.delete()
-        return redirect('seller:retailer_dash')
+        messages.success(request,
+                         ' Your product has been deleted successfully.')
+        return redirect('seller:admin_view')
     context_dict = {
         'item': item,
     }
     return render(request, 'delete_item.html', context=context_dict)
 
 
-@retailer_required
 def update_item(request, slug):
     item = Item.objects.get(slug=slug)
     form = AddItemForm(instance=item)  # prefills the form to be updated
@@ -57,7 +59,9 @@ def update_item(request, slug):
         # not as a new form
         if form.is_valid():
             form.save()
-            return redirect('seller:retailer_dash')
+            messages.success(request,
+                             ' Your product has been updated successfully.')
+            return redirect('seller:admin_view')
     context_dict = {
         'form': form,
     }

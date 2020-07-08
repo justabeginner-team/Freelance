@@ -69,12 +69,20 @@ class Category(models.Model):
         return self.name
 
 
+class Label(models.Model):
+    name = models.CharField(choices=LABEL_CHOICES, max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
 class Item(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=100)
     price = models.FloatField()
     discount_price = models.FloatField(blank=True, null=True)
     category = models.ManyToManyField('Category', related_name='items')
-    label = models.CharField(choices=LABEL_CHOICES, max_length=15)
+    label = models.ManyToManyField('Label', related_name='items')
     slug = models.SlugField(null=False, unique=True)
     description = models.TextField()
     image = models.ImageField(upload_to='media_root')
