@@ -77,13 +77,18 @@
 
             </h2>
 
-            {% if object.get_label_display == "best seller" %}
-              <span class="badge badge-danger mb-2">{{ object.get_label_display }}</span>
-            {% elif object.get_label_display == "new" %}
-              <span class="badge badge-info mb-2">{{object.get_label_display}}</span>
-            {% else %}
-              <span class="badge badge-success mb-2">{{object.get_label_display}}</span>
-            {% endif %}
+              {% for labe in object.label.all %}
+                {% if labe.name == "best seller" %}
+                  <span class="badge badge-danger mb-2">{{ labe.name }}</span>
+                {% endif %}
+                {% if labe.name == "new" %}
+                  <span class="badge badge-info mb-2">{{labe.name}}</span>
+                {% endif %}
+                {% if labe.name == "best rated" %}
+                  <span class="badge badge-success mb-2">{{labe.name}}</span>
+                {% endif %}
+              {% endfor %}
+
 
             <h3 class="h3-responsive text-center text-md-left mb-5 ml-xl-0 ml-4">
 

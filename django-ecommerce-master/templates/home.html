@@ -529,12 +529,14 @@
                                               <br>
                                             </h5>
                                             {% for labe in item.label.all %}
-                                                {% if labe.get_label_display == "best seller" %}
-                                                  <span class="badge badge-danger mb-2">{{ labe.get_label_display }}</span>
-                                                {% elif labe.get_label_display == "new" %}
-                                                  <span class="badge badge-info mb-2">{{labe.get_label_display}}</span>
-                                                {% else %}
-                                                  <span class="badge badge-success mb-2">{{labe.get_label_display}}</span>
+                                                {% if labe.name == "best seller" %}
+                                                  <span class="badge badge-danger mb-2">{{ labe.name }}</span>
+                                                {% endif %}
+                                                {% if labe.name == "new" %}
+                                                  <span class="badge badge-info mb-2">{{labe.name}}</span>
+                                                {% endif %}
+                                                {% if labe.name == "best rated" %}
+                                                  <span class="badge badge-success mb-2">{{labe.name}}</span>
                                                 {% endif %}
                                             {% endfor %}
 
