@@ -10,7 +10,7 @@
             <img class="profile-img img-lg rounded-circle" src="{% static 'assets/images/profile/male/image_1.png' %}" alt="profile image">
           </div>
           <div class="info-wrapper">
-            <p class="user-name">Allen Clerk</p>
+            <p class="user-name">{{request.user.first_name}} {{request.user.last_name}}</p>
             <h6 class="display-income">$3,400,00</h6>
           </div>
         </div>
@@ -91,7 +91,7 @@
             <div class="row">
               <div class="col-12 py-5">
                 <h4>Dashboard</h4>
-                <p class="text-gray">Welcome aboard, Allen Clerk</p>
+                <p class="text-gray">Welcome aboard, {{request.user.first_name}} {{request.user.last_name}}</p>
               </div>
             </div>
             <div class="row">
@@ -407,9 +407,13 @@
                         <div class="activity-log">
                           <p class="log-name">
                           <img class="img-sm" src="{% static 'assets/images/profile/male/image_4.png' %}" alt="Profile Image"
-                            data-toggle="tooltip" title={{re.user}}> {{re.user}}</p>
+                            data-toggle="tooltip" title={{re.user}}> {{re.user}}
+                          </p>
                            
-                          <div class="log-details">{{ re.review | linebreaks }}
+                          <div class="log-details">
+                            <b>{{ re.subject }} --> {{re.item}}</b>
+                            <br>
+                            {{ re.review | slice:":99"  }}
                           </div>
                           <small class="log-time">{{re.review_posted_when}}</small>
                         </div>

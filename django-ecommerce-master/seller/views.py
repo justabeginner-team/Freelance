@@ -1,5 +1,6 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
+from django.views.generic import FormView, View
 from .decorators import retailer_required
 from .forms import AddItemForm
 from core.models import Item, Order, Rating
@@ -17,24 +18,40 @@ from django.conf import settings
 
 # Create your views here.
 
+#
+# def add_item(request):
+#     form = AddItemForm()
+#     if request.method == 'POST':
+#         form = AddItemForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             print('form is valid')
+#             # user = request.user
+#             # obj = Item(user=user)
+#             # obj.save()
+#             form.save()
+#             messages.success(request,
+#                              ' Your product has been added successfully.')
+#             return redirect('seller:admin_view')
+#     context_dict = {
+#         'form': form,
+#     }
+#     return render(request, 'add_item.html', context=context_dict)
 
-def add_item(request):
-    form = AddItemForm()
-    if request.method == 'POST':
-        form = AddItemForm(request.POST, request.FILES)
-        if form.is_valid():
-            print('form is valid')
-            # user = request.user
-            # obj = Item(user=user)
-            # obj.save()
-            form.save()
-            messages.success(request,
-                             ' Your product has been added successfully.')
-            return redirect('seller:admin_view')
-    context_dict = {
-        'form': form,
-    }
-    return render(request, 'add_item.html', context=context_dict)
+
+class AddItemFormView(FormView):
+    form_class = AddItemForm
+    template_name = 'add_item.html'
+    # success_url = 'seller:admin_view'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.save()
+        messages.success(self.request,
+                         'Your Item has been added successfully')
+        return super(AddItemFormView, self).form_valid(form)
+
+    def get_success_url(self):  # overrides the actual method
+        return reverse('seller:admin_view')
 
 
 def delete_item(request, slug):
@@ -111,13 +128,13 @@ def retailer_dash(request):
 
 
 def admin(request):
-    items = Item.objects.all()
-    recents = items.all().order_by('-created_on')[:3]
+    items = Item.objects.filter(user=request.user)
+    recents = items.order_by('-created_on')[:3]
     orders = Order.objects.all()
-    rev = Rating.objects.all().order_by('-created_on')
+    rev = Rating.objects.filter(item__user=request.user).order_by('-created_on')
     return render(request, 'admin-dash/index.html', {
-        'orders': orders,
-        'reviews': rev,
         'items': items,
         'recents': recents,
+        'orders': orders,
+        'reviews': rev,
     })
