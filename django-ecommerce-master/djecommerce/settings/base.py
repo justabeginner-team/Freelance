@@ -24,9 +24,6 @@ INSTALLED_APPS = [
     'django_filters',
     'django_extensions',
 
-    'django_daraja',
-    'notifications',
-    'inline_static',
 
     # 'webpush',
 

@@ -14,7 +14,7 @@ from .views import (
     account_settings,
     CustomerSignupView,
     index,
-    stk_push_callback,
+    
     getitems,
 )
 
@@ -36,5 +36,5 @@ urlpatterns = [
     path('account_settings/', account_settings, name='account_settings'),
 
     path('category/<str:category>', category_view, name='category_view'),
-    path('ajaxitemsload',getitems,name='ajaxitems'),
+    #path('ajaxitemsload',getitems,name='ajaxitems'),
 ]

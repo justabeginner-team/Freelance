@@ -1,5 +1,5 @@
 from django.template.loader import render_to_string
-from django_daraja.mpesa.core import MpesaClient
+
 from django.http import HttpResponse,JsonResponse
 from django.shortcuts import render
 from django.conf import settings
@@ -19,7 +19,7 @@ from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddReviewF
 from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating  # ,EcommerceUser
 from .filters import ItemFilter, CategoryFilter
 from .mixins import ProfileSignupView
-
+from seller.mpesa_credentials import lipa_na_mpesa_online
 
 import random
 import string
@@ -137,7 +137,7 @@ class CheckoutView(View):
                             phone_number=phone_number
                         )
                         shipping_address.save()
-
+                        #lipa_na_mpesa_online(request,amount=1,phonenumber=phone_number)
                         order.shipping_address = shipping_address
                         order.save()
 
@@ -274,9 +274,9 @@ class PaymentView(View):
     def get(self, *args, **kwargs):
         if kwargs['payment_option']=='mpesa':
             #amount = int(order.get_total() * 100)
-            number = Address.objects.filter(user=self.request.user).phone_number
+            number = Address.objects.all()
             print(number)
-           # lipa_na_mpesa_online(amount=amount,phonenumber=)
+           
         order = Order.objects.get(user=self.request.user, ordered=False)
         if order.billing_address:
             context = {
@@ -695,6 +695,3 @@ def index(request):
     return HttpResponse(response.text)
 
 
-def stk_push_callback(request):
-    data = request.body
-        # You can do whatever you want with the notification received frc2b/validation

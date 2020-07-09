@@ -70,13 +70,17 @@
                             </strong>
                           </h5>
 
-                          {% if latestitem.get_label_display == "best seller" %}
-                            <span class="badge badge-danger mb-2">{{ latestitem.get_label_display }}</span>
-                          {% elif latestitem.get_label_display == "new" %}
-                            <span class="badge badge-info mb-2">{{latestitem.get_label_display}}</span>
-                          {% else %}
-                            <span class="badge badge-success mb-2">{{latestitem.get_label_display}}</span>
-                          {% endif %}
+                          {% for labe in latestitem.label.all %}
+                            {% if labe.name == "best seller" %}
+                              <span class="badge badge-danger mb-2">{{ labe.name }}</span>
+                            {% endif %}
+                            {% if labe.name == "new" %}
+                              <span class="badge badge-info mb-2">{{labe.name}}</span>
+                            {% endif %}
+                            {% if labe.name == "best rated" %}
+                              <span class="badge badge-success mb-2">{{labe.name}}</span>
+                            {% endif %}
+                          {% endfor %}
 
                           <!-- Rating -->
                           <ul class="rating inline-ul">
@@ -371,13 +375,18 @@
                               <a href="" class="dark-grey-text">{{randomitem.title}}</a>
                             </strong>
                           </h5>
-                          {% if randomitem.get_label_display == "best seller" %}
-                            <span class="badge badge-danger mb-2">{{ randomitem.get_label_display }}</span>
-                          {% elif randomitem.get_label_display == "new" %}
-                            <span class="badge badge-info mb-2">{{randomitem.get_label_display}}</span>
-                          {% else %}
-                            <span class="badge badge-success mb-2">{{randomitem.get_label_display}}</span>
-                          {% endif %}
+                          {% for labe in randomitem.label.all %}
+                            {% if labe.name == "best seller" %}
+                              <span class="badge badge-danger mb-2">{{ labe.name }}</span>
+                            {% endif %}
+                            {% if labe.name == "new" %}
+                              <span class="badge badge-info mb-2">{{labe.name}}</span>
+                            {% endif %}
+                            {% if labe.name == "best rated" %}
+                              <span class="badge badge-success mb-2">{{labe.name}}</span>
+                            {% endif %}
+                          {% endfor %}
+
                           <!-- Rating -->
                           <ul class="rating inline-ul">
 

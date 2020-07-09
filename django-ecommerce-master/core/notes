@@ -324,3 +324,31 @@ main>
       </section>
     </div>
   </main>
+
+
+  <script>
+ 
+  $(document).ready(function(){
+     
+    setInterval(function(){
+      $.ajax({
+          type:'GET',
+          url:"{% url 'core:ajaxitems' %}",
+          dataType:"json",
+          
+          success:function(response,status){
+            if (status=="success"){
+             
+              var itemdata=response.items
+              for(var me in itemdata){
+                var item=itemdata[me]
+                var title=item.title
+                console.log(title)
+              }
+            }
+           
+          },
+      });
+    },6000);
+  });
+</script>

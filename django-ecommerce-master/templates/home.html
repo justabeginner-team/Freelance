@@ -3,6 +3,7 @@
 {% include "carousel.html" %}
 <!-- Mega menu -->
 <div class="container mt-5 pt-3">
+ 
 {% include "carousel.html" %}
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark primary-color mb-5">
@@ -468,7 +469,7 @@
         <!-- Grid row -->
 
         <!-- Section small products -->
-        <button>Use Ajax to get and then run a JavaScript</button>
+      
 <a  href="{% url 'seller:admin_view' %}">link to dashboard </a>
         <section>
 
@@ -529,13 +530,17 @@
                                               </small>
                                               <br>
                                             </h5>
-                                            {% if item.get_label_display == "best seller" %}
-                                            <span class="badge badge-danger mb-2">{{ item.get_label_display }}</span>
-                                            {% elif item.get_label_display == "new" %}
-                                            <span class="badge badge-info mb-2">{{item.get_label_display}}</span>
-                                            {% else %}
-                                            <span class="badge badge-success mb-2">{{item.get_label_display}}</span>
-                                              {% endif %}
+                                            {% for labe in item.label.all %}
+                                                {% if labe.name == "best seller" %}
+                                                  <span class="badge badge-danger mb-2">{{ labe.name }}</span>
+                                                {% endif %}
+                                                {% if labe.name == "new" %}
+                                                  <span class="badge badge-info mb-2">{{labe.name}}</span>
+                                                {% endif %}
+                                                {% if labe.name == "best rated" %}
+                                                  <span class="badge badge-success mb-2">{{labe.name}}</span>
+                                                {% endif %}
+                                            {% endfor %}
 
                                             <!-- Rating -->
                                             <ul class="rating">
@@ -1330,22 +1335,5 @@
 {% endblock content %}
 
 {% block extra_scripts %}
-<script>
- 
-  $(document).ready(function(){
-     
-    setInterval(function(){
-      $.ajax({
-          type:'GET',
-          url:"{% url 'core:ajaxitems' %}",
-          
-          success:function(response,status){
-            
-           console.log(status)
-          },
-      });
-    },2000);
-  });
-</script>
 
 {% endblock extra_scripts %}

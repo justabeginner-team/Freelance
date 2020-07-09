@@ -77,13 +77,18 @@
 
             </h2>
 
-            {% if object.get_label_display == "best seller" %}
-              <span class="badge badge-danger mb-2">{{ object.get_label_display }}</span>
-            {% elif object.get_label_display == "new" %}
-              <span class="badge badge-info mb-2">{{object.get_label_display}}</span>
-            {% else %}
-              <span class="badge badge-success mb-2">{{object.get_label_display}}</span>
-            {% endif %}
+              {% for labe in object.label.all %}
+                {% if labe.name == "best seller" %}
+                  <span class="badge badge-danger mb-2">{{ labe.name }}</span>
+                {% endif %}
+                {% if labe.name == "new" %}
+                  <span class="badge badge-info mb-2">{{labe.name}}</span>
+                {% endif %}
+                {% if labe.name == "best rated" %}
+                  <span class="badge badge-success mb-2">{{labe.name}}</span>
+                {% endif %}
+              {% endfor %}
+
 
             <h3 class="h3-responsive text-center text-md-left mb-5 ml-xl-0 ml-4">
 
@@ -194,115 +199,139 @@
       <!-- News card -->
     </section>
 
-    <!-- Section: Product detail -->
-    <div class="divider-new">
-      <h3 class="h3-responsive font-weight-bold blue-text mx-3">Product Reviews</h3>
-    </div>
-
-    <!-- Product Reviews -->
-    <section id="reviews" class="pb-5">
-      <!-- Main wrapper -->
-      <div class="comments-list text-center text-md-left">
-        {% for rev in reviews %}
-        <!-- First row -->
-        <div class="row mb-5">
-          <!-- Image column -->
-          <div class="col-sm-2 col-12 mb-3">
-            <img src="https://mdbootstrap.com/img/Photos/Avatars/img (8).jpg" alt="sample image"
-              class="avatar rounded-circle z-depth-1-half">
-          </div>
-          <!-- Image column -->
-          <!-- Content column -->
-          <div class="col-sm-10 col-12">
-            <a>
-              <h5 class="user-name font-weight-bold">{{rev.user.first_name}} {{rev.user.last_name}}</h5>
-            </a>
-            <!-- Rating -->
-            <div class="rating">
-                            <i class="fas fa-star blue-text{% if rev.rate < 1 %}-o empty{% endif %}"></i>
-                            <i class="fas fa-star blue-text{% if rev.rate < 2 %}-o empty{% endif %}"></i>
-                            <i class="fas fa-star blue-text{% if rev.rate < 3 %}-o empty{% endif %}"></i>
-                            <i class="fas fa-star blue-text{% if rev.rate < 4 %}-o empty{% endif %}"></i>
-                            <i class="fas fa-star blue-text{% if rev.rate < 5 %}-o empty{% endif %}"></i>
-            </div>
-
-            <div class="card-data">
-
-              <ul class="list-unstyled mb-1">
-
-                <li class="comment-date font-small grey-text">
-                  <i class="far fa-clock-o"></i>{{rev.review_posted_when}}
-                </li>
-                <li>
-                  <div> <b>  {{rev.subject}}</b></div>
-                </li>
-
-              </ul>
-
-            </div>
-
-            <p class="dark-grey-text article">{{rev.review | linebreaks}}</p>
-
-          </div>
-          <!-- Content column -->
+      <!-- Section: Product detail -->
+        <div class="divider-new">
+          <h3 class="h3-responsive font-weight-bold blue-text mx-3">Review Section</h3>
         </div>
-        <!-- First row -->
-        {% empty %}
-           <h2 class="dark-grey-text article">There are no comments yet for this product</h2>
-        {% endfor %}
-      </div>
-    </section>
 
-   <section>
-    <div class="row">
-       <div class="container">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="text-uppercase">Write Your Review</h4>
+  <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="pills-reviews-tab"
+         data-toggle="pill" href="#pills-reviews"
+         role="tab" aria-controls="pills-reviews" aria-selected="true">
+        <h4 class="h3-responsive mx-3">Product Reviews</h4></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="pills-feedback-tab"
+         data-toggle="pill" href="#pills-feedback" role="tab"
+         aria-controls="pills-feedback" aria-selected="false">
+        <h4 class="h3-responsive mx-3">Review Product</h4></a>
+    </li>
+  </ul>
 
-                        <form class="review-form" action="" method="post">
-                            {% csrf_token %}
-
-                            <div class="form-group">
-                                <label for="subject">Subject</label>
-                                <input class="form-control" id="subject" name="subject" type="text" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="review">Make a review</label>
-                                <textarea class="form-control" id="review" name="review" rows="9" required></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="rate">Rate the product: </label>
-                                <br>
-                                <div id="rate" class="rate">
-                                    <input type="radio" id="star5" name="rate" value="5" />
-                                        <label for="star5" title="5 stars">5 stars</label>
-                                    <input type="radio" id="star4" name="rate" value="4" />
-                                        <label for="star4" title="4 stars">4 stars</label>
-                                    <input type="radio" id="star3" name="rate" value="3" />
-                                        <label for="star3" title="3 stars">3 stars</label>
-                                    <input type="radio" id="star2" name="rate" value="2" />
-                                        <label for="star2" title="2 stars">2 stars</label>
-                                    <input type="radio" id="star1" name="rate" value="1" />
-                                        <label for="star1" title="1 star">1 star</label>
-                                </div>
-
-                            </div>
-                            <br>
-
-                            {% if request.user.is_authenticated %}
-                            <button class="btn btn-info btn-sm">Submit</button>
-                            {% else %}
-                            Log in to make a review
-                            {% endif %}
-                        </form>
+    <div class="tab-content" id="pills-tabContent">
+      <div class="tab-pane fade show active" id="pills-reviews" role="tabpanel" aria-labelledby="pills-reviews-tab">
+        <!-- Product Reviews -->
+        <section id="reviews" class="pb-5">
+          <!-- Main wrapper -->
+          <div class="comments-list text-center text-md-left">
+            {% for rev in reviews %}
+            <!-- First row -->
+            <div class="row mb-5">
+              <!-- Image column -->
+              <div class="col-sm-2 col-12 mb-3">
+                <img src="https://mdbootstrap.com/img/Photos/Avatars/img (8).jpg" alt="sample image"
+                  class="avatar rounded-circle z-depth-1-half">
+              </div>
+              <!-- Image column -->
+              <!-- Content column -->
+              <div class="col-sm-10 col-12">
+                <a>
+                  <h5 class="user-name font-weight-bold">{{rev.user.first_name}} {{rev.user.last_name}}</h5>
+                </a>
+                <!-- Rating -->
+                <div class="rating">
+                                <i class="fas fa-star blue-text{% if rev.rate < 1 %}-o empty{% endif %}"></i>
+                                <i class="fas fa-star blue-text{% if rev.rate < 2 %}-o empty{% endif %}"></i>
+                                <i class="fas fa-star blue-text{% if rev.rate < 3 %}-o empty{% endif %}"></i>
+                                <i class="fas fa-star blue-text{% if rev.rate < 4 %}-o empty{% endif %}"></i>
+                                <i class="fas fa-star blue-text{% if rev.rate < 5 %}-o empty{% endif %}"></i>
                 </div>
+
+                <div class="card-data">
+
+                  <ul class="list-unstyled mb-1">
+
+                    <li class="comment-date font-small grey-text">
+                      <i class="far fa-clock-o"></i>{{rev.review_posted_when}}
+                    </li>
+                    <li>
+                      <div> <b>  {{rev.subject}}</b></div>
+                    </li>
+
+                  </ul>
+
+                </div>
+
+                <p class="dark-grey-text article">{{rev.review | linebreaks}}</p>
+
+              </div>
+              <!-- Content column -->
             </div>
-        </div>
+            <!-- First row -->
+            {% empty %}
+               <h2 class="dark-grey-text article">There are no comments yet for this product</h2>
+            {% endfor %}
+          </div>
+        </section>
+      </div>
+
+      <div class="tab-pane fade" id="pills-feedback" role="tabpanel" aria-labelledby="pills-feedback-tab">
+        <section>
+          <div class="row">
+             <div class="container">
+                  <div class="card">
+                      <div class="card-body">
+                          <h4 class="text-uppercase">Write Your Review</h4>
+
+                              <form class="review-form" action="" method="post">
+                                  {% csrf_token %}
+
+                                  <div class="form-group">
+                                      <label for="subject">Subject</label>
+                                      <input class="form-control" id="subject" name="subject" type="text" required>
+                                  </div>
+
+                                  <div class="form-group">
+                                      <label for="review">Make a review</label>
+                                      <textarea class="form-control" id="review" name="review" rows="9" required></textarea>
+                                  </div>
+
+                                  <div class="form-group">
+                                      <label for="rate">Rate the product: </label>
+                                      <br>
+                                      <div id="rate" class="rate">
+                                          <input type="radio" id="star5" name="rate" value="5" />
+                                              <label for="star5" title="5 stars">5 stars</label>
+                                          <input type="radio" id="star4" name="rate" value="4" />
+                                              <label for="star4" title="4 stars">4 stars</label>
+                                          <input type="radio" id="star3" name="rate" value="3" />
+                                              <label for="star3" title="3 stars">3 stars</label>
+                                          <input type="radio" id="star2" name="rate" value="2" />
+                                              <label for="star2" title="2 stars">2 stars</label>
+                                          <input type="radio" id="star1" name="rate" value="1" />
+                                              <label for="star1" title="1 star">1 star</label>
+                                      </div>
+
+                                  </div>
+                                  <br>
+
+                                  {% if request.user.is_authenticated %}
+                                  <button class="btn btn-info btn-sm">Submit</button>
+                                  {% else %}
+                                  Log in to make a review
+                                  {% endif %}
+                              </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+       </section>
+      </div>
+
     </div>
-   </section>
+
+
     <!-- Section: Products v.5 -->
     <section id="products" class="pb-5 mt-4">
 

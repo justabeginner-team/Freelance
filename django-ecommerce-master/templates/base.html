@@ -20,6 +20,9 @@
   <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
   <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{% static 'css/toastr.min.css' %}" media="all">
+  <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/toastr.min.js' %}"></script>
   <style type="text/css">
     html,
     body,
@@ -53,11 +56,42 @@
 </head>
 
 <body class="homepage-v1 hidden-sn white-skin animated">
+ 
 {% include "sidebar.html" %}
 {% include "navbar.html" %}
 <br>
-<section>
+<section> 
+  {% if messages %}
+  {% for message in messages %}
+  
+  <script type=text/javascript>
+         toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-full-width",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      }
+      toastr.{{ message.tags }}('{{ message }}')
+       
+        </script>
+  {% endfor %}
+  {% endif %}
     {% block mega %}
+   
+    
+    
+    
     {% endblock mega %}
 </section>
 
