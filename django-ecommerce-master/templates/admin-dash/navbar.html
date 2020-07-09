@@ -17,6 +17,13 @@
               <button class="btn btn-primary" type="submit"><i class="mdi mdi-arrow-right-thick"></i></button>
             </div>
           </form>
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible fade show " role="alert">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
           <ul class="nav ml-auto">
             <li class="nav-item dropdown">
               <a class="nav-link" href="#" id="notificationDropdown" data-toggle="dropdown" aria-expanded="false">

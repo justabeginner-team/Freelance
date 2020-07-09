@@ -81,6 +81,7 @@ class Item(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to='media_root')
     created_on = models.DateTimeField(auto_now_add=True)
+    quantity=models.IntegerField(null=False)
 
     def __str__(self):
         return self.title

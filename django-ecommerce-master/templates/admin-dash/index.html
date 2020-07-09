@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
     <!-- partial -->
-    <div class="page-body">
+    <div class="page-body ">
       <!-- partial:partials/_sidebar.html -->
       <div class="sidebar">
         <div class="user-profile">
@@ -278,7 +278,7 @@
                       <a href="{% url 'seller:add_item' %}" ><button class="btn btn-outline-info btn-md btn-block" type="button">Add Item</button></a>
                     </div>
                     <div class="d-flex mt-5 mb-3">
-                      <small class="mb-0 text-primary">Recenty Added Items </small>
+                      <small class="mb-0 text-primary">Recently Added Items </small>
                     </div>
                     {% for item in recents %}
                     <div class="d-flex justify-content-between border-bottom py-2">
@@ -295,7 +295,7 @@
                     <p class="card-title ml-n1">Item History</p>
                   </div>
                 <div class="table-responsive">
-                    <table class="table table-hover table-sm">
+                    <table class="table info-table table-dark">
                     <thead>
                          <tr>
                         <th>Item</th>
@@ -312,9 +312,11 @@
                         <td>{{item.title}}</td>
                         <td>{{item.price}}</td>
                         <td>{{item.discount_price}}</td>
-                        <td>{% for categor in item.category.all %}
-                              {{ categor.name }}
-                          {% endfor %}</td>
+                        <td>
+                          {% for categor in item.category.all %}
+                              --{{ categor.name }}--
+                          {% endfor %}
+                        </td>
                         <td><a style="color:blue;" href="{% url 'seller:update_item' item.slug %}"><i class="mdi mdi-border-color"></i></a></td>
                         <td><a style="color: red;" href="{% url 'seller:delete_item' item.slug %}"><i class="mdi mdi-delete"></i></a></td>
                     </tr>

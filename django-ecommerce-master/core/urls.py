@@ -12,10 +12,10 @@ from .views import (
     RequestRefundView,
     category_view,
     account_settings,
-    add_review,
     CustomerSignupView,
     index,
     stk_push_callback,
+    getitems,
 )
 
 app_name = 'core'
@@ -36,8 +36,5 @@ urlpatterns = [
     path('account_settings/', account_settings, name='account_settings'),
 
     path('category/<str:category>', category_view, name='category_view'),
-    path('reviews/<str:slug>', add_review, name='add_review'),
-    path('mpesa/',index, name='index'),
-    path('daraja/stk-push',stk_push_callback,
-         name='mpesa_stk_push_callback'),
+    path('ajaxitemsload',getitems,name='ajaxitems'),
 ]

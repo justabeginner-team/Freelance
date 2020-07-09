@@ -1,6 +1,6 @@
 from django.template.loader import render_to_string
 from django_daraja.mpesa.core import MpesaClient
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.shortcuts import render
 from django.conf import settings
 from django.contrib import messages
@@ -8,8 +8,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView, View
-from django.shortcuts import redirect
+from django.views.generic import ListView, DetailView, View, FormView
+from django.shortcuts import redirect, reverse
 from django.utils import timezone
 from django.urls import reverse
 from django.core.mail import send_mail
@@ -19,7 +19,7 @@ from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddReviewF
 from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating  # ,EcommerceUser
 from .filters import ItemFilter, CategoryFilter
 from .mixins import ProfileSignupView
-from seller.mpesa_credentials import lipa_na_mpesa_online
+
 
 import random
 import string
@@ -175,9 +175,17 @@ class CheckoutView(View):
                     # assign the payment to the order
 
                     order_items = order.items.all()
+                    
                     order_items.update(ordered=True)
-                    for item in order_items:
-                        item.save()
+                    for itemorder in order_items:
+                        
+                        item_quantity=itemorder.item.quantity
+                        pk = itemorder.item.pk
+                        order_item_quantity=itemorder.quantity
+                        remainder=item_quantity-order_item_quantity
+                        Item.objects.filter(pk=pk).update(quantity=remainder)
+                    
+                        itemorder.save()
 
                     order.ordered = True
                     order.payment = payment
@@ -440,6 +448,18 @@ def HomeView(request):
     }
     return render(request, 'home.html', context=context_dict)
 
+def getitems(request):
+   if request.method == "GET":# and request.is_ajax():
+      try:
+         items = Item.objects.all()
+      except:
+         return JsonResponse({"success":False},status=400)
+
+      itemlist=items.values()
+      print(itemlist)
+      return JsonResponse({"items":list(itemlist)},status=200,safe=False)
+   return JsonResponse({"success": False},status=400)
+
 
 class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
@@ -454,35 +474,43 @@ class OrderSummaryView(LoginRequiredMixin, View):
             return redirect("/")
 
 
-class ItemDetailView(DetailView):
+class ItemDisplayView(DetailView):
     model = Item
     template_name = "product.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(ItemDisplayView, self).get_context_data(**kwargs)
+        context['reviews'] = Rating.objects.filter(item=self.get_object())
+        # context['form'] = AddReviewForm
+        return context
 
-def add_review(request, slug):
-    item = get_object_or_404(Item, slug=slug)
-    reviews = Rating.objects.filter(item__slug=slug)
-    review_form = AddReviewForm()
-    new_comment = None
 
-    if request.method == 'POST':
-        review_form = AddReviewForm(data=request.POST)
-        if review_form.is_valid():
-            # data.ip = request.META.get('REMOTE_ADDR')
-            new_comment = review_form.save(commit=False)
-            # Assign the current post to the comment
-            new_comment.item = item
-            new_comment.user = request.user
-            # Save the comment to the database
-            new_comment.save()
-            messages.success(request,
+class ItemReview(FormView):
+    form_class = AddReviewForm
+    template_name = 'ratings.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        item = Item.objects.get(slug=self.kwargs['slug'])
+        form.instance.item = item
+        form.save()
+        messages.success(self.request,
                              ' Thank you, your review has been successfully submitted and is awaiting moderation.')
-            return redirect('core:home')
+        return super(ItemReview, self).form_valid(form)
 
-    return render(request, 'ratings.html', {
-        'new_comment': new_comment,
-        'reviews': reviews,
-    })
+    def get_success_url(self):
+        return reverse('core:product', kwargs={'slug': self.kwargs['slug']})
+
+
+class ItemDetailView(View):
+    def get(self, request, *args, **kwargs):
+        view=ItemDisplayView.as_view()
+        return view(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        view = ItemReview.as_view()
+        return view(request, *args, **kwargs)
+
 
 
 @login_required

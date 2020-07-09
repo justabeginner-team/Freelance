@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block mega %}
+{% include "carousel.html" %}
 <!-- Mega menu -->
 <div class="container mt-5 pt-3">
 {% include "carousel.html" %}
@@ -467,7 +468,8 @@
         <!-- Grid row -->
 
         <!-- Section small products -->
-<a href="{% url 'seller:admin_view' %}">link to dashboard </a>
+        <button>Use Ajax to get and then run a JavaScript</button>
+<a  href="{% url 'seller:admin_view' %}">link to dashboard </a>
         <section>
 
           <!-- Grid row -->
@@ -516,7 +518,7 @@
                                             <h5 class="card-title mb-1"><strong><a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}</a></strong>
                                               <br>
                                               <small>
-                                                  Category:&nbsp;&nbsp;
+                                                  Category:&nbsp;
 
                                                   {% for categor in item.category.all %}
                                                    <a href="{% url 'core:category_view' categor.name %}">
@@ -524,10 +526,6 @@
                                                    </a>&nbsp;
 
                                                   {% endfor %}
-                                                <br>
-                                                  <a href="{% url 'core:add_review' item.slug %}">
-                                                    Rate this product&nbsp;&nbsp;
-                                                  </a>
                                               </small>
                                               <br>
                                             </h5>
@@ -1331,4 +1329,23 @@
 
 {% endblock content %}
 
+{% block extra_scripts %}
+<script>
+ 
+  $(document).ready(function(){
+     
+    setInterval(function(){
+      $.ajax({
+          type:'GET',
+          url:"{% url 'core:ajaxitems' %}",
+          
+          success:function(response,status){
+            
+           console.log(status)
+          },
+      });
+    },2000);
+  });
+</script>
 
+{% endblock extra_scripts %}

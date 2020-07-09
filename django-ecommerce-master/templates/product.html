@@ -2,13 +2,10 @@
 
 {% block content %}
 
-
-
-
   <!-- Main Container -->
   <div class="container mt-5 pt-3">
 
-    <!-- Section: product details -->
+    <!-- Section: Product detail -->
     <section id="productDetails" class="pb-5">
 
       <!-- News card -->
@@ -18,79 +15,56 @@
 
           <div class="col-lg-6">
 
-            <div class="row mx-2">
+            <!-- Carousel Wrapper -->
+            <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails" data-ride="carousel">
 
-              <!-- Carousel Wrapper -->
-              <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails mb-5 pb-4"
-                data-ride="carousel">
+              <!-- Slides -->
+              <div class="carousel-inner text-center text-md-left" role="listbox">
 
-                <!-- Slides -->
-                <div class="carousel-inner text-center text-md-left" role="listbox">
+                <div class="carousel-item active">
 
-                  <div class="carousel-item active">
-
-                    <img src="{{object.image.url}" alt="First slide"
-                      class="img-fluid">
-
-                  </div>
+                  <img src="{{ object.image.url }}" alt="First slide"
+                    class="img-fluid">
 
                 </div>
-                <!-- Slides -->
 
-                <!-- Thumbnails -->
-                <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">
+                <div class="carousel-item">
 
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/18.jpg" alt="Second slide"
+                    class="img-fluid">
 
-                  <span class="sr-only">Previous</span>
+                </div>
 
-                </a>
+                <div class="carousel-item">
 
-                <a class="carousel-control-next" href="#carousel-thumb" role="button" data-slide="next">
-
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-
-                  <span class="sr-only">Next</span>
-
-                </a>
-                <!-- Thumbnails -->
-
-              </div>
-              <!-- Carousel Wrapper -->
-
-            </div>
-
-            <!-- Grid row -->
-            <div class="row mb-4">
-
-              <div class="col-md-12">
-
-                <div id="mdb-lightbox-ui"></div>
-
-                <div class="mdb-lightbox no-margin">
-
-                  <!-- Grid column -->
-                  <figure class="col-md-4">
-
-                    <!-- Large image -->
-                    <!--<a href="{{object.image.url}"
-                      data-size="1600x1067">-->
-
-                      <!-- Thumbnail -->
-                      <img src="{{object.image.url}"
-                        class="img-fluid">
-
-                    </a>
-
-                  </figure>
-                  <!-- Grid column -->
+                  <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/19.jpg" alt="Third slide"
+                    class="img-fluid">
 
                 </div>
 
               </div>
+              <!-- Slides -->
+
+              <!-- Thumbnails -->
+              <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">
+
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+
+                <span class="sr-only">Previous</span>
+
+              </a>
+
+              <a class="carousel-control-next" href="#carousel-thumb" role="button" data-slide="next">
+
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+
+                <span class="sr-only">Next</span>
+
+              </a>
+              <!-- Thumbnails -->
 
             </div>
-            <!-- Grid row -->
+            <!-- Carousel Wrapper -->
 
           </div>
 
@@ -103,13 +77,13 @@
 
             </h2>
 
-            <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">bestseller</span>
-
-            </strong>
-
-            </h2>
-
-            <span class="badge badge-success product mb-4 ml-2">SALE</span>
+            {% if object.get_label_display == "best seller" %}
+              <span class="badge badge-danger mb-2">{{ object.get_label_display }}</span>
+            {% elif object.get_label_display == "new" %}
+              <span class="badge badge-info mb-2">{{object.get_label_display}}</span>
+            {% else %}
+              <span class="badge badge-success mb-2">{{object.get_label_display}}</span>
+            {% endif %}
 
             <h3 class="h3-responsive text-center text-md-left mb-5 ml-xl-0 ml-4">
 
@@ -120,126 +94,215 @@
                 </span>
 
                <span class="grey-text">
-
                     <small>
-
                       <s>${{ object.price }}</s>
-
                     </small>
-
                </span>
                 {% else %}
                 <span  class="red-text font-weight-bold">
                   ${{ object.price }}
                 </span>
                 {% endif %}
-              
 
             </h3>
 
-            <p class="ml-xl-0 ml-4">
-              {{ object.description }}
+            <!-- Accordion wrapper -->
+            <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
 
-            </p>
-{%comment%}
-            <p class="ml-xl-0 ml-4">
+              <!-- Accordion card -->
+              <div class="card">
+                <!-- Card header -->
+                <div class="card-header" role="tab" id="headingOne1">
+                  <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true"
+                    aria-controls="collapseOne1">
 
+                    <h5 class="mb-0">
+                      Description
+                      <i class="fas fa-angle-down rotate-icon"></i>
+                    </h5>
+                  </a>
+                </div>
+
+                <!-- Card body -->
+                <div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1"
+                  data-parent="#accordionEx">
+
+                  <div class="card-body">
+
+                    {{ object.description }}
+
+                  </div>
+                </div>
+              </div>
+              <!-- Accordion card -->
+            </div>
+
+            <p class="ml-xl-0 ml-4">
               <strong>Storage: </strong>64GB</p>
-
             <p class="ml-xl-0 ml-4">
-
               <strong>Size: </strong>9.6-inch</p>
-
             <p class="ml-xl-0 ml-4">
-
               <strong>Resolution: </strong>2048 x 1536</p>
-
             <p class="ml-xl-0 ml-4">
-
               <strong>Availability: </strong>In stock</p>
-              {%endcomment%}
+
 
             <!-- Add to Cart -->
             <section class="color">
-
               <div class="mt-5">
-                 
                 <p class="grey-text">Choose your color</p>
-
                 <div class="row text-center text-md-left">
-
                   <div class="col-md-4 col-12 ">
-
                     <!-- Radio group -->
                     <div class="form-group">
-
                       <input class="form-check-input" name="group100" type="radio" id="radio100" checked="checked">
-
                       <label for="radio100" class="form-check-label dark-grey-text">White</label>
-
                     </div>
-
                   </div>
-
                   <div class="col-md-4">
-
                     <!-- Radio group -->
                     <div class="form-group">
-
                       <input class="form-check-input" name="group100" type="radio" id="radio101">
-
                       <label for="radio101" class="form-check-label dark-grey-text">Silver</label>
-
                     </div>
-
                   </div>
-
                   <div class="col-md-4">
-
                     <!-- Radio group -->
                     <div class="form-group">
-
                       <input class="form-check-input" name="group100" type="radio" id="radio102">
-
                       <label for="radio102" class="form-check-label dark-grey-text">Gold</label>
-
                     </div>
-
                   </div>
-
                 </div>
-                 
                 <div class="row mt-3 mb-4">
-
                   <div class="col-md-12 text-center text-md-left text-md-right">
-
-                  <a href="{{ object.get_add_to_cart_url }}" class="btn btn-primary btn-md my-0 p">
+                  <a href="{{ object.get_add_to_cart_url }}" class="btn btn-primary btn-rounded">
                     Add to cart
                     <i class="fas fa-shopping-cart ml-1"></i>
                   </a>
-                  </div>
-                  <a href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger btn-md my-0 p">
+                  <a href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger btn-rounded">
                     Remove from cart
                   </a>
+                  </div>
                 </div>
-
               </div>
-
             </section>
             <!-- Add to Cart -->
-
           </div>
-
         </div>
-
       </div>
       <!-- News card -->
-
     </section>
 
-   
+    <!-- Section: Product detail -->
+    <div class="divider-new">
+      <h3 class="h3-responsive font-weight-bold blue-text mx-3">Product Reviews</h3>
+    </div>
 
-   
+    <!-- Product Reviews -->
+    <section id="reviews" class="pb-5">
+      <!-- Main wrapper -->
+      <div class="comments-list text-center text-md-left">
+        {% for rev in reviews %}
+        <!-- First row -->
+        <div class="row mb-5">
+          <!-- Image column -->
+          <div class="col-sm-2 col-12 mb-3">
+            <img src="https://mdbootstrap.com/img/Photos/Avatars/img (8).jpg" alt="sample image"
+              class="avatar rounded-circle z-depth-1-half">
+          </div>
+          <!-- Image column -->
+          <!-- Content column -->
+          <div class="col-sm-10 col-12">
+            <a>
+              <h5 class="user-name font-weight-bold">{{rev.user.first_name}} {{rev.user.last_name}}</h5>
+            </a>
+            <!-- Rating -->
+            <div class="rating">
+                            <i class="fas fa-star blue-text{% if rev.rate < 1 %}-o empty{% endif %}"></i>
+                            <i class="fas fa-star blue-text{% if rev.rate < 2 %}-o empty{% endif %}"></i>
+                            <i class="fas fa-star blue-text{% if rev.rate < 3 %}-o empty{% endif %}"></i>
+                            <i class="fas fa-star blue-text{% if rev.rate < 4 %}-o empty{% endif %}"></i>
+                            <i class="fas fa-star blue-text{% if rev.rate < 5 %}-o empty{% endif %}"></i>
+            </div>
+
+            <div class="card-data">
+
+              <ul class="list-unstyled mb-1">
+
+                <li class="comment-date font-small grey-text">
+                  <i class="far fa-clock-o"></i>{{rev.review_posted_when}}
+                </li>
+                <li>
+                  <div> <b>  {{rev.subject}}</b></div>
+                </li>
+
+              </ul>
+
+            </div>
+
+            <p class="dark-grey-text article">{{rev.review | linebreaks}}</p>
+
+          </div>
+          <!-- Content column -->
+        </div>
+        <!-- First row -->
+        {% empty %}
+           <h2 class="dark-grey-text article">There are no comments yet for this product</h2>
+        {% endfor %}
+      </div>
+    </section>
+
+   <section>
+    <div class="row">
+       <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="text-uppercase">Write Your Review</h4>
+
+                        <form class="review-form" action="" method="post">
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <input class="form-control" id="subject" name="subject" type="text" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="review">Make a review</label>
+                                <textarea class="form-control" id="review" name="review" rows="9" required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="rate">Rate the product: </label>
+                                <br>
+                                <div id="rate" class="rate">
+                                    <input type="radio" id="star5" name="rate" value="5" />
+                                        <label for="star5" title="5 stars">5 stars</label>
+                                    <input type="radio" id="star4" name="rate" value="4" />
+                                        <label for="star4" title="4 stars">4 stars</label>
+                                    <input type="radio" id="star3" name="rate" value="3" />
+                                        <label for="star3" title="3 stars">3 stars</label>
+                                    <input type="radio" id="star2" name="rate" value="2" />
+                                        <label for="star2" title="2 stars">2 stars</label>
+                                    <input type="radio" id="star1" name="rate" value="1" />
+                                        <label for="star1" title="1 star">1 star</label>
+                                </div>
+
+                            </div>
+                            <br>
+
+                            {% if request.user.is_authenticated %}
+                            <button class="btn btn-info btn-sm">Submit</button>
+                            {% else %}
+                            Log in to make a review
+                            {% endif %}
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+   </section>
     <!-- Section: Products v.5 -->
     <section id="products" class="pb-5 mt-4">
 
