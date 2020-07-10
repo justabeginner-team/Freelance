@@ -1,6 +1,6 @@
 from django.template.loader import render_to_string
 
-from django.http import HttpResponse,JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.conf import settings
 from django.contrib import messages
@@ -51,7 +51,6 @@ def is_valid_form(values):
         if field == '':
             valid = False
     return valid
-
 
 
 class CheckoutView(View):
@@ -124,7 +123,7 @@ class CheckoutView(View):
                         'shipping_country')
                     shipping_zip = form.cleaned_data.get('shipping_zip')
 
-                    phone_number=form.cleaned_data.get('phonenumber')
+                    phone_number = form.cleaned_data.get('phonenumber')
 
                     if is_valid_form([shipping_address1, shipping_country, shipping_zip]):
                         shipping_address = Address(
@@ -137,7 +136,7 @@ class CheckoutView(View):
                             phone_number=phone_number
                         )
                         shipping_address.save()
-                        #lipa_na_mpesa_online(request,amount=1,phonenumber=phone_number)
+                        # lipa_na_mpesa_online(request,amount=1,phonenumber=phone_number)
                         order.shipping_address = shipping_address
                         order.save()
 
@@ -175,16 +174,15 @@ class CheckoutView(View):
                     # assign the payment to the order
 
                     order_items = order.items.all()
-                    
+
                     order_items.update(ordered=True)
                     for itemorder in order_items:
-                        
-                        item_quantity=itemorder.item.quantity
+                        item_quantity = itemorder.item.quantity
                         pk = itemorder.item.pk
-                        order_item_quantity=itemorder.quantity
-                        remainder=item_quantity-order_item_quantity
+                        order_item_quantity = itemorder.quantity
+                        remainder = item_quantity - order_item_quantity
                         Item.objects.filter(pk=pk).update(quantity=remainder)
-                    
+
                         itemorder.save()
 
                     order.ordered = True
@@ -195,14 +193,13 @@ class CheckoutView(View):
                     messages.success(self.request, "Your order was successful!")
 
 
-                   # message = "Your order was successful!"
-                   # receipient=['alexgathua3@gmail.com',]
-                   # html= render_to_string('invoice.html')
+                # message = "Your order was successful!"
+                # receipient=['alexgathua3@gmail.com',]
+                # html= render_to_string('invoice.html')
 
-                    #send_mail(subject="hello",message=message,from_email="alexgathua2@gmail.com",recipient_list=receipient,html_message=html)
+                # send_mail(subject="hello",message=message,from_email="alexgathua2@gmail.com",recipient_list=receipient,html_message=html)
 
-
-                    #return render(request, "invoice.html", )
+                # return render(request, "invoice.html", )
 
                 elif use_default_billing:
                     print("Using the defualt billing address")
@@ -272,11 +269,11 @@ class CheckoutView(View):
 
 class PaymentView(View):
     def get(self, *args, **kwargs):
-        if kwargs['payment_option']=='mpesa':
-            #amount = int(order.get_total() * 100)
+        if kwargs['payment_option'] == 'mpesa':
+            # amount = int(order.get_total() * 100)
             number = Address.objects.all()
             print(number)
-           
+
         order = Order.objects.get(user=self.request.user, ordered=False)
         if order.billing_address:
             context = {
@@ -302,116 +299,116 @@ class PaymentView(View):
             messages.warning(
                 self.request, "You have not added a billing address")
             return redirect("core:checkout")
-    
+
     def post(self, *args, **kwargs):
-        
-                order = Order.objects.get(user=self.request.user, ordered=False)
-                form = PaymentForm(self.request.POST)
-                userprofile = UserProfile.objects.get(user=self.request.user)
-                if form.is_valid():
-                    token = form.cleaned_data.get('stripeToken')
-                    save = form.cleaned_data.get('save')
-                    use_default = form.cleaned_data.get('use_default')
 
-                    if save:
-                        if userprofile.stripe_customer_id != '' and userprofile.stripe_customer_id is not None:
-                            customer = stripe.Customer.retrieve(
-                                userprofile.stripe_customer_id)
-                            customer.sources.create(source=token)
+        order = Order.objects.get(user=self.request.user, ordered=False)
+        form = PaymentForm(self.request.POST)
+        userprofile = UserProfile.objects.get(user=self.request.user)
+        if form.is_valid():
+            token = form.cleaned_data.get('stripeToken')
+            save = form.cleaned_data.get('save')
+            use_default = form.cleaned_data.get('use_default')
 
-                        else:
-                            customer = stripe.Customer.create(
-                                email=self.request.user.email,
-                            )
-                            customer.sources.create(source=token)
-                            userprofile.stripe_customer_id = customer['id']
-                            userprofile.one_click_purchasing = True
-                            userprofile.save()
+            if save:
+                if userprofile.stripe_customer_id != '' and userprofile.stripe_customer_id is not None:
+                    customer = stripe.Customer.retrieve(
+                        userprofile.stripe_customer_id)
+                    customer.sources.create(source=token)
 
-                    amount = int(order.get_total() * 100)
+                else:
+                    customer = stripe.Customer.create(
+                        email=self.request.user.email,
+                    )
+                    customer.sources.create(source=token)
+                    userprofile.stripe_customer_id = customer['id']
+                    userprofile.one_click_purchasing = True
+                    userprofile.save()
 
-                    try:
+            amount = int(order.get_total() * 100)
 
-                        if use_default or save:
-                            # charge the customer because we cannot charge the token more than once
-                            charge = stripe.Charge.create(
-                                amount=amount,  # cents
-                                currency="usd",
-                                customer=userprofile.stripe_customer_id
-                            )
-                        else:
-                            # charge once off on the token
-                            charge = stripe.Charge.create(
-                                amount=amount,  # cents
-                                currency="usd",
-                                source=token
-                            )
+            try:
 
-                        # create the payment
-                        payment = Payment()
-                        payment.stripe_charge_id = charge['id']
-                        payment.user = self.request.user
-                        payment.amount = order.get_total()
-                        payment.save()
+                if use_default or save:
+                    # charge the customer because we cannot charge the token more than once
+                    charge = stripe.Charge.create(
+                        amount=amount,  # cents
+                        currency="usd",
+                        customer=userprofile.stripe_customer_id
+                    )
+                else:
+                    # charge once off on the token
+                    charge = stripe.Charge.create(
+                        amount=amount,  # cents
+                        currency="usd",
+                        source=token
+                    )
 
-                        # assign the payment to the order
+                # create the payment
+                payment = Payment()
+                payment.stripe_charge_id = charge['id']
+                payment.user = self.request.user
+                payment.amount = order.get_total()
+                payment.save()
 
-                        order_items = order.items.all()
-                        order_items.update(ordered=True)
-                        for item in order_items:
-                            item.save()
+                # assign the payment to the order
 
-                        order.ordered = True
-                        order.payment = payment
-                        order.ref_code = create_ref_code()
-                        order.save()
+                order_items = order.items.all()
+                order_items.update(ordered=True)
+                for item in order_items:
+                    item.save()
 
-                        messages.success(self.request, "Your order was successful!")
-                        return redirect("/")
+                order.ordered = True
+                order.payment = payment
+                order.ref_code = create_ref_code()
+                order.save()
 
-                    except stripe.error.CardError as e:
-                        body = e.json_body
-                        err = body.get('error', {})
-                        messages.warning(self.request, f"{err.get('message')}")
-                        return redirect("/")
+                messages.success(self.request, "Your order was successful!")
+                return redirect("/")
 
-                    except stripe.error.RateLimitError as e:
-                        # Too many requests made to the API too quickly
-                        messages.warning(self.request, "Rate limit error")
-                        return redirect("/")
+            except stripe.error.CardError as e:
+                body = e.json_body
+                err = body.get('error', {})
+                messages.warning(self.request, f"{err.get('message')}")
+                return redirect("/")
 
-                    except stripe.error.InvalidRequestError as e:
-                        # Invalid parameters were supplied to Stripe's API
-                        print(e)
-                        messages.warning(self.request, "Invalid parameters")
-                        return redirect("/")
+            except stripe.error.RateLimitError as e:
+                # Too many requests made to the API too quickly
+                messages.warning(self.request, "Rate limit error")
+                return redirect("/")
 
-                    except stripe.error.AuthenticationError as e:
-                        # Authentication with Stripe's API failed
-                        # (maybe you changed API keys recently)
-                        messages.warning(self.request, "Not authenticated")
-                        return redirect("/")
+            except stripe.error.InvalidRequestError as e:
+                # Invalid parameters were supplied to Stripe's API
+                print(e)
+                messages.warning(self.request, "Invalid parameters")
+                return redirect("/")
 
-                    except stripe.error.APIConnectionError as e:
-                        # Network communication with Stripe failed
-                        messages.warning(self.request, "Network error")
-                        return redirect("/")
+            except stripe.error.AuthenticationError as e:
+                # Authentication with Stripe's API failed
+                # (maybe you changed API keys recently)
+                messages.warning(self.request, "Not authenticated")
+                return redirect("/")
 
-                    except stripe.error.StripeError as e:
-                        # Display a very generic error to the user, and maybe send
-                        # yourself an email
-                        messages.warning(
-                            self.request, "Something went wrong. You were not charged. Please try again.")
-                        return redirect("/")
+            except stripe.error.APIConnectionError as e:
+                # Network communication with Stripe failed
+                messages.warning(self.request, "Network error")
+                return redirect("/")
 
-                    except Exception as e:
-                        # send an email to ourselves
-                        messages.warning(
-                            self.request, "A serious error occurred. We have been notifed.")
-                        return redirect("/")
+            except stripe.error.StripeError as e:
+                # Display a very generic error to the user, and maybe send
+                # yourself an email
+                messages.warning(
+                    self.request, "Something went wrong. You were not charged. Please try again.")
+                return redirect("/")
 
-                messages.warning(self.request, "Invalid data received")
-                return redirect("/payment/stripe/")
+            except Exception as e:
+                # send an email to ourselves
+                messages.warning(
+                    self.request, "A serious error occurred. We have been notifed.")
+                return redirect("/")
+
+        messages.warning(self.request, "Invalid data received")
+        return redirect("/payment/stripe/")
 
 
 # class HomeView(ListView):
@@ -448,17 +445,18 @@ def HomeView(request):
     }
     return render(request, 'home.html', context=context_dict)
 
-def getitems(request):
-   if request.method == "GET":# and request.is_ajax():
-      try:
-         items = Item.objects.all()
-      except:
-         return JsonResponse({"success":False},status=400)
 
-      itemlist=items.values()
-      print(itemlist)
-      return JsonResponse({"items":list(itemlist)},status=200,safe=False)
-   return JsonResponse({"success": False},status=400)
+def getitems(request):
+    if request.method == "GET":  # and request.is_ajax():
+        try:
+            items = Item.objects.all()
+        except:
+            return JsonResponse({"success": False}, status=400)
+
+        itemlist = items.values()
+        print(itemlist)
+        return JsonResponse({"items": list(itemlist)}, status=200, safe=False)
+    return JsonResponse({"success": False}, status=400)
 
 
 class OrderSummaryView(LoginRequiredMixin, View):
@@ -495,7 +493,7 @@ class ItemReview(FormView):
         form.instance.item = item
         form.save()
         messages.success(self.request,
-                             ' Thank you, your review has been successfully submitted and is awaiting moderation.')
+                         ' Thank you, your review has been successfully submitted and is awaiting moderation.')
         return super(ItemReview, self).form_valid(form)
 
     def get_success_url(self):
@@ -504,13 +502,12 @@ class ItemReview(FormView):
 
 class ItemDetailView(View):
     def get(self, request, *args, **kwargs):
-        view=ItemDisplayView.as_view()
+        view = ItemDisplayView.as_view()
         return view(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         view = ItemReview.as_view()
         return view(request, *args, **kwargs)
-
 
 
 @login_required
@@ -693,5 +690,3 @@ def index(request):
     response = cl.stk_push(phone_number, amount,
                            account_reference, transaction_desc, callback_url)
     return HttpResponse(response.text)
-
-

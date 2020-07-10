@@ -5,15 +5,12 @@
   <main>
     <!-- Main Container -->
     <div class="container">
-      <!-- Section cart -->
-      <section class="section my-5 pb-5">
-        <div class="card card-ecommerce">
-          <div class="card-body">
             <!-- Shopping Cart table -->
-            <div class="table-responsive">
-              <table class="table product-table table-cart-v-2">
+            <div class="table-responsive text-nowrap">
+                 <h2>Order Summary</h2>
+              <table class="table">
                 <!-- Table head -->
-                <thead class="mdb-color lighten-5">
+                <thead >
                   <tr>
                     <th class="font-weight-bold" scope="col">#</th>
                     <th class="font-weight-bold" scope="col">Item title</th>
@@ -48,7 +45,7 @@
                     <td class="font-weight-bold">
                         {% if order_item.item.discount_price %}
                             ${{ order_item.get_total_discount_item_price }}
-                            <span class="badge badge-primary">Saving ${{ order_item.get_amount_saved }}</span>
+                            <span class="badge badge-success">Saving ${{ order_item.get_amount_saved }}</span>
                         {% else %}
                             ${{ order_item.get_total_item_price }}
                         {% endif %}
@@ -103,7 +100,7 @@
                 <!-- Total row -->
 
                   <tr>
-                    <td colspan="5">
+                    <td colspan="8">
                         <a href="{% url 'core:checkout' %}">
                           <button type="button" class="btn btn-warning btn-rounded float-right ml-2">
                               PROCEED TO CHECKOUT
@@ -129,10 +126,6 @@
             </div>
                <!-- Shopping Cart table -->
           </div>
-        </div>
-      </section>
-        <!-- Section cart -->
-    </div>
   </main>
 {% endblock content %}
 

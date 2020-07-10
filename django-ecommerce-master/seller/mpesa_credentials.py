@@ -11,6 +11,7 @@ class MpesaC2bCredential:
     consumer_secret = 'K9zQLBGiyNJxms2i'
     api_URL = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials'
 
+
 class MpesaAccessToken:
     r = requests.get(MpesaC2bCredential.api_URL,
                      auth=HTTPBasicAuth(MpesaC2bCredential.consumer_key, MpesaC2bCredential.consumer_secret))
@@ -27,8 +28,7 @@ class LipanaMpesaPpassword:
     decode_password = online_password.decode('utf-8')
 
 
-
-def lipa_na_mpesa_online(request,amount,phonenumber):
+def lipa_na_mpesa_online(request, amount, phonenumber):
     access_token = MpesaAccessToken.validated_mpesa_access_token
     api_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
     headers = {"Authorization": "Bearer %s" % access_token}
@@ -47,5 +47,3 @@ def lipa_na_mpesa_online(request,amount,phonenumber):
     }
     response = requests.post(api_url, json=request, headers=headers)
     return HttpResponse(response.text)
-
-
