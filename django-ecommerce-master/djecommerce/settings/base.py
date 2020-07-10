@@ -24,7 +24,6 @@ INSTALLED_APPS = [
     'django_filters',
     'django_extensions',
 
-
     # 'webpush',
 
     'core',
@@ -94,14 +93,14 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'
 )
-#EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-#EMAIL_FILE_PATH='email/app-meso'
+# EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+# EMAIL_FILE_PATH='email/app-meso'
 
-EMAIL_HOST='smtp.gmail.com'
-EMAIL_PORT=587
-EMAIL_HOST_USER=''
-EMAIL_HOST_PASSWORD=''
-EMAIL_USE_TLS=True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'testpython301@gmail.com'
+EMAIL_HOST_PASSWORD = 'alex9122#'
+EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 ACCOUNT_EMAIL_REQUIRED = True
@@ -109,7 +108,7 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 LOGOUT_URL = 'account_logout'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_SIGNUP_REDIRECT_URL = 'account_login'
-LOGIN_REDIRECT_URL = 'retailer_dash'
+LOGIN_REDIRECT_URL = 'admin_view'
 ACCOUNT_USERNAME_BLACKLIST = ['mike', 'alex']
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "[Alex Ian eccomerce web]"
@@ -121,7 +120,6 @@ SITE_ID = 1
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-
 # The Mpesa environment to use
 # Possible values: sandbox, production
 
@@ -132,9 +130,9 @@ MPESA_ENVIRONMENT = 'sandbox'
 MPESA_CONSUMER_KEY = 'J7t2QJ8reSz9Kqx5kBzfpCAhZ6ibbc4g'
 MPESA_CONSUMER_SECRET = 'K9zQLBGiyNJxms2i'
 
-#Shortcode to use for transactions. For sandbox  use the Shortcode 1 provided on test credentials page
+# Shortcode to use for transactions. For sandbox  use the Shortcode 1 provided on test credentials page
 
-#MPESA_SHORTCODE = 'Initiator Name (Shortcode 1)'
+# MPESA_SHORTCODE = 'Initiator Name (Shortcode 1)'
 # Shortcode to use for Lipa na MPESA Online (MPESA Express) transactions
 # This only has a different value on sandbox, you do not need to set it on production
 # For sandbox use the Lipa na MPESA Online Shorcode provided on test credentials page
@@ -153,5 +151,3 @@ MPESA_SHORTCODE_TYPE = 'paybill'
 # Production passkey is sent via email once you go live
 
 MPESA_PASSKEY = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
-
-
