@@ -23,6 +23,7 @@ INSTALLED_APPS = [
 
     'django_filters',
     'django_extensions',
+    'phone_field',
 
     # 'webpush',
 
