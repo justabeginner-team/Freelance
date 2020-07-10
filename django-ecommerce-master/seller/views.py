@@ -1,3 +1,6 @@
+from requests.auth import HTTPBasicAuth
+import requests
+from django.http import HttpResponse
 from django.contrib import messages
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import FormView, View
@@ -138,3 +141,10 @@ def admin(request):
         'orders': orders,
         'reviews': rev,
     })
+
+
+# your example view
+
+
+
+

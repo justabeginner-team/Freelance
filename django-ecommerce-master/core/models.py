@@ -9,7 +9,7 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 import random, string
-
+from django.core.validators import RegexValidator
 
 # CATEGORY_CHOICES = (
 #     ('S', 'Shirt'),
@@ -87,6 +87,7 @@ class Item(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to='media_root')
     created_on = models.DateTimeField(auto_now_add=True)
+    quantity=models.IntegerField(null=False)
 
     def __str__(self):
         return self.title
@@ -242,7 +243,8 @@ class Address(models.Model):
     zip = models.CharField(max_length=100)
     address_type = models.CharField(max_length=1, choices=ADDRESS_CHOICES)
     default = models.BooleanField(default=False)
-
+    phone_regex=RegexValidator(regex=r'^(?:254|\+254|0)?(7(?:[129][0-9])|(?:0[0-9]))[0-9]{6})$',message="phone number must be entered in the format:'+2547*******'")
+    phone_number=models.CharField(validators=[phone_regex],max_length=14,blank=True)
     def __str__(self):
         return self.user.username
 

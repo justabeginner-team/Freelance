@@ -11,9 +11,25 @@
           <div class="card">
             <form method="POST" class="card-body">
               {% csrf_token %}
-               {% if usr.is_retailer%}
+              
+              <h3>Payment option</h3>
+              
+              <div class="d-block my-3">
+                {% for value, name in form.fields.payment_option.choices %}
+                <div class="custom-control custom-radio">
+                  <input id="{{ name }}" name="payment_option" value="{{ value }}" type="radio" class="custom-control-input" required>
+                  <label class="custom-control-label" for="{{ name }}">{{ name }}</label>
+                </div>
+                {% endfor %}
+              </div>
+              <hr class="mb-4">
+              <div class="md-form md-outline">
+                <input type="number" id="materialRegisterFormPhone" name="phonenumber" class="form-control"
+                  aria-describedby="materialRegisterFormPhoneHelpBlock">
+                <label for="materialRegisterFormPhone">Phone number</label>
+              </div>
               <h3>Shipping address</h3>
-              {%endif%}
+           
 
               <div class='hideable_shipping_form'>
 
@@ -111,18 +127,9 @@
               {% endif %}
               <hr>
 
-              <h3>Payment option</h3>
+             
 
-              <div class="d-block my-3">
-                {% for value, name in form.fields.payment_option.choices %}
-                <div class="custom-control custom-radio">
-                  <input id="{{ name }}" name="payment_option" value="{{ value }}" type="radio" class="custom-control-input" required>
-                  <label class="custom-control-label" for="{{ name }}">{{ name }}</label>
-                </div>
-                {% endfor %}
-              </div>
-
-              <hr class="mb-4">
+              
               <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
 
             </form>
@@ -157,6 +164,8 @@ use_default_shipping.addEventListener('change', function() {
     hideable_shipping_form.show();
   }
 })
+
+
 
 use_default_billing.addEventListener('change', function() {
   if (this.checked) {

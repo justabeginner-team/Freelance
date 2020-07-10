@@ -166,7 +166,7 @@ $(function () {
     if ($("#radial-chart").length) {
         a = {
             chart: {
-                height: 230,
+                height: 200,
                 type: "radialBar"
             },
             series: [67],
@@ -214,7 +214,7 @@ $(function () {
             stroke: {
                 lineCap: "round"
             },
-            labels: ["Progress"]
+            labels: ["Sales"]
         };
         (r = new ApexCharts(document.querySelector("#radial-chart"), a)).render()
     }

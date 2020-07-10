@@ -9,6 +9,8 @@ from .views import (
     # RetailerSignupView
     # send_push,
     admin,
+    
+   
 )
 
 app_name = 'seller'
@@ -19,7 +21,8 @@ urlpatterns = [
     path('update_item/<slug>', update_item, name='update_item'),
     path('retailer_dash/', retailer_dash, name='retailer_dash'),
     # path('ret/',RetailerSignupView.as_view()),
-    # path('send_push', send_push),
+    #path('lipa/', lipa_na_mpesa_online,
+        # name='get_mpesa_access_token'),
     # path('sw.js', TemplateView.as_view(template_name='sw.js', content_type='application/x-javascript')),
     path('template/', admin, name='admin_view')
 ]

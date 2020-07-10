@@ -1,3 +1,4 @@
+
 from django import forms
 from django.forms import ModelForm
 from django_countries.fields import CountryField
@@ -14,7 +15,8 @@ from django.conf import settings
 
 PAYMENT_CHOICES = (
     ('S', 'Stripe'),
-    ('P', 'PayPal')
+    ('P', 'PayPal'),
+    ('M','Mpesa')
 )
 
 
@@ -42,10 +44,13 @@ class MySignupForm(SignupForm):
     
     
     pass
-    
-    
-    
+
+
+
+
+
 class CheckoutForm(forms.Form):
+    phonenumber = forms.CharField(required=False)
     shipping_address = forms.CharField(required=False)
     shipping_address2 = forms.CharField(required=False)
     shipping_country = CountryField(blank_label='(select country)').formfield(
