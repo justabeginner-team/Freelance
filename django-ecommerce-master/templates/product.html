@@ -3,6 +3,7 @@
 {% block content %}
 
   <!-- Main Container -->
+  
   <div class="container mt-5 pt-3">
 
     <!-- Section: Product detail -->
@@ -229,13 +230,13 @@
             <!-- First row -->
             <div class="row mb-5">
               <!-- Image column -->
-              <div class="col-sm-2 col-12 mb-3">
+              <div class="col col-md-6 mb-3">
                 <img src="https://mdbootstrap.com/img/Photos/Avatars/img (8).jpg" alt="sample image"
                   class="avatar rounded-circle z-depth-1-half">
               </div>
               <!-- Image column -->
               <!-- Content column -->
-              <div class="col-sm-10 col-12">
+              <div class="col-sm-6 w-100">
                 <a>
                   <h5 class="user-name font-weight-bold">{{rev.user.first_name}} {{rev.user.last_name}}</h5>
                 </a>
@@ -268,6 +269,7 @@
               </div>
               <!-- Content column -->
             </div>
+            <hr>
             <!-- First row -->
             {% empty %}
                <h2 class="dark-grey-text article">There are no comments yet for this product</h2>
