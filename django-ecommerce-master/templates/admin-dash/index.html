@@ -317,7 +317,7 @@
                               --{{ categor.name }}--
                           {% endfor %}
                         </td>
-                        <td><a style="color:blue;" href="{% url 'seller:update_item' item.slug %}"><i class="mdi mdi-border-color"></i></a></td>
+                        <td>{{item.user}}<a style="color:blue;" href="{% url 'seller:update_item' item.slug %}"><i class="mdi mdi-border-color"></i></a></td>
                         <td><a style="color: red;" href="{% url 'seller:delete_item' item.slug %}"><i class="mdi mdi-delete"></i></a></td>
                     </tr>
                     {% endfor %}
