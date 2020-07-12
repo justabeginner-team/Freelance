@@ -19,6 +19,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.conf import settings
 
+
 # Create your views here.
 
 #
@@ -44,6 +45,7 @@ from django.conf import settings
 class AddItemFormView(FormView):
     form_class = AddItemForm
     template_name = 'add_item.html'
+
     # success_url = 'seller:admin_view'
 
     def form_valid(self, form):
@@ -133,18 +135,14 @@ def retailer_dash(request):
 def admin(request):
     items_table = Item.objects.filter(user=request.user)
     recents = items_table.order_by('-created_on')[:3]
-    # orders = Order.objects.filter(items__item__user=request.user)
+    obj = Order.objects.filter(items__item__user__exact=request.user)
+    orders = obj.order_by('-start_date')
     rev = Rating.objects.filter(item__user=request.user).order_by('-created_on')
     return render(request, 'admin-dash/index.html', {
         'items': items_table,
         'recents': recents,
-        # 'orders': orders,
+        'orders': orders,
         'reviews': rev,
     })
 
-
 # your example view
-
-
-
-
