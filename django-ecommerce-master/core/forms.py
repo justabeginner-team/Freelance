@@ -3,13 +3,14 @@ from django import forms
 from django.forms import ModelForm
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
-from .models import Item, Rating
+from .models import Item, Rating,UserProfile
 from allauth.account.adapter import DefaultAccountAdapter, get_adapter
 from django.contrib.auth import get_user_model
 from allauth.account.forms import SetPasswordField, PasswordField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 
 
@@ -20,33 +21,23 @@ PAYMENT_CHOICES = (
 )
 
 
-class SignupForm(forms.Form):
-    email = forms.EmailField(required=True, )
-    username = forms.CharField(max_length=80, required=True, )
-    password1 = SetPasswordField()
-    password2 = PasswordField()
-    first_name = forms.CharField(max_length=100, required=False, )
-    last_name = forms.CharField(max_length=100, required=False, )
+class SignupForm(forms.ModelForm):
+    retailer=forms.BooleanField(required=False)
+    company = forms.CharField(max_length=50)
+
     class Meta:
-        model = get_user_model()  # use this function for swapping user model
-        default_field_order = ( 'first_name', 'last_name','email', 'username', 'password1', 'password2',
-                  )
-    
-        
+        model = get_user_model()
+        fields = ['first_name', 'last_name', 'company']
+
     def signup(self, request, user):
-        user.username = self.cleaned_data['username']
+
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
-        user.is_retailer=True
         user.save()
 
-class MySignupForm(SignupForm):
-    
-    
-    pass
-
-
-
+        profile = UserProfile(user=user,is_retailer=self.cleaned_data['retailer'],
+                              company_name=self.cleaned_data['company'])
+        profile.save()
 
 
 class CheckoutForm(forms.Form):

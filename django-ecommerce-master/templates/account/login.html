@@ -62,6 +62,12 @@
     background-color: rgba(229, 228, 255, 0.2);
   }
 
+.rgba-gradient {
+      background: -webkit-linear-gradient(98deg, rgba(22, 91, 231, 0.5), rgba(255, 32, 32, 0.5) 100%);
+      background: -webkit-gradient(linear, 98deg, from(rgba(22, 91, 231, 0.5)), to(rgba(255, 32, 32, 0.5)));
+      background: linear-gradient(to 98deg, rgba(22, 91, 231, 0.5), rgba(255, 32, 32, 0.5) 100%);
+    }
+
   .md-form label {
     color: #ffffff;
   }
@@ -101,7 +107,7 @@
 
     <!-- Intro Section -->
     <section class="view intro-2">
-      <div class="mask rgba-green-strong h-100 d-flex justify-content-center align-items-center">
+      <div class="mask rgba-gradient h-100 d-flex justify-content-center align-items-center">
         <div class="container">
           <div class="row">
             <div class="col-xl-5 col-lg-6 col-md-10 col-sm-12 mx-auto mt-5">
@@ -144,7 +150,7 @@
                       <form class="login" method="POST" action="{% url 'account_login' %}">
                         
                         {% csrf_token %}
-                       <!--{{ form|crispy }}-->
+                       
 
                         <div class="md-form">
                           <i class="fas fa-user prefix white-text"></i>

@@ -67,22 +67,22 @@
   
   <script type=text/javascript>
          toastr.options = {
-        "closeButton": false,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": false,
-        "positionClass": "toast-top-full-width",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "4000",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-      }
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "5000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          }
       toastr.{{ message.tags }}('{{ message }}')
        
         </script>

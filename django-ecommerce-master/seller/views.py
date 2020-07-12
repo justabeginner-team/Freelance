@@ -133,12 +133,12 @@ def retailer_dash(request):
 def admin(request):
     items_table = Item.objects.filter(user=request.user)
     recents = items_table.order_by('-created_on')[:3]
-    # orders = Order.objects.filter(items__item__user=request.user)
+    orders = Order.objects.filter(items__item__user=request.user)
     rev = Rating.objects.filter(item__user=request.user).order_by('-created_on')
     return render(request, 'admin-dash/index.html', {
         'items': items_table,
         'recents': recents,
-        # 'orders': orders,
+        'orders': orders,
         'reviews': rev,
     })
 

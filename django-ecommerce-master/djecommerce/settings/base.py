@@ -4,7 +4,7 @@ from decouple import config
 BASE_DIR = os.path.dirname(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__))))
 
-SECRET_KEY = '8#s^kyoz5g-@f(xd)0)1ass(9lknoi=3_l0hgv^iy^szqw3lq7'
+SECRET_KEY = config('SECRET_KEY')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -66,11 +66,7 @@ GRAPH_MODELS = {
     'group_models': True,
 }
 
-# WEBPUSH_SETTINGS = {
-#     "VAPID_PUBLIC_KEY": "BIHPaqGVkzIePYMUOCoK61unJ2Qi3VGZRQ8ObINU1HQw1tQHGEbMvtDEY-wZNzphS-JPV7QI3UibvW0Scjxlfoo",
-#     "VAPID_PRIVATE_KEY": "p2Bz6G20GRqShK_36k91YNcEFF2aFSLpLhwjZmKfNk8",
-#     "VAPID_ADMIN_EMAIL": "alexgathua3@gmail.com",
-# }
+
 
 WSGI_APPLICATION = 'djecommerce.wsgi.application'
 
@@ -94,15 +90,15 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'
 )
-# EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-# EMAIL_FILE_PATH='email/app-meso'
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'testpython301@gmail.com'
-EMAIL_HOST_PASSWORD = 'alex9122#'
-EMAIL_USE_TLS = True
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+ACCOUNT_SIGNUP_FORM_CLASS = 'core.forms.SignupForm'
+
+#EMAIL_HOST = config('EMAIL_HOST')
+#EMAIL_PORT = config('EMAIL_PORT',cast=int)
+#EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+#EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+#EMAIL_USE_TLS = config('EMAIL_USE_TLS',cast=bool)
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
@@ -124,12 +120,12 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # The Mpesa environment to use
 # Possible values: sandbox, production
 
-MPESA_ENVIRONMENT = 'sandbox'
+MPESA_ENVIRONMENT = config('MPESA_ENVIRONMENT')
 
 # Credentials for the daraja app
 
-MPESA_CONSUMER_KEY = 'J7t2QJ8reSz9Kqx5kBzfpCAhZ6ibbc4g'
-MPESA_CONSUMER_SECRET = 'K9zQLBGiyNJxms2i'
+MPESA_CONSUMER_KEY = config('MPESA_CONSUMER_KEY')
+MPESA_CONSUMER_SECRET = config('MPESA_CONSUMER_SECRET')
 
 # Shortcode to use for transactions. For sandbox  use the Shortcode 1 provided on test credentials page
 
@@ -138,17 +134,23 @@ MPESA_CONSUMER_SECRET = 'K9zQLBGiyNJxms2i'
 # This only has a different value on sandbox, you do not need to set it on production
 # For sandbox use the Lipa na MPESA Online Shorcode provided on test credentials page
 
-MPESA_EXPRESS_SHORTCODE = '174379'
+MPESA_EXPRESS_SHORTCODE = config('MPESA_EXPRESS_SHORTCODE')
 
 # Type of shortcode
 # Possible values:
 # - paybill (For Paybill)
 # - till_number (For Buy Goods Till Number)
 
-MPESA_SHORTCODE_TYPE = 'paybill'
+MPESA_SHORTCODE_TYPE = config('MPESA_SHORTCODE_TYPE')
 
 # Lipa na MPESA Online passkey
 # Sandbox passkey is available on test credentials page
 # Production passkey is sent via email once you go live
 
-MPESA_PASSKEY = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
+MPESA_PASSKEY = config('MPESA_PASSKEY')
+
+
+EMAIL_BACKEND="sendgrid_backend.SendgridBackend"
+SENDGRID_API_KEY = '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'
+SENDGRID_SANDBOX_MODE_IN_DEBUG=False
+SENDGRID_ECHO_TO_STDOUT=True

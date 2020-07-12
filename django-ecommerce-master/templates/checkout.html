@@ -201,53 +201,9 @@
     })
 
 
-  $('#form').on('submit', function (e) {
+ 
 
-    e.preventDefault();
-
-    $.ajax({
-      type: "POST",
-      url: "{% url 'core:checkout' %}", /* django ajax posting url  */
-      data: {
-  
-        payment_option:$('#{{name}}').val(),
-        shipping_address:$('#shipping_address').val(),
-        shipping_address2: $('#shipping_address2').val(),
-        shipping_country:$('#id_shipping_country').val(),
-        shipping_zip: $('#shipping_zip').val(),
-        same_billing_address: $('#same_billing_address').val(),
-        set_default_shipping: $('#set_default_shipping').val(),
-        use_default_shipping: $('#use_default_shipping').val(),
-
-       
-        billing_address: $('#billing_address').val(),
-        billing_address2: $('#billing_address2').val(),
-        billing_country: $('#id_billing_country').val(),
-        billing_zip: $('#billing_zip').val(),
-        set_default_billing: $('#set_default_billing').val(),
-        use_default_billing: $('#use_default_billing').val(),
-
-
-        csrfmiddlewaretoken: '{{ csrf_token }}',
-        dataType: "json",
-
-      },
-
-      success: function (data) {
-       toastr.data.message.tags ('{{ message }}')
-      },
-
-      failure: function () {
-
-      }
-
-
-    });
-
-
-  });     
-
-
+    
 
 
 
