@@ -23,7 +23,7 @@ PAYMENT_CHOICES = (
 
 class SignupForm(forms.ModelForm):
     retailer=forms.BooleanField(required=False)
-    company = forms.CharField(max_length=50)
+    company = forms.CharField(max_length=50,required=False)
 
     class Meta:
         model = get_user_model()

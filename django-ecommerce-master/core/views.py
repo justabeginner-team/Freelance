@@ -31,8 +31,15 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 def create_ref_code():
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
 
-
-
+def login_success(request):
+    """
+    Redirects user to various pages depending on whether they
+    are customers or retailers
+    """
+    
+    user=UserProfile.objects.get(user=request.user)
+    print(f"================={user.is_retailer}==============")
+    
 def products(request):
     context = {
         'items': Item.objects.all()

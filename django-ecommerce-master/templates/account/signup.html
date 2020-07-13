@@ -206,44 +206,47 @@
                           {% csrf_token %}
                           <div class="md-form">
                            
-                            <input type="text" id="orangeForm-name" name="first_name" class="form-control">
-                            <label for="orangeForm-name">first name</label>
+                            <input type="text" id="orangeForm-fname" name="first_name" class="form-control" required>
+                            <label for="orangeForm-name">first name<span style="color: red;"> *</span></label>
                           </div>
                           <div class="md-form">
                             
-                            <input type="text" id="orangeForm-name" name="last_name" class="form-control">
-                            <label for="orangeForm-name">last name</label>
+                            <input type="text" id="orangeForm-lname" name="last_name" class="form-control" required>
+                            <label for="orangeForm-name">last name<span style="color: red;"> *</span></label>
                           </div>
                           <div class="md-form">
                            
-                            <input type="text" id="orangeForm-name" name="username"  class="form-control">
-                            <label for="orangeForm-name">username</label>
+                            <input type="text" id="orangeForm-uname" name="username"  class="form-control" required>
+                            <label for="orangeForm-name">username<span style="color: red;"> *</span></label>
                           </div>
                           <div class="md-form">
                            
-                            <input type="text" id="orangeForm-email"  name="email" class="form-control">
-                            <label for="orangeForm-email"> email</label>
+                            <input type="text" id="orangeForm-email"  name="email" class="form-control" required>
+                            <label for="orangeForm-email">email<span style="color: red;"> *</span></label>
                           </div>
                          
                           <div class="md-form">
                            
-                            <input type="password" id="orangeForm-pass" name="password1" class="form-control">
-                            <label for="orangeForm-pass"> password</label>
+                            <input type="password" id="orangeForm-pass" name="password1" class="form-control" required>
+                            <label for="orangeForm-pass">password<span style="color: red;"> *</span></label>
                           </div>
                           <div class="md-form">
                         
-                            <input type="password" id="orangeForm-pass"  name="password2" class="form-control">
-                            <label for="orangeForm-pass">repeat password</label>
+                            <input type="password" id="orangeForm-pass1"  name="password2" class="form-control" required>
+                            <label for="orangeForm-pass">repeat password<span style="color: red;"> *</span></label>
                           </div>
-                          <div class="custom-control custom-checkbox ">
+                          <div class="md custom-control custom-checkbox ">
                             <input type="checkbox" name="retailer" id="defaultUnchecked" class="custom-control-input">
-                            <label for="defaultUnchecked" class="custom-control-label">Are you a retailer?</label>
+                            <label for="defaultUnchecked" class="custom-control-label"><span style="color: red;">want to sell with us?</span></label>
                           </div>
-                          <div class="md-form">
+                          <div class='hideable_fields'>
+                            <div class="md-form">
                           
-                            <input type="text" id="orangeForm-name" name="company" class="form-control">
+                            <input type="text" id="orangeForm-cname" name="company" class="form-control">
                             <label for="orangeForm-name">company</label>
                           </div>
+                          </div>
+                          
                         
                         
                           <input type="hidden" name="{{ redirect_field_name }}" value="{% url 'account_login' %}" />
@@ -281,3 +284,27 @@
 
 
 {% endblock %}
+{% block extra_scripts %}
+<script>
+ 
+    
+    var hideable_fields = $('.hideable_fields');
+    var retailer = document.querySelector("input[name=retailer]");
+    $(document).ready(function(){
+       document.getElementById('orangeForm-cname').disabled = true;
+       hideable_fields.hide();
+      retailer.addEventListener('change', function () {
+      if (this.checked) {
+        document.getElementById('orangeForm-cname').disabled=false;
+        hideable_fields.show();
+      } 
+      else {
+         document.getElementById('orangeForm-cname').disabled = true;
+        hideable_fields.hide();
+      }
+    });
+    })
+    
+  
+</script>
+{% endblock extra_scripts %}

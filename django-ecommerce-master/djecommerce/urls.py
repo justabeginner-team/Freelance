@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from .views import login_success
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -11,6 +12,7 @@ urlpatterns = [
     # path('webpush/', include('webpush.urls')),
     path('', include('core.urls', namespace='core')),
     path('', include('seller.urls', namespace='seller')),
+    path('success', login_success, name='where_to_go'),
 ]
 
 if settings.DEBUG:

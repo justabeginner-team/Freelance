@@ -55,7 +55,7 @@ class UserProfile(models.Model):
     stripe_customer_id = models.CharField(max_length=50, blank=True, null=True)
     one_click_purchasing = models.BooleanField(default=False)
     is_retailer=models.BooleanField(default=False)  
-    company_name = models.CharField(max_length=50, null=False, blank=False)
+    company_name = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
         return self.user.username

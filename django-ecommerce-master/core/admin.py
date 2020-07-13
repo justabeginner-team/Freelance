@@ -68,6 +68,13 @@ class RatingAdmin(admin.ModelAdmin):
     def approve_comments(self, request, queryset):
         queryset.update(status=True)
 
+class UserProfileAdmin(admin.ModelAdmin):
+    readonly_fields = ('one_click_purchasing', 'stripe_customer_id', 'user',
+                        'is_retailer', 'company_name')
+
+
+
+
 
 admin.site.register(Item, ItemAdmin)
 admin.site.register(Category)
@@ -78,5 +85,5 @@ admin.site.register(Payment)
 admin.site.register(Coupon)
 admin.site.register(Refund)
 admin.site.register(Address, AddressAdmin)
-admin.site.register(UserProfile)
+admin.site.register(UserProfile,UserProfileAdmin)
 admin.site.register(Rating, RatingAdmin)
