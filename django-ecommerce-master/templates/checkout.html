@@ -8,7 +8,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
-          <form method="POST" class="card-body">
+          <form id="form" method="POST" class="card-body">
             {% csrf_token %}
               <ul class="stepper horizontal horizontal-fix" id="custom-validation">
                 <li class="step active">
@@ -20,9 +20,10 @@
                         <div class="d-block my-3">
                           {% for value, name in form.fields.payment_option.choices %}
                           <div class="custom-control custom-radio">
-                            <input id="{{ name }}" name="payment_option" value="{{ value }}" type="radio" class="custom-control-input" required>
+                            <input id="{{ name }}" name="payment_option" value="{{ value }}" type="radio" class="validate custom-control-input" required>
                             <label class="custom-control-label" for="{{ name }}">{{ name }}</label>
                           </div>
+                          {{name}}
                           {% endfor %}
                         </div>
                       </div>
@@ -198,6 +199,14 @@
     $(document).ready(function () {
       $('.stepper').mdbStepper();
     })
+
+
+ 
+
+    
+
+
+
 var hideable_shipping_form = $('.hideable_shipping_form');
 var hideable_billing_form = $('.hideable_billing_form');
 

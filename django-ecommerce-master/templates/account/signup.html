@@ -103,7 +103,7 @@
           <div class="row pt-5">
 
             <!-- Grid column -->
-            <div class="col-md-12">
+            <div class="col-md-12 col-lg-12">
 
               <div class="card">
                 <div class="card-body">
@@ -175,20 +175,20 @@
 
                       <!-- Grid row -->
                       <div class="row pb-4 d-flex justify-content-center mb-4">
-                          <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
-                          {% comment %}
+                         
+                         
                         <h4 class="mt-3 mr-4">
                           <strong>Login with</strong>
                         </h4>
 
                         <div class="inline-ul text-center d-flex justify-content-center">
-                          <a class="p-2 m-2 fa-lg tw-ic">
+                          <a class="p-2 m-2 fa tw-ic">
                             <i class="fab fa-twitter fa-lg indigo-text"></i>
                           </a>
-                          <a class="p-2 m-2 fa-lg li-ic">
+                          <a class="p-2 m-2 fa li-ic">
                             <i class="fab fa-linkedin-in fa-lg indigo-text"> </i>
                           </a>
-                          <a class="p-2 m-2 fa-lg ins-ic">
+                          <a class="p-2 m-2 fa ins-ic">
                             <i class="fab fa-instagram fa-lg indigo-text"> </i>
                           </a>
                         </div>
@@ -196,7 +196,7 @@
                         <h4 class="mt-3 ml-4">
                           <strong>or:</strong>
                         </h4>
-                          {% endcomment %}
+                     
                       </div>
                       <!-- /Grid row -->
 
@@ -204,7 +204,47 @@
                      
                         <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
                           {% csrf_token %}
-                          {{ form|crispy }}
+                          <div class="md-form">
+                           
+                            <input type="text" id="orangeForm-name" name="first_name" class="form-control">
+                            <label for="orangeForm-name">first name</label>
+                          </div>
+                          <div class="md-form">
+                            
+                            <input type="text" id="orangeForm-name" name="last_name" class="form-control">
+                            <label for="orangeForm-name">last name</label>
+                          </div>
+                          <div class="md-form">
+                           
+                            <input type="text" id="orangeForm-name" name="username"  class="form-control">
+                            <label for="orangeForm-name">username</label>
+                          </div>
+                          <div class="md-form">
+                           
+                            <input type="text" id="orangeForm-email"  name="email" class="form-control">
+                            <label for="orangeForm-email"> email</label>
+                          </div>
+                         
+                          <div class="md-form">
+                           
+                            <input type="password" id="orangeForm-pass" name="password1" class="form-control">
+                            <label for="orangeForm-pass"> password</label>
+                          </div>
+                          <div class="md-form">
+                        
+                            <input type="password" id="orangeForm-pass"  name="password2" class="form-control">
+                            <label for="orangeForm-pass">repeat password</label>
+                          </div>
+                          <div class="custom-control custom-checkbox ">
+                            <input type="checkbox" name="retailer" id="defaultUnchecked" class="custom-control-input">
+                            <label for="defaultUnchecked" class="custom-control-label">Are you a retailer?</label>
+                          </div>
+                          <div class="md-form">
+                          
+                            <input type="text" id="orangeForm-name" name="company" class="form-control">
+                            <label for="orangeForm-name">company</label>
+                          </div>
+                        
                         
                           <input type="hidden" name="{{ redirect_field_name }}" value="{% url 'account_login' %}" />
                         <div class="text-center">
@@ -238,4 +278,6 @@
 
 
 </body>
+
+
 {% endblock %}

@@ -12,9 +12,8 @@ from .views import (
     RequestRefundView,
     category_view,
     account_settings,
-    CustomerSignupView,
     index,
-    
+
     getitems,
 )
 
@@ -36,5 +35,5 @@ urlpatterns = [
     path('account_settings/', account_settings, name='account_settings'),
 
     path('category/<str:category>', category_view, name='category_view'),
-    #path('ajaxitemsload',getitems,name='ajaxitems'),
+    # path('ajaxitemsload',getitems,name='ajaxitems'),
 ]
