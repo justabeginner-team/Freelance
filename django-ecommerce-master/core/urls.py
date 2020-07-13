@@ -13,8 +13,6 @@ from .views import (
     category_view,
     account_settings,
     index,
-    login_success,
-    
     getitems,
 )
 
@@ -36,5 +34,5 @@ urlpatterns = [
     path('account_settings/', account_settings, name='account_settings'),
 
     path('category/<str:category>', category_view, name='category_view'),
-    path('successi', login_success, name='where_to'),
+    # path('ajaxitemsload',getitems,name='ajaxitems'),
 ]

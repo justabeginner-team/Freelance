@@ -66,8 +66,6 @@ GRAPH_MODELS = {
     'group_models': True,
 }
 
-
-
 WSGI_APPLICATION = 'djecommerce.wsgi.application'
 
 LANGUAGE_CODE = 'en-us'
@@ -93,12 +91,12 @@ AUTHENTICATION_BACKENDS = (
 
 ACCOUNT_SIGNUP_FORM_CLASS = 'core.forms.SignupForm'
 
-#EMAIL_HOST = config('EMAIL_HOST')
-#EMAIL_PORT = config('EMAIL_PORT',cast=int)
-#EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-#EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-#EMAIL_USE_TLS = config('EMAIL_USE_TLS',cast=bool)
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = config('EMAIL_HOST')
+# EMAIL_PORT = config('EMAIL_PORT',cast=int)
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+# EMAIL_USE_TLS = config('EMAIL_USE_TLS',cast=bool)
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
@@ -149,8 +147,7 @@ MPESA_SHORTCODE_TYPE = config('MPESA_SHORTCODE_TYPE')
 
 MPESA_PASSKEY = config('MPESA_PASSKEY')
 
-
-EMAIL_BACKEND="sendgrid_backend.SendgridBackend"
-SENDGRID_API_KEY = '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'
-SENDGRID_SANDBOX_MODE_IN_DEBUG=False
-SENDGRID_ECHO_TO_STDOUT=True
+EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+SENDGRID_API_KEY = config('SENDGRID_API_KEY')
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+SENDGRID_ECHO_TO_STDOUT = True
