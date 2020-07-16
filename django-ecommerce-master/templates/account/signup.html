@@ -204,7 +204,10 @@
                      
                         <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
                           {% csrf_token %}
-                          <div class="md-form">
+                          
+
+                          
+                                     <div class="md-form">
                            
                             <input type="text" id="orangeForm-fname" name="first_name" class="form-control" required>
                             <label for="orangeForm-name">first name<span style="color: red;"> *</span></label>
@@ -247,6 +250,8 @@
                           </div>
                           </div>
                           
+                          
+                 
                         
                         
                           <input type="hidden" name="{{ redirect_field_name }}" value="{% url 'account_login' %}" />
