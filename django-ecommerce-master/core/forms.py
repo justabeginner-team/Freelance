@@ -1,9 +1,8 @@
-
 from django import forms
 from django.forms import ModelForm
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
-from .models import Item, Rating,UserProfile
+from .models import Item, Rating, UserProfile
 from allauth.account.adapter import DefaultAccountAdapter, get_adapter
 from django.contrib.auth import get_user_model
 from allauth.account.forms import SetPasswordField, PasswordField
@@ -12,30 +11,27 @@ from crispy_forms.layout import Submit
 from django.conf import settings
 from django.contrib.auth import get_user_model
 
-
-
 PAYMENT_CHOICES = (
     ('S', 'Stripe'),
     ('P', 'PayPal'),
-    ('M','Mpesa')
+    ('M', 'Mpesa')
 )
 
 
 class SignupForm(forms.ModelForm):
-    retailer=forms.BooleanField(required=False)
-    company = forms.CharField(max_length=50,required=False)
+    retailer = forms.BooleanField(required=False)
+    company = forms.CharField(max_length=50, required=False)
 
     class Meta:
         model = get_user_model()
         fields = ['first_name', 'last_name', 'company']
 
     def signup(self, request, user):
-
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
         user.save()
 
-        profile = UserProfile(user=user,is_retailer=self.cleaned_data['retailer'],
+        profile = UserProfile(user=user, is_retailer=self.cleaned_data['retailer'],
                               company_name=self.cleaned_data['company'])
         profile.save()
 

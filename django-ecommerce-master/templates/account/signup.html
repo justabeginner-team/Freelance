@@ -207,17 +207,17 @@
                           <div class="md-form">
                            
                             <input type="text" id="orangeForm-fname" name="first_name" class="form-control" required>
-                            <label for="orangeForm-name">first name<span style="color: red;"> *</span></label>
+                            <label for="orangeForm-fname">first name<span style="color: red;"> *</span></label>
                           </div>
                           <div class="md-form">
                             
                             <input type="text" id="orangeForm-lname" name="last_name" class="form-control" required>
-                            <label for="orangeForm-name">last name<span style="color: red;"> *</span></label>
+                            <label for="orangeForm-lname">last name<span style="color: red;"> *</span></label>
                           </div>
                           <div class="md-form">
                            
                             <input type="text" id="orangeForm-uname" name="username"  class="form-control" required>
-                            <label for="orangeForm-name">username<span style="color: red;"> *</span></label>
+                            <label for="orangeForm-uname">username<span style="color: red;"> *</span></label>
                           </div>
                           <div class="md-form">
                            
@@ -243,12 +243,10 @@
                             <div class="md-form">
                           
                             <input type="text" id="orangeForm-cname" name="company" class="form-control">
-                            <label for="orangeForm-name">company</label>
+                            <label for="orangeForm-cname">company</label>
                           </div>
                           </div>
-                          
-                        
-                        
+
                           <input type="hidden" name="{{ redirect_field_name }}" value="{% url 'account_login' %}" />
                         <div class="text-center">
                            <button class="btn btn-indigo btn-rounded mt-5" type="submit">{% trans "Sign Up" %} &raquo;</button>

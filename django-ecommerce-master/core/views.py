@@ -1,29 +1,23 @@
-from django.template.loader import render_to_string
-
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
-from django.conf import settings
-from django.contrib import messages
-from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView, View, FormView
-from django.shortcuts import redirect, reverse
-from django.utils import timezone
-from django.urls import reverse
-from django.core.mail import send_mail
-from django.contrib.auth.models import User
-
-from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddReviewForm
-from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating  # ,EcommerceUser
-from .filters import ItemFilter, CategoryFilter
-from .mixins import ProfileSignupView
-from seller.mpesa_credentials import lipa_na_mpesa_online
-
 import random
 import string
+
 import stripe
+from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import redirect
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
+from django.utils import timezone
+from django.views.generic import DetailView, View, FormView
+
+from .filters import CategoryFilter
+from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddReviewForm
+from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating  # ,EcommerceUser
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -412,6 +406,9 @@ class PaymentView(View):
 #     template_name = "home.html"
 def HomeView(request):
     items = Item.objects.all()
+    paginator = Paginator(items, 9)  # Show 3 items per page.
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     laptop_count = items.filter(category__name__contains='Laptops').count()
     smartphone_count = items.filter(category__name__contains='Smartphones').count()
     tablet_count = items.filter(category__name__contains='Tablets').count()
@@ -426,6 +423,7 @@ def HomeView(request):
 
     context_dict = {
         'items': items,
+        'page_obj': page_obj,
         'myfilter': myfilter,
         'laptop_count': laptop_count,
         'smartphone_count': smartphone_count,
