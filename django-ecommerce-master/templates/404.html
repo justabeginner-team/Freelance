@@ -1,22 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
+{% load static %}
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>shop</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+  <title>Material Design Bootstrap</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
+
   <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
   <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
-  <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
-  <link href="{% static 'css/addons/steppers.min.css' %}" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/toastr.min.css' %}" media="all">
-  <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/toastr.min.js' %}"></script>
-  
   <style>
     html,
     body,
@@ -32,7 +29,7 @@
         height: 815px;
       }
     }
-    @media (min-width: 800px) and (max-width: 850px) {         
+    @media (min-width: 480px) and (max-width: 850px) {         
       html,
       body,
       header,
@@ -44,7 +41,32 @@
 </head>
 
 <body>
+{% if messages %}
+{% for message in messages %}
 
+<script type=text/javascript>
+             toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": true,
+                "onclick": null,
+                "showDuration": "5000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+              }
+          toastr.{{ message.tags }}('{{ message }}')
+           
+            </script>
+{% endfor %}
+{% endif %}
   <!-- Navigation & Intro -->
   <header>
 

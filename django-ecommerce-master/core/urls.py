@@ -12,7 +12,6 @@ from .views import (
     RequestRefundView,
     category_view,
     account_settings,
-    index,
     getitems,
 )
 

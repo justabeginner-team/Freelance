@@ -672,14 +672,3 @@ def category_view(request, category):
     return render(request, 'home.html', context=context_dict)
 
 
-def index(request):
-    cl = MpesaClient()
-    # Use a Safaricom phone number that you have access to, for you to be able to view the prompt.
-    phone_number = '254711521508'
-    amount = 1
-    account_reference = 'reference'
-    transaction_desc = 'Description'
-    callback_url = 'https://darajambili.herokuapp.com/c2b/validation/'
-    response = cl.stk_push(phone_number, amount,
-                           account_reference, transaction_desc, callback_url)
-    return HttpResponse(response.text)
