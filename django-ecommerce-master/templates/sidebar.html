@@ -1,5 +1,8 @@
-   <!-- Sidebar navigation -->
+<section>
+<!-- Navigation -->
+  <header>
 
+    <!-- Sidebar navigation -->
     <ul id="slide-out" class="side-nav custom-scrollbar">
 
       <!-- Logo -->
@@ -7,7 +10,11 @@
 
         <div class="logo-wrapper waves-light">
 
-          <a href="#"><img src="https://mdbootstrap.com/img/logo/mdb-transparent.png" class="img-fluid flex-center"></a>
+          <a href="#">
+
+            <img src="https://mdbootstrap.com/img/logo/mdb-transparent.png" class="img-fluid flex-center">
+
+          </a>
 
         </div>
 
@@ -19,13 +26,45 @@
 
         <ul class="social">
 
-          <li><a class="fb-ic"><i class="fab fa-facebook-f"> </i></a></li>
+          <li>
 
-          <li><a class="pin-ic"><i class="fab fa-pinterest"> </i></a></li>
+            <a class="fb-ic">
 
-          <li><a class="gplus-ic"><i class="fab fa-google-plus-g"> </i></a></li>
+              <i class="fab fa-facebook-f"> </i>
 
-          <li><a class="tw-ic"><i class="fab fa-twitter"> </i></a></li>
+            </a>
+
+          </li>
+
+          <li>
+
+            <a class="pin-ic">
+
+              <i class="fab fa-pinterest"> </i>
+
+            </a>
+
+          </li>
+
+          <li>
+
+            <a class="gplus-ic">
+
+              <i class="fab fa-google-plus-g"> </i>
+
+            </a>
+
+          </li>
+
+          <li>
+
+            <a class="tw-ic">
+
+              <i class="fab fa-twitter"> </i>
+
+            </a>
+
+          </li>
 
         </ul>
 
@@ -50,21 +89,65 @@
 
       <!-- Side navigation links -->
       <li>
+        <ul class="collapsible collapsible-accordion">
+          <li>
+            <a class="collapsible-header waves-effect arrow-r">
+                <i class="fas fa-user "></i>
+                Your Account
+                <i class="fas fa-angle-down rotate-icon"></i>
+            </a>
+            <div class="collapsible-body">
+              <ul>
+                {% if request.user.is_authenticated %}
+                <li>
+                  <a class="dropdown-item waves-effect waves-light" href="">Profile</a>
+                </li>
+                <li>
+                   <a class="dropdown-item waves-effect waves-light" href="{% url 'account_logout' %}">Log out</a>
+                </li>
+
+                {% else %}
+                    <li >
+                      <a class="dropdown-item waves-effect waves-light" href="{% url 'account_login' %}">
+                        Login
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item waves-effect waves-light" href="{% url 'account_signup' %}">
+                         Signup
+                      </a>
+                    </li>
+                {% endif %}
+              </ul>
+            </div>
+          </li>
+        </ul>
 
         <ul class="collapsible collapsible-accordion">
 
-          <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-shopping-cart"></i> Cart page<i
-                class="fas fa-angle-down rotate-icon"></i></a>
+          <li>
+
+            <a class="collapsible-header waves-effect arrow-r">
+
+              <i class="fas fa-shopping-cart"></i> Cart page
+
+              <i class="fas fa-angle-down rotate-icon"></i>
+
+            </a>
 
             <div class="collapsible-body">
 
               <ul>
 
-                <li><a href="../cart/cart-v1.html" class="waves-effect">Cart V.1</a>
+                <li>
+
+                  <a href="../cart/cart-v1.html" class="waves-effect">Cart V.1</a>
 
                 </li>
 
-                <li><a href="../cart/cart-v2.html" class="waves-effect">Cart V.2</a>
+                <li>
+
+                  <a href="../cart/cart-v2.html" class="waves-effect">Cart V.2</a>
 
                 </li>
 
@@ -74,26 +157,41 @@
 
           </li>
 
-          <li><a class="collapsible-header waves-effect arrow-r"><i class="far fa-hand-pointer"></i> Category page<i
-                class="fas fa-angle-down rotate-icon"></i></a>
+          <li>
+
+            <a class="collapsible-header waves-effect arrow-r">
+
+              <i class="far fa-hand-pointer"></i> Category page
+
+              <i class="fas fa-angle-down rotate-icon"></i>
+
+            </a>
 
             <div class="collapsible-body">
 
               <ul>
 
-                <li><a href="../category/category-v1.html" class="waves-effect">Category V.1</a>
+                <li>
+
+                  <a href="../category/category-v1.html" class="waves-effect">Category V.1</a>
 
                 </li>
 
-                <li><a href="../category/category-v2.html" class="waves-effect">Category V.2</a>
+                <li>
+
+                  <a href="../category/category-v2.html" class="waves-effect">Category V.2</a>
 
                 </li>
 
-                <li><a href="../category/category-v3.html" class="waves-effect">Category V.3</a>
+                <li>
+
+                  <a href="../category/category-v3.html" class="waves-effect">Category V.3</a>
 
                 </li>
 
-                <li><a href="../category/category-v4.html" class="waves-effect">Category V.4</a>
+                <li>
+
+                  <a href="../category/category-v4.html" class="waves-effect">Category V.4</a>
 
                 </li>
 
@@ -103,22 +201,35 @@
 
           </li>
 
-          <li><a href="{% url 'core:home' %}" class="collapsible-header waves-effect arrow-r"><i class="far fa-bookmark"></i> Homepage<i
-                class="fas fa-angle-down rotate-icon"></i></a>
+          <li>
+
+            <a class="collapsible-header waves-effect arrow-r">
+
+              <i class="far fa-bookmark"></i> Homepage
+
+              <i class="fas fa-angle-down rotate-icon"></i>
+
+            </a>
 
             <div class="collapsible-body">
 
               <ul>
 
-                <li><a href="../homepage/homepage-v1.html" class="waves-effect">Homepage V.1</a>
+                <li>
+
+                  <a href="../homepage/homepage-v1.html" class="waves-effect">Homepage V.1</a>
 
                 </li>
 
-                <li><a href="../homepage/homepage-v2.html" class="waves-effect">Homepage V.2</a>
+                <li>
+
+                  <a href="../homepage/homepage-v2.html" class="waves-effect">Homepage V.2</a>
 
                 </li>
 
-                <li><a href="../homepage/homepage-v3.html" class="waves-effect">Homepage V.3</a>
+                <li>
+
+                  <a href="../homepage/homepage-v3.html" class="waves-effect">Homepage V.3</a>
 
                 </li>
 
@@ -128,18 +239,29 @@
 
           </li>
 
-          <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-camera-retro"></i> Product page<i
-                class="fas fa-angle-down rotate-icon"></i></a>
+          <li>
+
+            <a class="collapsible-header waves-effect arrow-r">
+
+              <i class="fas fa-camera-retro"></i> Product page
+
+              <i class="fas fa-angle-down rotate-icon"></i>
+
+            </a>
 
             <div class="collapsible-body">
 
               <ul>
 
-                <li><a href="../product/product-v1.html" class="waves-effect">Product V.1</a>
+                <li>
+
+                  <a href="../product/product-v1.html" class="waves-effect">Product V.1</a>
 
                 </li>
 
-                <li><a href="../product/product-v2.html" class="waves-effect">Product V.2</a>
+                <li>
+
+                  <a href="../product/product-v2.html" class="waves-effect">Product V.2</a>
 
                 </li>
 
@@ -149,10 +271,13 @@
 
           </li>
 
-          <li><a href="../contact/contact.html" class="collapsible-header waves-effect"><i class="fas fa-envelope"></i>
+          <li>
 
-              Contact</a>
-            </li>
+            <a href="../contact/contact.html" class="collapsible-header waves-effect">
+
+              <i class="fas fa-envelope"></i> Contact</a>
+
+          </li>
 
         </ul>
 
@@ -162,5 +287,13 @@
       <div class="sidenav-bg mask-strong"></div>
 
     </ul>
-
     <!-- Sidebar navigation -->
+
+    <!-- Navbar -->
+   {% include 'navbar.html' %}
+
+    <!-- Navbar -->
+
+  </header>
+  <!-- Navigation -->
+</section>

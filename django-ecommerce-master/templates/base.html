@@ -58,10 +58,9 @@
 </head>
 
 <body class="homepage-v1 hidden-sn white-skin animated">
- 
-{% include "sidebar.html" %}
-{% include "navbar.html" %}
-<br>
+
+    {% include "sidebar.html" %}
+    {% include "carousel.html" %}
 <section> 
   {% if messages %}
   {% for message in messages %}
@@ -90,14 +89,10 @@
   {% endfor %}
   {% endif %}
     {% block mega %}
-   
-    
-    
-    
+
     {% endblock mega %}
 </section>
 
-<br>
     {% block content %}
     {% endblock content %}
 <br>
