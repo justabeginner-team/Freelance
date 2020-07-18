@@ -405,7 +405,7 @@ class PaymentView(View):
 #     paginate_by = 10
 #     template_name = "home.html"
 def HomeView(request):
-    items = Item.objects.all()
+    items = Item.objects.all().order_by('-created_on')
     paginator = Paginator(items, 9)  # Show 3 items per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -416,8 +416,8 @@ def HomeView(request):
     camera_count = items.filter(category__name__contains='Camera').count()
     accesories_count = items.filter(category__name__contains='Accesories').count()
     tv_count = items.filter(category__name__contains='Tv').count()
-    lst = items.all().order_by('-created_on')[:3]
-    rdm = items.all().order_by('?')[:3]
+    lst = items.order_by('-created_on')[:3]
+    rdm = items.order_by('?')[:3]
     myfilter = CategoryFilter(request.GET, queryset=items)
     items = myfilter.qs
 

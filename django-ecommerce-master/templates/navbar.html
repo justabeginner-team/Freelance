@@ -1,22 +1,18 @@
 {% load cart_template_tags %}
 
-
-   <!-- Navigation -->
-<div class="container-fluid mx-0 px-0">
-  
     <!-- Navbar -->
     <nav class="navbar fixed-top navbar-expand-lg  navbar-light scrolling-navbar white">
   
       <div class="container">
   
         <!-- SideNav slide-out button -->
-        {% if request.user.is_authenticated %}
+
         <div class="float-left mr-2">
   
           <a href="#" data-activates="slide-out" class="button-collapse"><i class="fas fa-bars"></i></a>
   
         </div>
-        {% endif %}
+
   
         <a class="navbar-brand font-weight-bold" href="#"><strong>SHOP</strong></a>
         
@@ -41,52 +37,21 @@
                   </li>
                   
                   {% comment %}
-  
-                  
+
   
                   <li class="nav-item ml-3">
-        <a class="nav-link waves-effect waves-light dark-grey-text font-weight-bold" href="#"><i
+                      <a class="nav-link waves-effect waves-light dark-grey-text font-weight-bold" href="#"><i
                         class="fas fa-envelope blue-text"></i>
-        
                       Contact <span class="sr-only">(current)</span></a>
         
-                    <a class="nav-link waves-effect waves-light dark-grey-text font-weight-bold" href="#"><i
+                      <a class="nav-link waves-effect waves-light dark-grey-text font-weight-bold" href="#"><i
                         class="fas fa-cog blue-text"></i>
         
                       Settings</a>
         
                   </li>
                   {% endcomment %}
-  
 
-                  <li class="nav-item dropdown ml-3">
-        
-                    <a class="nav-link dropdown-toggle waves-effect waves-light dark-grey-text font-weight-bold"
-                      id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
-                        class="fas fa-user blue-text"></i>
-        
-                      Profile </a>
-        
-                    <div class="dropdown-menu dropdown-menu-right dropdown-cyan" aria-labelledby="navbarDropdownMenuLink-4">
-        
-                      <a class="dropdown-item waves-effect waves-light" href="">My account</a>
-        
-                      <a class="dropdown-item waves-effect waves-light" href="{% url 'account_logout' %}">Log out</a>
-        
-                    </div>
-        
-                  </li>
-              {% else %}
-                  <li class="nav-item">
-                    <a class="nav-link waves-effect" href="{% url 'account_login' %}">
-                      <span class="clearfix d-none d-sm-inline-block"> Login </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link waves-effect" href="{% url 'account_signup' %}">
-                      <span class="clearfix d-none d-sm-inline-block"> Signup </span>
-                    </a>
-                  </li>
               {% endif %}
         
           </ul>
@@ -119,6 +84,3 @@
     </div>
     {% endif %}
     <!-- Fixed button -->
-
-  <!-- Navigation -->
-</div>
