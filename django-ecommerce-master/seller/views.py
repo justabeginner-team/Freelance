@@ -18,6 +18,7 @@ from django.views.decorators.csrf import csrf_exempt
 # from webpush import send_user_notification
 import json
 from django.conf import settings
+from .mpesa_credentials import MpesaAccessToken,LipanaMpesaPpassword,lipa_na_mpesa_online
 
 
 # Create your views here.
@@ -41,6 +42,10 @@ from django.conf import settings
 #     }
 #     return render(request, 'add_item.html', context=context_dict)
 
+def mpesa(request):
+    
+    response = lipa_na_mpesa_online(request,amount=1,phonenumber=254711521508)
+    return HttpResponse(response.text)
 
 class AddItemFormView(FormView):
     form_class = AddItemForm
