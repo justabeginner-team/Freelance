@@ -17,7 +17,8 @@ from django.views.generic import DetailView, View, FormView
 
 from .filters import CategoryFilter
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddReviewForm
-from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating  # ,EcommerceUser
+from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating, \
+    Category  # ,EcommerceUser
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -472,6 +473,8 @@ class ItemDisplayView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ItemDisplayView, self).get_context_data(**kwargs)
         context['reviews'] = Rating.objects.filter(item=self.get_object())
+        # context['related'] = Category.objects.filter(name=self.get_object())
+        # print(context['related'])
         # context['form'] = AddReviewForm
         return context
 
@@ -669,6 +672,6 @@ def category_view(request, category):
         'items': items,
 
     }
-    return render(request, 'home.html', context=context_dict)
+    return render(request, 'category_view.html', context=context_dict)
 
 

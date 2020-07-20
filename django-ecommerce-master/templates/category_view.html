@@ -59,41 +59,40 @@
                                                 <div class="card-body">
 
                                                   <!-- Category & Title -->
-                                                  <h5 class="card-title mb-1"><strong><a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}</a></strong>
-                                                  </h5>
-                                                  <br>
-                                                  <small>
-                                                      Categories:&nbsp;
-                                                      {% for categor in item.category.all %}
-                                                      <a href="{% url 'core:category_view' categor.name %}">
-                                                          {{ categor.name }}
-                                                      </a>&nbsp;
-                                                      {% endfor %}
-                                                  </small>
-                                                  <br>
-                                                  {% if item.get_label_display == "best seller" %}
-                                                  <span class="badge badge-danger mb-2">{{ item.get_label_display }}</span>
-                                                  {% elif item.get_label_display == "new" %}
-                                                  <span class="badge badge-info mb-2">{{item.get_label_display}}</span>
-                                                  {% else %}
-                                                  <span class="badge badge-success mb-2">{{item.get_label_display}}</span>
+                                            <h5 class="card-title mb-1"><strong><a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}</a></strong>
+                                              <br>
+                                              <small>
+                                                  Categories:&nbsp;
+                                                  {% for categor in item.category.all %}
+                                                  <a href="{% url 'core:category_view' categor.name %}">
+                                                      {{ categor.name }}
+                                                  </a>&nbsp;
+                                                  {% endfor %}
+                                              </small>
+                                               <br>
+                                            </h5>
+                                            {% for labe in item.label.all %}
+                                                {% if labe.name == "best seller" %}
+                                                  <span class="badge badge-danger mb-2">{{ labe.name }}</span>
+                                                {% endif %}
+                                                {% if labe.name == "new" %}
+                                                  <span class="badge badge-info mb-2">{{labe.name}}</span>
+                                                {% endif %}
+                                                {% if labe.name == "best rated" %}
+                                                  <span class="badge badge-success mb-2">{{labe.name}}</span>
+                                                {% endif %}
+                                            {% endfor %}
 
-                                                  {% endif %}
+                                            <!-- Rating -->
+                                            <ul class="rating">
 
-                                                  <!-- Rating -->
-                                                  <ul class="rating">
+                                              <li><i class="fas fa-star {% if item.avg_rating < 1 %}grey-text{% endif %}"></i></li>
+                                              <li><i class="fas fa-star {% if item.avg_rating < 2 %}grey-text{% endif %}"></i></li>
+                                              <li><i class="fas fa-star {% if item.avg_rating < 3 %}grey-text{% endif %}"></i></li>
+                                              <li><i class="fas fa-star {% if item.avg_rating < 4 %}grey-text{% endif %}"></i></li>
+                                              <li><i class="fas fa-star {% if item.avg_rating < 5 %}grey-text{% endif %}"></i></li>
 
-                                                    <li><i class="fas fa-star blue-text"></i></li>
-
-                                                    <li><i class="fas fa-star blue-text"></i></li>
-
-                                                    <li><i class="fas fa-star blue-text"></i></li>
-
-                                                    <li><i class="fas fa-star blue-text"></i></li>
-
-                                                    <li><i class="fas fa-star blue-text"></i></li>
-
-                                                  </ul>
+                                            </ul>
 
                                                   <!-- Card footer -->
                                                   <div class="card-footer pb-0">
