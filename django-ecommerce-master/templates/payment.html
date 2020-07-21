@@ -110,7 +110,7 @@ button:hover {
 
         <div class="col-md-12 mb-4">
           <div class="card">
-
+            {% if stripe %}
             <script src="https://js.stripe.com/v3/"></script>
             {% if card %}
               <div style="padding: 5px 30px;">
@@ -121,6 +121,7 @@ button:hover {
                   <span>Exp: {{ card.exp_month }}/{{ card.exp_year }}</span></label>
                 </div>
               </div>
+             
             {% endif %}
 
             <div class="current-card-form">
@@ -154,8 +155,24 @@ button:hover {
                   </div>
                   <div id="card-errors" role="alert"></div>
               </form>
-            </div>
-
+            </div> 
+            {% elif mpesa %}
+            <form action="." method="post" >
+              {% csrf_token %}
+              <div >
+                <label for="">
+                  <span style="color: green;" >MPESA</span>
+                </label>
+               <div class="md-form">
+                <input type="number" name="mpesa" class="form-control" required>
+                <label for="numberExample">mpesa number 254*************</label>
+               </div>
+              </div>
+              <div >
+                <button class="btn btn-success" >Submit Payment</button>
+              </div>
+            </form>
+              {% endif %}
           </div>
         </div>
 
