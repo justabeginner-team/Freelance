@@ -10,6 +10,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('', include('core.urls', namespace='core')),
     path('', include('seller.urls', namespace='seller')),
+    path('', include('mpesa.urls', namespace='mpesa')),
     path('success', login_success, name='where_to_go'),
 ]
 

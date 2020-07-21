@@ -21,7 +21,7 @@
   <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
   <link href="{% static 'css/addons/steppers.min.css' %}" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="{% static 'css/toastr.min.css' %}" media="all">
+  <link rel="stylesheet" href="{% static 'css/toastr.min.css' %}" >
   <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/toastr.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/addons/steppers.min.js' %}"></script>
@@ -55,47 +55,40 @@
 
 
   </style>
+  
 </head>
 
 <body class="homepage-v1 hidden-sn white-skin animated">
-
-    {% include "sidebar.html" %}
-    {% include "carousel.html" %}
-<section> 
   {% if messages %}
   {% for message in messages %}
   
   <script type=text/javascript>
-         toastr.options = {
-            "closeButton": false,
-            "debug": false,
-            "newestOnTop": true,
-            "progressBar": true,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": true,
-            "onclick": null,
-            "showDuration": "5000",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-          }
-      toastr.{{ message.tags }}('{{ message }}')
-       
-        </script>
+  
+                    toastr["{{ message.tags }}"]("{{ message }}",toastr.options={
+              "closeButton": false,
+              "debug": false,
+              "newestOnTop": true,
+              "progressBar": false,
+              "positionClass": "md-toast-top-full-width",
+              "preventDuplicates": true,
+              "onclick": null,
+              "showDuration": 7000,
+              "hideDuration": 3000,
+              "timeOut": 5000,
+              "extendedTimeOut": 1000,
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "slideDown",
+              "hideMethod": "slideUp"
+              })
+    </script>
   {% endfor %}
   {% endif %}
-    {% block mega %}
-
-    {% endblock mega %}
-</section>
 
     {% block content %}
+   
     {% endblock content %}
-<br>
+
     {% block extra_body %}
     {% endblock %}
 

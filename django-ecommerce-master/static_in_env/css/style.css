@@ -37,3 +37,14 @@
 ul.horizontal-fix li a {
 padding: .84rem 2.14rem;
 }
+
+
+
+
+/*text animation gdient*/
+
+.textanime{
+    gra-color-1:#30CFD0;
+    background: -webkit-linear-gradient(left, $gra-color-1,$gra-color-2,$gra-color-1);
+
+}

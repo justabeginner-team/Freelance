@@ -18,7 +18,7 @@ from django.views.decorators.csrf import csrf_exempt
 # from webpush import send_user_notification
 import json
 from django.conf import settings
-from .mpesa_credentials import MpesaAccessToken,LipanaMpesaPpassword,lipa_na_mpesa_online
+
 
 
 # Create your views here.

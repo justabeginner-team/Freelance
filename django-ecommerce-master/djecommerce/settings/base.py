@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
 
     'core',
+    'mpesa',
 ]
 
 MIDDLEWARE = [
