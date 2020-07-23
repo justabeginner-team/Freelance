@@ -50,6 +50,15 @@ ADDRESS_CHOICES = (
 # created = models.DateTimeField(auto_now_add=True)
 # modified = models.DateTimeField(auto_now=True)
 
+
+class LoggedInUser(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='logged_in_user')
+    session_key = models.CharField(max_length=32)
+
+    def __str__(self):
+        return self.user.username
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     stripe_customer_id = models.CharField(max_length=50, blank=True, null=True)
@@ -105,9 +114,9 @@ class Item(models.Model):
         })
 
     def get_remove_from_cart_url(self):
-     return reverse("core:remove-from-cart", kwargs={
-         'slug': self.slug
-     })
+        return reverse("core:remove-from-cart", kwargs={
+            'slug': self.slug
+        })
 
     def no_of_ratings(self):
         ratings = Rating.objects.filter(item=self)
