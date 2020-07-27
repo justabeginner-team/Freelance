@@ -40,7 +40,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'core.middlewares.OneSessionPerUser',
+    # 'core.middlewares.OneSessionPerUser',
 ]
 
 ROOT_URLCONF = 'djecommerce.urls'
