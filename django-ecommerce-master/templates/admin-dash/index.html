@@ -1,5 +1,10 @@
 {% extends "admin-dash/base.html" %}
 {% load static %}
+
+{% block javascript %}
+  <script src="{% static 'assets/js/items.js' %}"></script>
+{% endblock javascript%}
+
 {% block content %}
     <!-- partial -->
     <div class="page-body ">
@@ -274,9 +279,15 @@
                         <small class="text-gray">$91,105.00</small>
                       </div>
                     </div>
+
                     <div class="d-flex flex-row mt-4 mb-4">
-                      <a href="{% url 'seller:add_item' %}" ><button class="btn btn-outline-info btn-md btn-block" type="button">Add Item</button></a>
+                        <button class="btn btn-outline-info btn-md btn-block js-create-item"
+                                data-url="{% url 'seller:add_item' %}"
+                                type="button">
+                          Add Item
+                        </button>
                     </div>
+
                     <div class="d-flex mt-5 mb-3">
                       <small class="mb-0 text-primary">Recently Added Items </small>
                     </div>
@@ -295,7 +306,7 @@
                     <p class="card-title ml-n1">Item History</p>
                   </div>
                 <div class="table-responsive">
-                    <table class="table info-table table-dark">
+                    <table class="table info-table table-dark" id="item-table">
                     <thead>
                        <tr>
                          <th>Item</th>
@@ -308,21 +319,7 @@
                       </tr>
                     </thead>
                    <tbody>
-                       {% for item in items %}
-                    <tr>
-                        <td>{{item.title}}</td>
-                        <td>{{item.quantity}}</td>
-                        <td>{{item.price}}</td>
-                        <td>{{item.discount_price}}</td>
-                        <td>
-                          {% for categor in item.category.all %}
-                              --{{ categor.name }}--
-                          {% endfor %}
-                        </td>
-                        <td><a style="color:blue;" href="{% url 'seller:update_item' item.slug %}"><i class="mdi mdi-border-color"></i></a></td>
-                        <td><a style="color: red;" href="{% url 'seller:delete_item' item.slug %}"><i class="mdi mdi-delete"></i></a></td>
-                    </tr>
-                    {% endfor %}
+                       {% include 'admin-dash/partial_item_list.html' %}
                    </tbody>
 
                 </table>
@@ -332,6 +329,14 @@
                   </a>
                 </div>
 
+              </div>
+
+               <!-- THE MODAL WE WILL BE USING -->
+              <div class="modal fade" id="modal-item">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                  </div>
+                </div>
               </div>
 
               <div class="col-md-8 equel-grid">
@@ -388,6 +393,7 @@
                   </a>
                 </div>
               </div>
+
               <div class="col-md-4 equel-grid">
                 <div class="grid">
                   <div class="grid-body">

@@ -1,3 +1,4 @@
+from django.template.loader import render_to_string
 from requests.auth import HTTPBasicAuth
 import requests
 from django.http import HttpResponse
@@ -18,7 +19,6 @@ from django.views.decorators.csrf import csrf_exempt
 # from webpush import send_user_notification
 import json
 from django.conf import settings
-
 
 
 # Create your views here.
@@ -43,56 +43,121 @@ from django.conf import settings
 #     return render(request, 'add_item.html', context=context_dict)
 
 def mpesa(request):
-    
-    response = lipa_na_mpesa_online(request,amount=1,phonenumber=254711521508)
+    response = lipa_na_mpesa_online(request, amount=1, phonenumber=254711521508)
     return HttpResponse(response.text)
 
-class AddItemFormView(FormView):
-    form_class = AddItemForm
-    template_name = 'add_item.html'
 
-    # success_url = 'seller:admin_view'
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        form.save()
-        messages.success(self.request,
-                         'Your Item has been added successfully')
-        return super(AddItemFormView, self).form_valid(form)
-
-    def get_success_url(self):  # overrides the actual method
-        return reverse('seller:admin_view')
+def admin(request):
+    items_table = Item.objects.filter(user=request.user)
+    recents = items_table.order_by('-created_on')[:3]
+    obj = Order.objects.filter(items__item__user__exact=request.user)
+    orders = obj.order_by('-start_date')
+    rev = Rating.objects.filter(item__user=request.user).order_by('-created_on')
+    return render(request, 'admin-dash/index.html', {
+        'items': items_table,
+        'recents': recents,
+        'orders': orders,
+        'reviews': rev,
+    })
 
 
-def delete_item(request, slug):
-    item = Item.objects.get(slug=slug)
+# class AddItemFormView(FormView):
+#     form_class = AddItemForm
+#     template_name = 'add_item.html'
+#
+#     # success_url = 'seller:admin_view'
+#
+#     def form_valid(self, form):
+#         form.instance.user = self.request.user
+#         form.save()
+#         messages.success(self.request,
+#                          'Your Item has been added successfully')
+#         return super(AddItemFormView, self).form_valid(form)
+#
+#     def get_success_url(self):  # overrides the actual method
+#         return reverse('seller:admin_view')
+
+
+def item_create(request):
+    data = dict()
     if request.method == 'POST':
-        item.delete()
-        messages.success(request,
-                         ' Your product has been deleted successfully.')
-        return redirect('seller:admin_view')
-    context_dict = {
-        'item': item,
-    }
-    return render(request, 'delete_item.html', context=context_dict)
+        # this enables the form to be saved only in this instance
+        form = AddItemForm(request.POST, request.FILES)
+        # not as a new form
+        if form.is_valid():
+            # form.instance.user = request.user
+            form.save()
+            data['form_is_valid'] = True
+            items_table = Item.objects.filter(user=request.user)
+            data['html_item_list'] = render_to_string('admin-dash/partial_item_list.html', {
+                'items': items_table,
+            })
+            messages.success(request,
+                             ' Your product has been created successfully.')
+        else:
+            data['form_is_valid'] = False
+    else:
+        form = AddItemForm()
+
+    context = {'form': form}
+    data['html_form'] = render_to_string('admin-dash/partial_item_create.html',
+                                         context,
+                                         request=request)
+
+    return JsonResponse(data)
 
 
 def update_item(request, slug):
-    item = Item.objects.get(slug=slug)
-    form = AddItemForm(instance=item)  # prefills the form to be updated
+    item = get_object_or_404(Item, slug=slug)
+    data = dict()
     if request.method == 'POST':
         # this enables the form to be saved only in this instance
-        form = AddItemForm(request.POST, instance=item)
+        form = AddItemForm(request.POST, request.FILES, instance=item)
         # not as a new form
         if form.is_valid():
             form.save()
+            data['form_is_valid'] = True
+            items_table = Item.objects.filter(user=request.user)
+            data['html_item_list'] = render_to_string('admin-dash/partial_item_list.html', {
+                'items': items_table,
+            })
             messages.success(request,
                              ' Your product has been updated successfully.')
-            return redirect('seller:admin_view')
-    context_dict = {
-        'form': form,
-    }
-    return render(request, 'add_item.html', context=context_dict)
+        else:
+            data['form_is_valid'] = False
+    else:
+        form = AddItemForm(instance=item)
+
+    context = {'form': form}
+    data['html_form'] = render_to_string('admin-dash/partial_item_update.html',
+                                         context,
+                                         request=request)
+
+    return JsonResponse(data)
+
+
+def delete_item(request, slug):
+    item = get_object_or_404(Item, slug=slug)
+    data = dict()
+    if request.method == 'POST':
+        item.delete()
+        data['form_is_valid'] = True
+        items_table = Item.objects.filter(user=request.user)
+        data['html_item_list'] = render_to_string('admin-dash/partial_item_list.html', {
+            'items': items_table,
+        })
+        messages.success(request,
+                         ' Your product has been deleted successfully.')
+
+    else:
+        context = {
+            'item': item,
+        }
+        data['html_form'] = render_to_string('admin-dash/partial_item_delete.html',
+                                             context,
+                                             request=request
+                                             )
+    return JsonResponse(data)
 
 
 # @require_GET
@@ -116,7 +181,6 @@ def retailer_dash(request):
     }
     return render(request, 'retailer_dash.html', context=context_dict)
 
-
 # @require_POST
 # @csrf_exempt
 # def send_push(request):
@@ -136,18 +200,5 @@ def retailer_dash(request):
 #     except TypeError:
 #         return JsonResponse(status=500, data={"message": "An error occurred"})
 
-
-def admin(request):
-    items_table = Item.objects.filter(user=request.user)
-    recents = items_table.order_by('-created_on')[:3]
-    obj = Order.objects.filter(items__item__user__exact=request.user)
-    orders = obj.order_by('-start_date')
-    rev = Rating.objects.filter(item__user=request.user).order_by('-created_on')
-    return render(request, 'admin-dash/index.html', {
-        'items': items_table,
-        'recents': recents,
-        'orders': orders,
-        'reviews': rev,
-    })
 
 # your example view

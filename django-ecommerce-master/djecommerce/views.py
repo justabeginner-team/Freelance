@@ -5,6 +5,7 @@ from allauth.account.decorators import verified_email_required
 from django.shortcuts import render
 from django.contrib import messages
 
+
 @verified_email_required
 @login_required
 def login_success(request):
@@ -13,9 +14,9 @@ def login_success(request):
     are customers or retailers
     """
     try:
-        user=UserProfile.objects.get(
-                user=request.user)
-        
+        user = UserProfile.objects.get(
+            user=request.user)
+
         if user.is_retailer:
             return redirect('seller:admin_view')
         else:
@@ -24,8 +25,8 @@ def login_success(request):
         messages.warning(
             request, " please contact our support service.....\nyour account has been deactivated !")
 
-        return render(request,"404.html")
+        return render(request, "404.html")
 
 
-def handler404(request,exception):
-    return render(request,'404.html')        
+def handler404(request, exception):
+    return render(request, '404.html')

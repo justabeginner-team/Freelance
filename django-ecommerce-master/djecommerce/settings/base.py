@@ -40,6 +40,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # 'core.middlewares.OneSessionPerUser',
 ]
 
 ROOT_URLCONF = 'djecommerce.urls'
@@ -148,6 +150,11 @@ MPESA_SHORTCODE_TYPE = config('MPESA_SHORTCODE_TYPE')
 # Production passkey is sent via email once you go live
 
 MPESA_PASSKEY = config('MPESA_PASSKEY')
+
+EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+SENDGRID_API_KEY = config("SENDGRID_API_KEY")
+# Toggle sandbox mode (when running in DEBUG mode)
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
 # EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 # SENDGRID_API_KEY = config('SENDGRID_API_KEY')
