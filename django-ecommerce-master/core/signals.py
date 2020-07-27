@@ -1,5 +1,7 @@
 # from django.db.models.signals import post_save
-from .models import LoggedInUser
+from django.db.models.signals import post_save
+
+from .models import LoggedInUser, Item
 from django.contrib.auth.models import User
 from django.contrib.auth import user_logged_in, user_logged_out
 from django.dispatch import receiver
@@ -23,9 +25,8 @@ def on_user_logged_out(sender, **kwargs):
 # post_save.connect(userprofile_receiver, sender=settings.AUTH_USER_MODEL)
 
 
-# def review_receiver(sender, instance, created, *args, **kwargs):
+# def item_receiver(sender, instance, created, *args, **kwargs):
 #     if created:
-#         Rating.objects.create(
-#             user=instance,
+#         Item.objects.create(user=instance)
 #
-#         )
+#  post_save.connect(item_receiver, sender=Item)

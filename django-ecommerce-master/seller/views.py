@@ -85,7 +85,7 @@ def item_create(request):
         form = AddItemForm(request.POST, request.FILES)
         # not as a new form
         if form.is_valid():
-            form.instance.user = request.user
+            # form.instance.user = request.user
             form.save()
             data['form_is_valid'] = True
             items_table = Item.objects.filter(user=request.user)

@@ -150,6 +150,11 @@ MPESA_SHORTCODE_TYPE = config('MPESA_SHORTCODE_TYPE')
 
 MPESA_PASSKEY = config('MPESA_PASSKEY')
 
+EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+SENDGRID_API_KEY = config("SENDGRID_API_KEY")
+# Toggle sandbox mode (when running in DEBUG mode)
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+
 # EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 # SENDGRID_API_KEY = config('SENDGRID_API_KEY')
 # SENDGRID_SANDBOX_MODE_IN_DEBUG = False
