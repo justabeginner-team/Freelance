@@ -1,7 +1,7 @@
 from .base import *
 
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1', '73299d6b1621.ngrok.io']
+ALLOWED_HOSTS = ['127.0.0.1', '5ccd97aff471.ngrok.io']
 
 INSTALLED_APPS += [
     'debug_toolbar'
@@ -43,5 +43,5 @@ DATABASES = {
     }
 }
 
-STRIPE_PUBLIC_KEY = ''
-STRIPE_SECRET_KEY = ''
+#TRIPE_PUBLIC_KEY = ''
+#STRIPE_SECRET_KEY = ''

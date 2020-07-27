@@ -463,15 +463,16 @@
 
                                           <!-- Card image -->
                                           <div class="view overlay">
-                                            
-                                              <img src="{{ item.image.url }}"
-                                              class="img-fluid" alt="">
+                                          <div >
+                                              <img src="{{ item.image.url }}"style="width: 240px; height:200px; " class="img-fluid" alt="{{ item.title }}">
 
                                             <a href="{{ item.get_absolute_url }}" >
 
                                               <div class="mask rgba-white-slight"></div>
 
                                             </a>
+                                          </div>
+                                
                                             
                                           </div>
 

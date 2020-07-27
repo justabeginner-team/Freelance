@@ -43,8 +43,8 @@ def lipa_na_mpesa_online(request, amount, phonenumber):
         "PartyA": phonenumber,  # replace with your phone number to get stk push
         "PartyB": LipanaMpesaPpassword.Business_short_code,
         "PhoneNumber": phonenumber,  # replace with your phone number to get stk push
-        "CallBackURL": "https://47d0993d8dc3.ngrok.io/mpesa/callback/",
-        "AccountReference": "shop with us",
+        "CallBackURL": "https://964e3b79a11b.ngrok.io/mpesa/callback/",
+        "AccountReference": "shop with us", 
         "TransactionDesc": "Testing stk push"
     }
     response = requests.post(api_url, json=request, headers=headers)

@@ -4,7 +4,7 @@ from decouple import config
 BASE_DIR = os.path.dirname(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__))))
 
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY ='8#s^kyoz5g-@f(xd)0)1ass(9lknoi=3_l0hgv^iy^szqw3lq7'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -23,6 +23,7 @@ INSTALLED_APPS = [
 
     'django_filters',
     'django_extensions',
+    'django_celery_results',
     'phone_field',
 
     'widget_tweaks',
@@ -152,3 +153,7 @@ MPESA_PASSKEY = config('MPESA_PASSKEY')
 # SENDGRID_API_KEY = config('SENDGRID_API_KEY')
 # SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 # SENDGRID_ECHO_TO_STDOUT = True
+
+
+CELERY_BROKER_URL = 'amqp://localhost'
+CELERY_RESULT_BACKEND='django-db'

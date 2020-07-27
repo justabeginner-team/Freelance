@@ -21,7 +21,7 @@ from .filters import CategoryFilter
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddReviewForm
 from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating  # ,EcommerceUser
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
+#stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 @receiver(user_logged_in)
