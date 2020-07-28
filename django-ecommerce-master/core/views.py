@@ -3,6 +3,7 @@ import string
 
 import stripe
 from django.dispatch import receiver
+from django.contrib.auth.models import User
 from allauth.account.signals import user_logged_in
 from django.conf import settings
 from django.contrib import messages
@@ -24,6 +25,12 @@ from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, Us
 
 #stripe.api_key = settings.STRIPE_SECRET_KEY
 
+def validate_username(request):
+    username=request.GET.get('username',None)
+    data={
+        "is_taken":User.objects.filter(username__iexact=username).exists()
+    }
+    return JsonResponse(data)
 
 @receiver(user_logged_in)
 def user_logged_in(request,user,**kwargs):

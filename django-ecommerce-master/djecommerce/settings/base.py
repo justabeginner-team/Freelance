@@ -95,12 +95,10 @@ AUTHENTICATION_BACKENDS = (
 
 ACCOUNT_SIGNUP_FORM_CLASS = 'core.forms.SignupForm'
 
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_PORT = config('EMAIL_PORT', cast=int)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+
+DEFAULT_FROM_EMAIL="djangologinsmtp@gmail.com"
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"

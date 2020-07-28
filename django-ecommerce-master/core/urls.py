@@ -13,6 +13,7 @@ from .views import (
     category_view,
     account_settings,
     getitems,
+    validate_username,
 )
 
 app_name = 'core'
@@ -33,5 +34,5 @@ urlpatterns = [
     path('account_settings/', account_settings, name='account_settings'),
 
     path('category/<str:category>', category_view, name='category_view'),
-    # path('ajaxitemsload',getitems,name='ajaxitems'),
+     path('username/validation.',validate_username,name='validate_username'),
 ]
