@@ -208,38 +208,36 @@
 
                           
                                      <div class="md-form">
-                            <label for="orangeForm-fname">first name<span style="color: red;"> *</span></label>
-                            <input type="text" id="orangeForm-fname" name="first_name" class="form-control" required>
                            
+                            <input type="text" id="orangeForm-fname" name="first_name" class="form-control" required>
+                            <label for="orangeForm-fname">first name<span style="color: red;"> *</span></label>
                           </div>
                           <div class="md-form">
-                                                        <label for="orangeForm-lname">last name<span style="color: red;"> *</span></label>
-
+                            
                             <input type="text" id="orangeForm-lname" name="last_name" class="form-control" required>
+                            <label for="orangeForm-lname">last name<span style="color: red;"> *</span></label>
                           </div>
                           <div class="md-form">
-                                                       <label for="orangeForm-uname">username<span style="color: red;"> *</span></label>
-
-                            <input type="text" id="orangeForm-uname" name="username"  class="form-control" required>
-                            <div id="Uname">
-                              Looks good!
-                            </div>
+                           
+                            <input type="text" id="orangeForm-uname" name="username" oninput="validateUname()"  class="form-control validate" required>
+                            <label for="orangeForm-uname">username<span style="color: red;"> *</span></label>
+                            
                           </div>
                           <div class="md-form">
-                                                       <label for="orangeForm-email">email<span style="color: red;"> *</span></label>
-
+                           
                             <input type="text" id="orangeForm-email"  name="email" class="form-control" required>
+                            <label for="orangeForm-email">email<span style="color: red;"> *</span></label>
                           </div>
                          
                           <div class="md-form">
-                                                       <label for="orangeForm-pass">password<span style="color: red;"> *</span></label>
-
+                           
                             <input type="password" id="orangeForm-pass" name="password1" class="form-control" required>
+                            <label for="orangeForm-pass">password<span style="color: red;"> *</span></label>
                           </div>
                           <div class="md-form">
-                                                    <label for="orangeForm-pass">repeat password<span style="color: red;"> *</span></label>
-
+                        
                             <input type="password" id="orangeForm-pass1"  name="password2" class="form-control" required>
+                            <label for="orangeForm-pass">repeat password<span style="color: red;"> *</span></label>
                           </div>
                           <div class="md custom-control custom-checkbox ">
                             <input type="checkbox" name="retailer" id="defaultUnchecked" class="custom-control-input">
@@ -247,15 +245,15 @@
                           </div>
                           <div class='hideable_fields'>
                             <div class="md-form">
-                                                      <label for="orangeForm-cname">company</label>
-
+                          
                             <input type="text" id="orangeForm-cname" name="company" class="form-control">
+                            <label for="orangeForm-cname">company</label>
                           </div>
                           </div>
 
                           <input type="hidden" name="{{ redirect_field_name }}" value="{% url 'account_login' %}" />
                         <div class="text-center">
-                           <button class="btn btn-indigo btn-rounded mt-5" type="submit">{% trans "Sign Up" %} &raquo;</button>
+                           <button class="btn btn-primary btn-rounded mt-5" type="submit">{% trans "Sign Up" %} &raquo;</button>
                         </div>
                          
                         </form>
@@ -310,22 +308,20 @@
     })
     
 
-    $("#orangeForm-uname").change(function(){
-      var username=$(this).val();
+    function validateUname(){
+      var username=document.getElementById("orangeForm-uname").value;
       
       $.ajax({
         url:'{% url "core:validate_username" %}',
         data:{'username':username},
         dataType:'json',
         success:function(data){
-          if (data.is_taken){
-            document.getElementById("Uname").className="invalid-feedback";
-            alert("user exists")
-            
-          }
+          if (data.is_taken){document.getElementById("orangeForm-uname").classList.add("is-invalid")}
+          else{document.getElementById("orangeForm-uname").classList.remove("is-invalid")
+            document.getElementById("orangeForm-uname").classList.add("is-valid") }
         }
       });
-    });
+    }
   
 </script>
 {% endblock extra_scripts %}

@@ -22,15 +22,16 @@ from .filters import CategoryFilter
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddReviewForm
 from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating, \
     Category  # ,EcommerceUser
+from .tasks import *
 
 #stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def validate_username(request):
-    username=request.GET.get('username',None)
-    data={
-        "is_taken":User.objects.filter(username__iexact=username).exists()
-    }
-    return JsonResponse(data)
+    username = request.GET.get('username', None)
+    data=validate_user.apply_async((username,),\
+        queue="Validation", )
+    
+    return JsonResponse(data.get())
 
 @receiver(user_logged_in)
 def user_logged_in(request,user,**kwargs):
