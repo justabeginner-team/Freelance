@@ -1,0 +1,354 @@
+ACCOUNT_ADAPTER='core.forms.MyAccountAdapter'
+AUTH_USER_MODEL = 'core.EcommerceUser'
+ACCOUNT_SIGNUP_FORM_CLASS = 'core.forms.SignupForm'
+
+
+
+class EcommerceUser(AbstractUser):
+    is_retailer = models.BooleanField(default=False)
+   
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
+
+
+
+class CustomerSignupView(ProfileSignupView):
+success_url='accounts/login/'
+profile_class=EcommerceUser
+
+
+
+
+
+class SignupForm(forms.Form):
+    email = forms.EmailField(required=True, )
+    username = forms.CharField(max_length=80, required=True, )
+    password1 = SetPasswordField()
+    password2 = PasswordField()
+    first_name = forms.CharField(max_length=100, required=False, )
+    last_name = forms.CharField(max_length=100, required=False, )
+    is_retailer = forms.BooleanField(required=False)
+
+    class Meta:
+        model = get_user_model()  # use this function for swapping user model
+        fields = ('email', 'username', 'password1', 'password2', 'first_name', 'last_name', 'is_retailer')
+
+    def signup(self, request, user):
+        user.username = self.cleaned_data['username']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.is_retailer = self.cleaned_data['is_retailer']
+        user.save()
+
+
+class MyAccountAdapter(DefaultAccountAdapter):
+    def save_user(self, request, user, form, commit=False):
+        data = form.cleaned_data
+        user.email = data.get('email')
+        user.username = data.get('username')
+        # all your custom fields
+        # user.date_of_birth = data.get('date_of_birth')
+        # user.gender = data.get('gender')
+        if 'password1' in data:
+            user.set_password(data["password1"])
+        else:
+            user.set_unusable_password()
+        self.populate_username(request, user)
+        if commit:
+            user.save()
+        return user
+
+
+class EcommerceUserAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(EcommerceUser,EcommerceUserAdmin)
+
+
+path('log/',CustomerSignupView.as_view(),name='log')
+
+
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION=True
+ACCOUNT_EMAIL_REQUIRED=True
+ACCOUNT_EMAIL_VERIFICATION="mandatory"
+
+LOGIN_URL = 'home'
+LOGOUT_URL = 'account_logout'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
+LOGIN_REDIRECT_URL ='retailer_dash'
+ACCOUNT_EMAIL_REQUIRED = True
+#ACCOUNT_AUTHENTICATION_METHOD = 'email'
+#ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+##ACCOUNT_LOGOUT_ON_GET = True
+#ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 3
+#ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300
+#ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_UNIQUE_EMAIL = True
+
+
+
+ <div class="mt-5 pt-4">
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% endfor %}
+    {% endif %}
+    </div>
+
+
+
+
+
+
+
+
+      <main>
+    <div class="container">
+
+      <!--Navbar-->
+      <nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
+
+        <!-- Navbar brand -->
+        <span class="navbar-brand">Categories:</span>
+
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+          aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="basicExampleNav">
+
+          <!-- Links -->
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">All
+                
+              </a>
+            </li>
+
+            <form class="form-inline" method="get">
+            <li class="nav-item">
+              {{myfilter.category}}
+              <div class="md-form my-0">Category:{{myfilter.form.category}}</div>
+
+                <button class="btn btn-primary" type="submit">Search</button>
+            </li>
+            </form>
+
+          </ul>
+          <!-- Links -->
+
+          <form class="form-inline">
+            <div class="md-form my-0">
+              <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            </div>
+          </form>
+        </div>
+        <!-- Collapsible content -->
+
+      </nav>
+      <!--/.Navbar-->
+
+      <!--Section: Products v.3-->
+      <section class="text-center mb-4">
+
+        <div class="row wow fadeIn">
+          {% for item in items %}
+
+         <div id="elec" class="col-lg-3 col-md-6 mb-4">
+             <div  >
+               <div class="card">
+
+              <div class="view overlay">
+                {% comment %} <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="card-img-top" {% endcomment %}
+                <img src="{{ item.image.url }}" class="card-img-top">
+                <a href="{{ item.get_absolute_url }}">
+                  <div class="mask rgba-white-slight"></div>
+                </a>
+              </div>
+
+              <div class="card-body text-center">
+                <a href="" class="grey-text">
+                  <h5>{{ item.get_category_display }}</h5>
+                </a>
+                <h5>
+                  <strong>
+                    <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}
+                      <span class="badge badge-pill {{ item.get_label_display }}-color">NEW</span>
+                    </a>
+                  </strong>
+                </h5>
+
+                <h4 class="font-weight-bold blue-text">
+                  <strong>$
+                  {% if item.discount_price %}
+                  {{ item.discount_price }}
+                  {% else %}
+                  {{ item.price }}
+                  {% endif %}
+                  </strong>
+                </h4>
+
+                </div>
+
+               </div>
+             </div>
+          </div>
+          
+
+          
+          {% endfor %}
+        </div>
+
+      </section>
+      <!--Section: Products v.3-->
+
+      <!--Pagination-->
+
+      {% if is_paginated %}
+      <nav class="d-flex justify-content-center wow fadeIn">
+        <ul class="pagination pg-blue">
+
+          {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          {% endif %}
+
+          <li class="page-item active">
+            <a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+
+          {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+
+    </div>
+  </main>
+
+
+
+
+
+
+<main class="login-page">
+    <div class="container">
+      <section class="mb-4">
+        <div class="row wow fadeIn">
+          <div class='col-6 offset-3'>
+          <h1>{% trans "Sign In" %}</h1>
+
+          {% get_providers as socialaccount_providers %}
+
+          {% if socialaccount_providers %}
+          <p>{% blocktrans with site.name as site_name %}Please sign in with one
+          of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
+          for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+
+          <div class="socialaccount_ballot">
+
+            <ul class="socialaccount_providers">
+              {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+            </ul>
+
+            <div class="login-or">{% trans 'or' %}</div>
+
+          </div>
+
+          {% include "socialaccount/snippets/login_extra.html" %}
+
+          {% else %}
+          <p>{% blocktrans %}If you have not created an account yet, then please
+          <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+          {% endif %}
+
+          <form class="login" method="POST" action="{% url 'account_login' %}">
+            {% csrf_token %}
+            {{ form|crispy }}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <a class="btn btn-default" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+            <button class="btn btn-primary" type="submit">{% trans "Sign In" %}</button>
+          </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+
+
+
+
+
+main>
+    <div class="container">
+      <section class="mb-4">
+        <div class="row wow fadeIn">
+          <div class='col-6 offset-3'>
+            <h1>{% trans "Sign Up" %}</h1>
+            <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+            <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+              {% csrf_token %}
+              {{ form|crispy }}
+              
+              <input type="hidden" name="{{ redirect_field_name }}" value="{% url 'account_login' %}" />
+              
+              <button class='btn btn-primary' type="submit">{% trans "Sign Up" %} &raquo;</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+
+  <script>
+ 
+  $(document).ready(function(){
+     
+    setInterval(function(){
+      $.ajax({
+          type:'GET',
+          url:"{% url 'core:ajaxitems' %}",
+          dataType:"json",
+          
+          success:function(response,status){
+            if (status=="success"){
+             
+              var itemdata=response.items
+              for(var me in itemdata){
+                var item=itemdata[me]
+                var title=item.title
+                console.log(title)
+              }
+            }
+           
+          },
+      });
+    },6000);
+  });
+</script>
