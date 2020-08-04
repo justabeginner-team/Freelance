@@ -1,6 +1,5 @@
-import os
+import os,sentry_sdk
 from decouple import config
-import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
 sentry_sdk.init(
