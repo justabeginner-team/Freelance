@@ -24,18 +24,19 @@ from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, Us
     Category  # ,EcommerceUser
 from .tasks import *
 
-#stripe.api_key = settings.STRIPE_SECRET_KEY
+
+# stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def validate_username(request):
     username = request.GET.get('username', None)
-    data=validate_user.apply_async((username,),\
-        queue="Validation", )
-    
+    data = validate_user.apply_async((username,), queue="Validation", )
+
     return JsonResponse(data.get())
 
+
 @receiver(user_logged_in)
-def user_logged_in(request,user,**kwargs):
-     messages.info(request, f"hallo {user} ")
+def user_logged_in(request, user, **kwargs):
+    messages.info(request, f"hallo {user} ")
 
 
 def create_ref_code():
@@ -96,7 +97,7 @@ class CheckoutView(View):
 
     def post(self, request, *args, **kwargs):
         form = CheckoutForm(self.request.POST or None)
-        
+
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
             if form.is_valid():
@@ -187,18 +188,16 @@ class CheckoutView(View):
                         order_item_quantity = itemorder.quantity
                         remainder = item_quantity - order_item_quantity
 
-                        if remainder >=1:
-                            Item.objects.filter(pk=pk).update(quantity=remainder) 
+                        if remainder >= 1:
+                            Item.objects.filter(pk=pk).update(quantity=remainder)
                             itemorder.save()
 
-                            if remainder<1:
-                                 Item.objects.filter(pk=pk).delete()
+                            if remainder < 1:
+                                Item.objects.filter(pk=pk).delete()
                         else:
                             messages.warning(
-                                 self.request, f"Opps!! {itemorder.item.title} is out of stock")
+                                self.request, f"Opps!! {itemorder.item.title} is out of stock")
                             return redirect('core:order-summary')
-                            
-                       
 
                     order.ordered = True
                     order.payment = payment
@@ -289,36 +288,36 @@ class PaymentView(View):
             # amount = int(order.get_total() * 100)
             number = Address.objects.all()
             print(number)
-            context={
+            context = {
                 'mpesa': kwargs['payment_option']
             }
-            return render(self.request, "payment.html",context=context)
+            return render(self.request, "payment.html", context=context)
 
         if kwargs['payment_option'] == 'stripe':
-                if order.billing_address:
-                    context = {
-                        'order': order,
-                        'DISPLAY_COUPON_FORM': False
-                    }
-                    userprofile = self.request.user.userprofile
-                    if userprofile.one_click_purchasing:
-                        # fetch the users card list
-                        cards = stripe.Customer.list_sources(
-                            userprofile.stripe_customer_id,
-                            limit=3,
-                            object='card'
-                        )
-                        card_list = cards['data']
-                        if len(card_list) > 0:
-                            # update the context with the default card
-                            context.update({
-                                'card': card_list[0]
-                            })
-                    return render(self.request, "payment.html", context)
-                else:
-                    messages.warning(
-                        self.request, "You have not added a billing address")
-                    return redirect("core:checkout")
+            if order.billing_address:
+                context = {
+                    'order': order,
+                    'DISPLAY_COUPON_FORM': False
+                }
+                userprofile = self.request.user.userprofile
+                if userprofile.one_click_purchasing:
+                    # fetch the users card list
+                    cards = stripe.Customer.list_sources(
+                        userprofile.stripe_customer_id,
+                        limit=3,
+                        object='card'
+                    )
+                    card_list = cards['data']
+                    if len(card_list) > 0:
+                        # update the context with the default card
+                        context.update({
+                            'card': card_list[0]
+                        })
+                return render(self.request, "payment.html", context)
+            else:
+                messages.warning(
+                    self.request, "You have not added a billing address")
+                return redirect("core:checkout")
 
     def post(self, *args, **kwargs):
 
@@ -703,5 +702,3 @@ def category_view(request, category):
 
     }
     return render(request, 'category_view.html', context=context_dict)
-
-

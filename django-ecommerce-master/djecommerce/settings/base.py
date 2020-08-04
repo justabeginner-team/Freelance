@@ -4,7 +4,7 @@ from decouple import config
 BASE_DIR = os.path.dirname(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__))))
 
-SECRET_KEY ='8#s^kyoz5g-@f(xd)0)1ass(9lknoi=3_l0hgv^iy^szqw3lq7'
+SECRET_KEY = '8#s^kyoz5g-@f(xd)0)1ass(9lknoi=3_l0hgv^iy^szqw3lq7'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -99,13 +99,12 @@ SENDGRID_API_KEY = config("SENDGRID_API_KEY")
 # Toggle sandbox mode (when running in DEBUG mode)
 SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
-
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = config('EMAIL_PORT', cast=int)
 EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'TestSite Team <djangologinsmtp@gmail.com>'
 
 ACCOUNT_EMAIL_REQUIRED = True
@@ -157,7 +156,5 @@ MPESA_SHORTCODE_TYPE = config('MPESA_SHORTCODE_TYPE')
 
 MPESA_PASSKEY = config('MPESA_PASSKEY')
 
-
-
 CELERY_BROKER_URL = 'amqp://localhost'
-CELERY_RESULT_BACKEND='django-db'
+CELERY_RESULT_BACKEND = 'django-db'
