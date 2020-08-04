@@ -1,7 +1,7 @@
 from .base import *
 
-DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1', '5ccd97aff471.ngrok.io']
+DEBUG = False
+ALLOWED_HOSTS = ['127.0.0.1', 'b7e5c222d2db.ngrok.io']
 
 INSTALLED_APPS += [
     'debug_toolbar'

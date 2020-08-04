@@ -1,5 +1,15 @@
-import os
+import os, sentry_sdk
 from decouple import config
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn=config('DSN'),
+    integrations=[DjangoIntegration()],
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)
 
 BASE_DIR = os.path.dirname(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__))))
@@ -25,6 +35,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_celery_results',
     'phone_field',
+    'rangefilter',
+    'rest_framework',
 
     'widget_tweaks',
 
@@ -127,12 +139,12 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # The Mpesa environment to use
 # Possible values: sandbox, production
 
-MPESA_ENVIRONMENT = config('MPESA_ENVIRONMENT')
+# MPESA_ENVIRONMENT = config('MPESA_ENVIRONMENT')
 
 # Credentials for the daraja app
 
-MPESA_CONSUMER_KEY = config('MPESA_CONSUMER_KEY')
-MPESA_CONSUMER_SECRET = config('MPESA_CONSUMER_SECRET')
+# MPESA_CONSUMER_KEY = config('MPESA_CONSUMER_KEY')
+# MPESA_CONSUMER_SECRET = config('MPESA_CONSUMER_SECRET')
 
 # Shortcode to use for transactions. For sandbox  use the Shortcode 1 provided on test credentials page
 
@@ -141,20 +153,55 @@ MPESA_CONSUMER_SECRET = config('MPESA_CONSUMER_SECRET')
 # This only has a different value on sandbox, you do not need to set it on production
 # For sandbox use the Lipa na MPESA Online Shorcode provided on test credentials page
 
-MPESA_EXPRESS_SHORTCODE = config('MPESA_EXPRESS_SHORTCODE')
+# MPESA_EXPRESS_SHORTCODE = config('MPESA_EXPRESS_SHORTCODE')
 
 # Type of shortcode
 # Possible values:
 # - paybill (For Paybill)
 # - till_number (For Buy Goods Till Number)
 
-MPESA_SHORTCODE_TYPE = config('MPESA_SHORTCODE_TYPE')
+# MPESA_SHORTCODE_TYPE = config('MPESA_SHORTCODE_TYPE')
 
 # Lipa na MPESA Online passkey
 # Sandbox passkey is available on test credentials page
 # Production passkey is sent via email once you go live
 
-MPESA_PASSKEY = config('MPESA_PASSKEY')
+# MPESA_PASSKEY = config('MPESA_PASSKEY')
+
+# this is the url where we post the B2C request to Mpesa. Replace this with the url you get from safaricom after you
+# have passed the UATS
+MPESA_URL = config('MPESA_URL')
+
+# Consumer Secret
+MPESA_C2B_ACCESS_KEY = config('MPESA_C2B_ACCESS_KEY')
+# Consumer Key
+MPESA_C2B_CONSUMER_SECRET = config('MPESA_C2B_CONSUMER_SECRET')
+# Url for registering your paybill replace it the url you get from safaricom after you have passed the UATS
+C2B_REGISTER_URL = config('C2B_REGISTER_URL')
+# ValidationURL
+# replace http://mpesa.ngrok.io/ with your url ow here this app is running
+C2B_VALIDATE_URL = config('C2B_VALIDATE_URL')
+# ConfirmationURL
+# replace http://mpesa.ngrok.io/ with your url ow here this app is running
+C2B_CONFIRMATION_URL = config('C2B_CONFIRMATION_URL')
+# ShortCode (Paybill)
+C2B_SHORT_CODE = config('C2B_SHORT_CODE')
+# ResponseType
+C2B_RESPONSE_TYPE = config('C2B_RESPONSE_TYPE')
+
+# C2B (STK PUSH) Configs
+# https://developer.safaricom.co.ke/lipa-na-m-pesa-online/apis/post/stkpush/v1/processrequest
+
+# replace http://mpesa.ngrok.io/ with your url ow here this app is running
+C2B_ONLINE_CHECKOUT_CALLBACK_URL = config('C2B_ONLINE_CHECKOUT_CALLBACK_URL')
+# The Pass Key provided by Safaricom when you pass UAT's
+# See https://developer.safaricom.co.ke/test_credentials
+C2B_ONLINE_PASSKEY = config('C2B_ONLINE_PASSKEY')
+# Your Paybill
+C2B_ONLINE_SHORT_CODE = config('C2B_ONLINE_SHORT_CODE')
+# number of seconds from the expiry we consider the token expired the token expires after an hour
+# so if the token is 600 sec (10 minutes) to expiry we consider the token expired.
+TOKEN_THRESHOLD = config('TOKEN_THRESHOLD')
 
 CELERY_BROKER_URL = 'amqp://localhost'
 CELERY_RESULT_BACKEND = 'django-db'

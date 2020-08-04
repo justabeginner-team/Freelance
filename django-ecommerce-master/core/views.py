@@ -23,6 +23,7 @@ from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddReviewF
 from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating, \
     Category  # ,EcommerceUser
 from .tasks import *
+from mpesa.mpesa import Mpesa
 
 
 # stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -435,6 +436,8 @@ class PaymentView(View):
 #     paginate_by = 10
 #     template_name = "home.html"
 def HomeView(request):
+    #Mpesa.c2b_register_url()
+    #Mpesa.stk_push(phone=254715112499, amount=1, account_reference='test')
     items = Item.objects.all().order_by('-created_on')
     paginator = Paginator(items, 9)  # Show 3 items per page.
     page_number = request.GET.get('page')

@@ -1,17 +1,22 @@
 from django.urls import path
 
-from . import views
+from .views import (
+    C2bConfirmation,
+    C2bValidation,
+    OnlineCheckoutCallback,
+)
 
-app_name='mpesa'
+app_name = "mpesa"
+
 urlpatterns = [
-    path('access/token', views.getAccessToken, name='get_mpesa_access_token'),
-    path('online/lipa', views.lipa_na_mpesa_online, name='lipa_na_mpesa'),
-
-    # register, confirmation, validation and callback urls
-    path('c2b/register', views.register_urls,
-         name="register_mpesa_validation"),
-    path('c2b/confirmation', views.confirmation, name="confirmation"),
-    path('c2b/validation', views.validation, name="validation"),
-    path('c2b/callback', views.call_back, name="call_back"),
-
+   
+    path(
+        "c2b/confirmation", C2bConfirmation.as_view(), name="c2b_confirmation"
+    ),
+    path("c2b/validate", C2bValidation.as_view(), name="c2b_validation"),
+    path(
+        "c2b/online_checkout/callback",
+        OnlineCheckoutCallback.as_view(),
+        name="c2b_checkout_callback",
+    ),
 ]

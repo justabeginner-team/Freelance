@@ -223,6 +223,16 @@
                             <label for="orangeForm-uname">username<span style="color: red;"> *</span></label>
                             
                           </div>
+                          <div class="col-md-6 mb-4">
+                          
+                            <!-- Email validation -->
+                            <div class="md-form md-outline">
+                              <i class="fas fa-envelope prefix active"></i>
+                              <input type="email" id="form81" class="form-control validate invalid">
+                              <label for="form81" data-error="wrong" data-success="right" class="active">Type your email</label>
+                            </div>
+                          
+                          </div>
                           <div class="md-form">
                            
                             <input type="text" id="orangeForm-email"  name="email" class="form-control" required>
@@ -310,17 +320,30 @@
 
     function validateUname(){
       var username=document.getElementById("orangeForm-uname").value;
-      
+      const button=document.querySelector('button')
+      if (username!=""){
       $.ajax({
         url:'{% url "core:validate_username" %}',
         data:{'username':username},
         dataType:'json',
         success:function(data){
-          if (data.is_taken){document.getElementById("orangeForm-uname").classList.add("is-invalid")}
+          if (data.is_taken){document.getElementById("orangeForm-uname").classList.add("is-invalid")
+           button.classList.add("btn-danger")
+          button.disabled=true
+       
+      }
           else{document.getElementById("orangeForm-uname").classList.remove("is-invalid")
-            document.getElementById("orangeForm-uname").classList.add("is-valid") }
+            document.getElementById("orangeForm-uname").classList.add("is-valid") 
+             button.classList.remove("btn-danger")
+          button.disabled=false
+          }
+
         }
-      });
+      });}
+      else{
+        /*document.getElementById("orangeForm-uname").classList.remove("is-valid")*/
+        document.getElementById("orangeForm-uname").classList.add("is-invalid")
+      }
     }
   
 </script>
