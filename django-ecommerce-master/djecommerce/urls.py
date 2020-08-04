@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import *
 
+
 handler404=handler404
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -12,10 +13,11 @@ urlpatterns = [
     path('', include('seller.urls', namespace='seller')),
     path('', include('mpesa.urls', namespace='mpesa')),
     path('success', login_success, name='where_to_go'),
+  
 ]
 
 
-if settings.DEBUG:
+if not settings.DEBUG:
     import debug_toolbar
 
     urlpatterns += [path('__debug__/', include(debug_toolbar.urls))]

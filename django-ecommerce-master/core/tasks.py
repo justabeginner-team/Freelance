@@ -9,6 +9,6 @@ def send_mail_task(x, y):
 
 @shared_task(name='username-validate')
 def validate_user(username):
-  data = {
-      "is_taken": User.objects.filter(username__iexact=username).exists()}
-  return data    
+   data = {
+          "is_taken": User.objects.filter(username__iexact=username).exists()}
+   return data
