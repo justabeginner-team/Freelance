@@ -5,7 +5,7 @@ python:
 env:
   - SECRET_KEY='TEST'
 install:
-  - pip install -r requirements.txt
+  - pip install -r django-ecommerce-master\requirements.txt
 script:
   - pytest  
      
