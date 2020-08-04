@@ -1,4 +1,4 @@
-# Freelance
+# Freelance  [![Build Status](https://travis-ci.org/justabeginner-team/Freelance.svg?branch=master)](https://travis-ci.org/justabeginner-team/Freelance)
 
 oyah alex hii view mpya ya ku update items tumia the link /add_item/
 
