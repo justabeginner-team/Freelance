@@ -2,8 +2,10 @@
 __pycache__/
 media_root
 static_root
-env
+.env
 ../.idea/*
+
+venv
 
 Lib/
 Scripts/
