@@ -1,6 +1,6 @@
 from .base import *
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1', 'b7e5c222d2db.ngrok.io']
 
 INSTALLED_APPS += [
