@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     'widget_tweaks',
 
-    'core',
+    'core.apps.CoreConfig',
     'mpesa',
 ]
 

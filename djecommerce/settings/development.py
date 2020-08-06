@@ -43,5 +43,3 @@ DATABASES = {
     }
 }
 
-#TRIPE_PUBLIC_KEY = ''
-#STRIPE_SECRET_KEY = ''

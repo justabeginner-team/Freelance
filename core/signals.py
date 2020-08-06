@@ -1,5 +1,4 @@
-# from django.db.models.signals import post_save
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 
 from .models import LoggedInUser, Item
 from django.contrib.auth.models import User
@@ -16,17 +15,8 @@ def on_user_logged_in(sender, **kwargs):
 def on_user_logged_out(sender, **kwargs):
     LoggedInUser.objects.filter(user=kwargs.get('user')).delete()
 
-# def userprofile_receiver(sender, instance, created, *args, **kwargs):
-#     if created:
-#         userprofile = UserProfile.objects.create(user=instance)
-#         print('user created')
-#
-#
-# post_save.connect(userprofile_receiver, sender=settings.AUTH_USER_MODEL)
 
-
-# def item_receiver(sender, instance, created, *args, **kwargs):
-#     if created:
-#         Item.objects.create(user=instance)
-#
-#  post_save.connect(item_receiver, sender=Item)
+# @receiver(pre_save, sender=Item)
+# def item_receiver(sender, instance, *args, **kwargs):
+#     Item.objects.create(user=instance)
+#     print('item created')

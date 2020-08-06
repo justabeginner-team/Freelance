@@ -50,7 +50,7 @@ def mpesa(request):
 def admin(request):
     items_table = Item.objects.filter(user=request.user)
     recents = items_table.order_by('-created_on')[:3]
-    obj = Order.objects.filter(items__item__user__exact=request.user)
+    obj = Order.objects.filter(items__item__user__exact=request.user.id)
     orders = obj.order_by('-start_date')
     rev = Rating.objects.filter(item__user=request.user).order_by('-created_on')
     return render(request, 'admin-dash/index.html', {
@@ -81,11 +81,8 @@ def admin(request):
 def item_create(request):
     data = dict()
     if request.method == 'POST':
-        # this enables the form to be saved only in this instance
         form = AddItemForm(request.POST, request.FILES)
-        # not as a new form
         if form.is_valid():
-            # form.instance.user = request.user
             form.save()
             data['form_is_valid'] = True
             items_table = Item.objects.filter(user=request.user)
@@ -114,6 +111,7 @@ def update_item(request, slug):
         # this enables the form to be saved only in this instance
         form = AddItemForm(request.POST, request.FILES, instance=item)
         # not as a new form
+        print(data)
         if form.is_valid():
             form.save()
             data['form_is_valid'] = True
