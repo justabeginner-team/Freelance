@@ -19,6 +19,7 @@
   <link href="{% static 'css/addons/steppers.min.css' %}" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="{% static 'css/toastr.min.css' %}" >
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/toastr.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/addons/steppers.min.js' %}"></script>
@@ -81,8 +82,6 @@
     </script>
   {% endfor %}
   {% endif %}
-
-    {% include 'sidebar.html' %}
 
     {% block content %}
     {% endblock content %}

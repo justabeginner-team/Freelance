@@ -9,7 +9,7 @@ from .decorators import retailer_required
 from .forms import AddItemForm
 from core.models import Item, Order, Rating
 from core.filters import ItemFilter, CategoryFilter
-from core.mixins import ProfileSignupView
+
 
 from django.http.response import JsonResponse, HttpResponse
 from django.views.decorators.http import require_GET, require_POST
@@ -48,6 +48,7 @@ def mpesa(request):
 
 
 def admin(request):
+    print(request.user)
     items_table = Item.objects.filter(user=request.user)
     recents = items_table.order_by('-created_on')[:3]
     obj = Order.objects.filter(items__item__user__exact=request.user.id)
@@ -156,7 +157,6 @@ def delete_item(request, slug):
                                              request=request
                                              )
     return JsonResponse(data)
-
 
 # @require_GET
 def retailer_dash(request):
