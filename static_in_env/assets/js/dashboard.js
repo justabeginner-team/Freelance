@@ -22,7 +22,7 @@ $(function () {
         stepsize: 100
     }
     if ($('#stat-line_1').length) {
-        var lineChartCanvas = $("#stat-line_1").get(0).getContext("2d");
+        var lineChartCanvas = $("#stat-line_1").get(0).getContext("3d");
         var gradientStroke = lineChartCanvas.createLinearGradient(100, 60, 30, 0);
         gradientStroke.addColorStop(0, '#B721FF');
         gradientStroke.addColorStop(1, '#21D4FD');
@@ -123,9 +123,9 @@ $(function () {
                             drawBorder: !1
                         },
                         ticks: {
-                            min: 20,
+                            min: 0,
                             max: 80,
-                            stepSize: 20,
+                            stepSize: 10,
                             fontColor: "#212529",
                             maxTicksLimit: 3,
                             callback: function (a, e, r) {
@@ -154,7 +154,7 @@ $(function () {
                 labels: ["Mon", "Tue", "Wed", "Thus", "Fri", "Sat"],
                 datasets: [{
                     label: "Follower",
-                    data: [62, 52, 73, 58, 63, 72],
+                    data: [20, 10, 16, 11, 9, 2],
                     backgroundColor: [chartColors[0], chartColors[0], chartColors[0], chartColors[0], chartColors[0], chartColors[0]],
                     borderColor: chartColors[0],
                     borderWidth: 0

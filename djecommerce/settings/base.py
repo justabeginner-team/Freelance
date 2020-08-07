@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'core',
     'mpesa',
+    'utils',
 ]
 
 MIDDLEWARE = [
@@ -105,22 +106,24 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-ACCOUNT_SIGNUP_FORM_CLASS = 'core.forms.SignupForm'
+ACCOUNT_ADAPTER = 'utils.adapter.ShopAdapter'
+
+ACCOUNT_SIGNUP_FORM_CLASS = 'utils.forms.SignupForm'
 
 SENDGRID_API_KEY = config("SENDGRID_API_KEY")
 # Toggle sandbox mode (when running in DEBUG mode)
-SENDGRID_SANDBOX_MODE_IN_DEBUG = False
-
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_PORT = config('EMAIL_PORT', cast=int)
-EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+#SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
 #EMAIL_HOST = config('EMAIL_HOST')
 #EMAIL_PORT = config('EMAIL_PORT', cast=int)
-#EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-#EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
-#EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+#EMAIL_HOST_USER = 'apikey'
+#EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

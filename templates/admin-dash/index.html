@@ -15,7 +15,7 @@
             <img class="profile-img img-lg rounded-circle" src="{% static 'assets/images/profile/male/image_1.png' %}" alt="profile image">
           </div>
           <div class="info-wrapper">
-            <p class="user-name">{{request.user.first_name}} {{request.user.last_name}}</p>
+            <p class="user-name">{{request.user}} {{request.user.last_name}}</p>
             <h6 class="display-income">$3,400,00</h6>
           </div>
         </div>
@@ -256,7 +256,7 @@
                   </table>
                 </div>
               </div>
-              <div class="col-lg-5 col-md-6 col-sm-12 equel-grid">
+              <div class="col-lg-5 col-md-6 col-sm-12 equel-grid hoverable zoom">
                 <div class="grid">
                   <div class="grid-body">
                     <div class="split-header">
@@ -269,7 +269,7 @@
                       <h3>26.00453100</h3>
                       <p class="ml-1 font-weight-bold">BTC</p>
                     </div>
-                    <div class="d-flex mt-2">
+                    <div class="d-flex mt-2 ">
                       <div class="wrapper d-flex pr-4">
                         <small class="text-success font-weight-medium mr-2">USD</small>
                         <small class="text-gray">$103,342.50</small>
