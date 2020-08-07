@@ -436,8 +436,8 @@ class PaymentView(View):
 #     paginate_by = 10
 #     template_name = "home.html"
 def HomeView(request):
-    #Mpesa.c2b_register_url()
-    #Mpesa.stk_push(phone=254715112499, amount=1, account_reference='test')
+    # Mpesa.c2b_register_url()
+    # Mpesa.stk_push(phone=254715112499, amount=1, account_reference='test')
     items = Item.objects.all().order_by('-created_on')
     paginator = Paginator(items, 9)  # Show 3 items per page.
     page_number = request.GET.get('page')
@@ -689,10 +689,18 @@ class RequestRefundView(View):
 
 
 def account_settings(request):
+    # customer = request.user.customer  # gets current logged in customer
+    # form = CustomerForm(instance=customer)
+    #
+    # if request.method == 'POST':
+    #     form = CustomerForm(request.POST, request.FILES, instance=customer)
+    #     if form.is_valid():
+    #         form.save()
+    # return redirect('account')
     context_dict = {
-
+        # 'form': form,
     }
-    return render(request, 'profile/basic-1.html', context=context_dict)
+    return render(request, 'profile/extended.html', context=context_dict)
 
 
 def category_view(request, category):
