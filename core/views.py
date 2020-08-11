@@ -23,6 +23,7 @@ from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddReviewF
 from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating, \
     Category  
 from .tasks import *
+from cacheback.jobs import QuerySetGetJob, QuerySetFilterJob
 from mpesa.mpesa import Mpesa
 
 
@@ -438,8 +439,9 @@ class PaymentView(View):
 def HomeView(request):
     # Mpesa.c2b_register_url()
     # Mpesa.stk_push(phone=254715112499, amount=1, account_reference='test')
-    items = Item.objects.all().order_by('-created_on')
-    paginator = Paginator(items, 9)  # Show 3 items per page.
+    items = QuerySetFilterJob(Item).get()
+    # items = Item.objects.all().order_by('-created_on')
+    paginator = Paginator(items.order_by('-created_on'), 9)  # Show 3 items per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     laptop_count = items.filter(category__name__contains='Laptops').count()
@@ -475,7 +477,7 @@ def HomeView(request):
 def getitems(request):
     if request.method == "GET":  # and request.is_ajax():
         try:
-            items = Item.objects.all()
+            items = QuerySetFilterJob(Item).get()
         except:
             return JsonResponse({"success": False}, status=400)
 
@@ -488,7 +490,8 @@ def getitems(request):
 class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         try:
-            order = Order.objects.get(user=self.request.user, ordered=False)
+            order = QuerySetGetJob(Order).get(user=self.request.user, ordered=False)
+            # order = Order.objects.get(user=self.request.user, ordered=False)
             context = {
                 'object': order
             }
@@ -704,7 +707,7 @@ def account_settings(request):
 
 
 def category_view(request, category):
-    items = Item.objects.filter(
+    items = QuerySetFilterJob(Item).get(
         category__name__contains=category
     )
     context_dict = {

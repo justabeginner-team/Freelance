@@ -14,7 +14,7 @@ sentry_sdk.init(
 BASE_DIR = os.path.dirname(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__))))
 
-SECRET_KEY = '8#s^kyoz5g-@f(xd)0)1ass(9lknoi=3_l0hgv^iy^szqw3lq7'
+SECRET_KEY = config('SECRET_KEY')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django_filters',
     'django_extensions',
     'django_celery_results',
+    'cacheback',
     'phone_field',
     'rangefilter',
     'rest_framework',
@@ -75,6 +76,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 # AUTH_USER_MODEL = 'core.EcommerceUser'
 
@@ -215,3 +217,35 @@ TOKEN_THRESHOLD = config('TOKEN_THRESHOLD')
 
 CELERY_BROKER_URL = 'amqp://localhost'
 CELERY_RESULT_BACKEND = 'django-db'
+
+CACHE_TASK_QUEUE = 'CELERY'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        }
+    },
+    'loggers': {
+        'cacheback': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    }
+}

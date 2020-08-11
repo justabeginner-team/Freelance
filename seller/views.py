@@ -10,7 +10,6 @@ from .forms import AddItemForm
 from core.models import Item, Order, Rating
 from core.filters import ItemFilter, CategoryFilter
 
-
 from django.http.response import JsonResponse, HttpResponse
 from django.views.decorators.http import require_GET, require_POST
 from django.shortcuts import get_object_or_404
@@ -157,6 +156,7 @@ def delete_item(request, slug):
                                              request=request
                                              )
     return JsonResponse(data)
+
 
 # @require_GET
 def retailer_dash(request):

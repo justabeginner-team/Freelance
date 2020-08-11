@@ -18,8 +18,6 @@ PAYMENT_CHOICES = (
 )
 
 
-
-
 class CheckoutForm(forms.Form):
     phonenumber = forms.CharField(required=False)
     shipping_address = forms.CharField(required=False)
