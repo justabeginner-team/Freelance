@@ -38,7 +38,6 @@ kombu==4.6.11
 oauthlib==3.0.1
 pep8==1.7.1
 Pillow==7.1.2
-pkg-resources==0.0.0
 py-vapid==1.7.1
 pycodestyle==2.5.0
 pycparser==2.20

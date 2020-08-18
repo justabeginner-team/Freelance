@@ -50,9 +50,15 @@ def admin(request):
     print(request.user)
     items_table = Item.objects.filter(user=request.user)
     recents = items_table.order_by('-created_on')[:3]
-    obj = Order.objects.filter(items__item__user__exact=request.user.id)
-    orders = obj.order_by('-start_date')
+
+    obj = Order.objects.filter(items__item__user__exact=request.user)
+    orders = obj.order_by('-start_date')[:3]
+
     rev = Rating.objects.filter(item__user=request.user).order_by('-created_on')
+    print(obj.count())
+    for k in obj:
+        print(k.items)
+       
     return render(request, 'admin-dash/index.html', {
         'items': items_table,
         'recents': recents,
@@ -160,22 +166,19 @@ def delete_item(request, slug):
 
 # @require_GET
 def retailer_dash(request):
-    items = Item.objects.all()
+    
+    items = Item.objects.all().order_by('-created_on')[:3]
     orders = Order.objects.all()
 
     myfilter = ItemFilter(request.GET, queryset=items)
     items = myfilter.qs
 
-    # webpush_settings = getattr(settings, 'WEBPUSH_SETTINGS', {})
-    # vapid_key = webpush_settings.get('VAPID_PUBLIC_KEY')
-    # user = request.user
-
+   
     context_dict = {
         'items': items,
         'myfilter': myfilter,
         'orders': orders,
-        #   'user': user,
-        #   'vapid_key': vapid_key
+       
     }
     return render(request, 'retailer_dash.html', context=context_dict)
 
@@ -200,3 +203,13 @@ def retailer_dash(request):
 
 
 # your example view
+
+
+def more_items(request):
+    items = Item.objects.all()
+    return render(request,"admin-dash/items.html",{'items': items,})
+
+
+def more_orders(request):
+    orders = Order.objects.all()
+    return render(request, "admin-dash/orders.html", {'orders': orders, })

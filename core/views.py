@@ -23,8 +23,10 @@ from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddReviewF
 from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating, \
     Category
 from .tasks import *
+
 from cacheback.jobs import QuerySetGetJob, QuerySetFilterJob
 from mpesa.mpesa import Mpesa
+
 
 
 # stripe.api_key = settings.STRIPE_SECRET_KEY

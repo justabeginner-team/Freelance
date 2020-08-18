@@ -1,0 +1,103 @@
+{% extends "admin-dash/base.html" %}
+{% load static %}
+{% block extrastyle %}
+<style type="text/css">
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before {
+  bottom: .5em;
+}
+</style>
+{% endblock extrastyle %}
+
+{% block content %}
+
+<div class="page-content-wrapper">
+    <div class="page-content-wrapper-inner">
+        <div class="viewport-header">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb has-arrow">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'seller:admin_view' %}">Dashboard</a>
+                    </li>
+                   
+                    <li class="breadcrumb-item active" aria-current="page">Items</li>
+                </ol>
+            </nav>
+        </div>
+
+
+        <div class="content-viewport">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="grid">
+                        <div class="grid-body">
+                            <div class="item-wrapper">
+                                <div class="table-responsive">
+                                    <div id="json-sample-data-table_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                       
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <table id="dtBasicExample"
+                                                    class="data-table table table-striped dataTable" role="grid"
+                                                    aria-describedby="json-sample-data-table_info" style="width: 1088px;">
+                                                
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Item</th>
+                                                            <th>Quantity</th>
+                                                            <th>Price</th>
+                                                            <th>Discount Price</th>
+                                                            <th>Category</th>
+                                                            <th>Update</th>
+                                                            <th>Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th rowspan="1" colspan="1">Item</th>
+                                                            <th rowspan="1" colspan="1">Quantity</th>
+                                                            <th rowspan="1" colspan="1">price</th>
+                                                            <th rowspan="1" colspan="1">Discount price</th>
+                                                            <th rowspan="1" colspan="1">Category</th>
+                                                            <th rowspan="1" colspan="1">Update</th>
+                                                            <th rowspan="1" colspan="1">Remove</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                    <tbody>
+                                                        {% include 'admin-dash/partial_item_list.html' %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include "admin-dash/footer.html" %}
+</div>    
+
+{% endblock content %}
+
+{% block javascript %}
+<script type="text/javascript">
+  $(document).ready(function () {
+        $('#dtBasicExample').DataTable();
+        $('.dataTables_length').addClass('bs-select');
+    });
+</script>
+
+{% endblock javascript %}
