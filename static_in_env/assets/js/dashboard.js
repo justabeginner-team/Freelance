@@ -22,7 +22,7 @@ $(function () {
         stepsize: 100
     }
     if ($('#stat-line_1').length) {
-        var lineChartCanvas = $("#stat-line_1").get(0).getContext("3d");
+        var lineChartCanvas = $("#stat-line_1").get(0).getContext("2d");
         var gradientStroke = lineChartCanvas.createLinearGradient(100, 60, 30, 0);
         gradientStroke.addColorStop(0, '#B721FF');
         gradientStroke.addColorStop(1, '#21D4FD');
@@ -214,7 +214,7 @@ $(function () {
             stroke: {
                 lineCap: "round"
             },
-            labels: ["Sales"]
+            labels: ["orders"]
         };
         (r = new ApexCharts(document.querySelector("#radial-chart"), a)).render()
     }

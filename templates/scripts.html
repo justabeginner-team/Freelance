@@ -8,13 +8,29 @@
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/addons/steppers.min.js' %}"></script>
-
+<script type="text/javascript" src="{% static 'js/addons/rating.js' %}"></script>
 
 
 
 
 <!-- Initializations -->
 <script type="text/javascript">
+ $().ready(function () {
+
+    
+      $('#ctn-preloader').addClass('loaded');
+      // Una vez haya terminado el preloader aparezca el scroll
+      $('body').removeClass('no-scroll-y');
+
+      if ($('#ctn-preloader').hasClass('loaded')) {
+        // Es para que una vez que se haya ido el preloader se elimine toda la seccion preloader
+        $('#preloader').delay(1000).queue(function () {
+          $(this).remove();
+        });
+      }
+   
+
+  });
   // Animations initialization
   new WOW().init();
 
@@ -37,7 +53,7 @@
     });
   },4000);
 
-
+ 
 
   
 </script>

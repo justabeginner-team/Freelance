@@ -97,6 +97,7 @@
     // ex. to send the information to the server
     $container.on('click', '#voteSubmitButton', function () {
       $stars.popover('hide');
+      console.log("sending stars and review")
     });
 
     // Cancel, just close the popover

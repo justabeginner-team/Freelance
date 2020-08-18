@@ -1,5 +1,30 @@
  {% load static %}
     <nav class="t-header">
+      {% if messages %}
+      {% for message in messages %}
+      
+      <script type=text/javascript>
+      
+                                toastr["{{ message.tags }}"]("{{ message }}",toastr.options={
+                          "closeButton": false,
+                          "debug": false,
+                          "newestOnTop": true,
+                          "progressBar": false,
+                          "positionClass": "md-toast-top-full-width",
+                          "preventDuplicates": true,
+                          "onclick": null,
+                          "showDuration": 7000,
+                          "hideDuration": 3000,
+                          "timeOut": 5000,
+                          "extendedTimeOut": 1000,
+                          "showEasing": "swing",
+                          "hideEasing": "linear",
+                          "showMethod": "slideDown",
+                          "hideMethod": "slideUp"
+                          })
+                </script>
+      {% endfor %}
+      {% endif %}
       <div class="t-header-brand-wrapper">
         <a href="index.html">
           <img class="logo" src="{% static 'assets/images/logo.svg' %}" alt="">
@@ -17,13 +42,7 @@
               <button class="btn btn-primary" type="submit"><i class="mdi mdi-arrow-right-thick"></i></button>
             </div>
           </form>
-          {% if messages %}
-            {% for message in messages %}
-              <div class="alert alert-{{ message.tags }} alert-dismissible fade show " role="alert">
-                {{ message }}
-              </div>
-            {% endfor %}
-          {% endif %}
+        
           <ul class="nav ml-auto">
             <li class="nav-item dropdown">
               <a class="nav-link" href="#" id="notificationDropdown" data-toggle="dropdown" aria-expanded="false">

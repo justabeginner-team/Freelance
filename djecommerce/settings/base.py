@@ -126,7 +126,7 @@ EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'TestSite Team <djangologinsmtp@gmail.com>'
 
 ACCOUNT_EMAIL_REQUIRED = True

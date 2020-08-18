@@ -23,7 +23,7 @@ from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddReviewF
 from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating, \
     Category  
 from .tasks import *
-from mpesa.mpesa import Mpesa
+
 
 
 # stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -513,7 +513,7 @@ class ItemDisplayView(DetailView):
 
 class ItemReview(FormView):
     form_class = AddReviewForm
-    template_name = 'ratings.html'
+    template_name = 'products.html'
 
     def form_valid(self, form):
         form.instance.user = self.request.user
