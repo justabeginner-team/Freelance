@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 
   <!-- Main layout -->
@@ -455,27 +455,19 @@
               <!-- Card content -->
               <div class="card-body">
                 <!-- Title -->
-                <h4 class="card-title"><strong>John Doe</strong></h4>
+                <h4 class="card-title"><strong>{{request.user}} {{request.user.last_name}}</strong></h4>
                 <form method="post" action="" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {% for field in form %}
-                      <div class="form-group{% if field.errors %} has-error{% endif %}">
-                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                        {% render_field field class="form-control" %}
-                        {% for error in field.errors %}
-                          <p class="help-block">{{ error }}</p>
-                        {% endfor %}
-                      </div>
-                    {% endfor %}
-                    <input class="btn btn-primary" type="submit" name="Update Information">
+
                 </form>
                 <!-- Text -->
                 <p class="card-text mt-3">Some quick example text to build on the card title and make up the bulk of
                   the card's content.
                 </p>
 
-                <button type="button" class="btn btn-info btn-rounded btn-sm" data-toggle="modal" data-target="#modalContactUser">Contact<i
-                    class="fas fa-paper-plane ml-2"></i></button>
+                <button type="button" class="btn btn-info btn-rounded btn-sm" data-toggle="modal" data-target="#modalContactUser">
+                  Contact us
+                  <i class="fas fa-paper-plane ml-2"></i></button>
               </div>
 
             </section>
@@ -543,10 +535,11 @@
             <!-- Heading -->
             <div class="text-center mt-3 mb-5">
 
-              <h4><strong>John's projects</strong></h4>
+              <h4><strong>Your Orders</strong></h4>
 
-              <button type="button" class="btn btn-info btn-rounded mt-4" data-toggle="modal" data-target="#modalSubmitProject">Submit
-                new project <i class="far fa-image ml-1"></i></button>
+              <button type="button" class="btn btn-info btn-rounded mt-4" data-toggle="modal" data-target="#modalSubmitProject">
+                Make an order
+                <i class="fas fa-shopping-cart ml-3 ml-1"></i></button>
 
             </div>
             <!-- Heading -->
@@ -582,139 +575,11 @@
 
                 <!-- Card footer -->
                 <div class="card-footer links-light">
-                  <span class="float-left pt-2">
-                    <a><i class="fas fa-share-alt mr-2"></i></a>
-                    <a><i class="fas fa-heart-o mr-2"></i>10</a>
+                  <span class="float-left ">
+                    <a href="{% url 'account_email' %}" class="waves-effect p-2">Reset Email <i class="fas fa-envelope-square ml-1"></i></a>
                   </span>
                   <span class="float-right">
-                    <a href="" class="waves-effect p-2">Live Preview <i class="far fa-image ml-1"></i></a>
-                  </span>
-                </div>
-
-              </div>
-              <!-- Card -->
-
-              <!-- Card -->
-              <div class="card card-cascade narrower card-ecommerce d-flex mb-5">
-
-                <!-- Card image -->
-                <div class="view view-cascade overlay">
-                  <img src="https://mdbootstrap.com/img/Mockups/Horizontal/6-col/pro-signup.jpg" class="img-fluid" alt="">
-                  <a href="#">
-                    <div class="mask"></div>
-                  </a>
-                </div>
-
-                <!-- Card content -->
-                <div class="card-body card-body-cascade">
-
-                  <!-- Title -->
-                  <h4 class="card-title">Project name</h4>
-
-                  <!-- Text -->
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.
-                  </p>
-                </div>
-
-                <!-- Card footer -->
-                <div class="card-footer links-light">
-                  <span class="float-left pt-2">
-                    <a><i class="fas fa-share-alt mr-2"></i></a>
-                    <a><i class="fas fa-heart-o mr-2"></i>10</a>
-                  </span>
-                  <span class="float-right">
-                    <a href="" class="waves-effect p-2">Live Preview <i class="far fa-image ml-1"></i></a>
-                  </span>
-                </div>
-
-              </div>
-              <!-- Card -->
-
-            </div>
-            <!-- Card row -->
-
-            <!-- Card row -->
-            <div class="card-deck">
-
-              <!-- Card -->
-              <div class="card card-cascade narrower card-ecommerce d-flex mb-5">
-
-                <!-- Card image -->
-                <div class="view view-cascade overlay">
-                  <img src="https://mdbootstrap.com/img/Mockups/Horizontal/6-col/pro-pricing.jpg" class="img-fluid" alt="">
-                  <a href="#">
-                    <div class="mask"></div>
-                  </a>
-                </div>
-
-                <!-- Card content -->
-                <div class="card-body card-body-cascade">
-
-                  <!-- Title -->
-                  <h4 class="card-title">Project name</h4>
-
-                  <!-- Text -->
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.
-                  </p>
-
-                </div>
-
-                <!-- Card footer -->
-                <div class="card-footer links-light">
-
-                  <span class="float-left pt-2">
-                    <a><i class="fas fa-share-alt mr-2"></i></a>
-                    <a><i class="fas fa-heart-o mr-2"></i>10</a>
-                  </span>
-
-                  <span class="float-right">
-                    <a href="" class="waves-effect p-2">Live Preview <i class="far fa-image ml-1"></i></a>
-                  </span>
-
-                </div>
-
-              </div>
-              <!-- Card -->
-
-              <!-- Card -->
-              <div class="card card-cascade narrower card-ecommerce d-flex mb-5">
-
-                <!-- Card image -->
-                <div class="view view-cascade overlay">
-                  <img src="https://mdbootstrap.com/img/Mockups/Horizontal/6-col/pro-landing.jpg" class="img-fluid" alt="">
-                  <a href="#">
-                    <div class="mask"></div>
-                  </a>
-                </div>
-
-                <!-- Card content -->
-                <div class="card-body card-body-cascade">
-
-                  <!-- Title -->
-                  <h4 class="card-title">Project name</h4>
-
-                  <!-- Text -->
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.
-                  </p>
-
-                </div>
-
-                <!-- Card footer -->
-                <div class="card-footer links-light">
-
-                  <span class="float-left pt-2">
-                    <a><i class="fas fa-share-alt mr-2"></i></a>
-                    <a><i class="fas fa-heart-o mr-2"></i>10</a>
-                  </span>
-
-                  <span class="float-right">
-                    <a href="" class="waves-effect p-2">Live Preview <i class="far fa-image ml-1"></i></a>
+                    <a href="{% url 'account_reset_password' %}" class="waves-effect p-2">Reset Password <i class="fas fa-key ml-1"></i></a>
                   </span>
                 </div>
 

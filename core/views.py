@@ -21,7 +21,7 @@ from django.views.generic import DetailView, View, FormView
 from .filters import CategoryFilter
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddReviewForm
 from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating, \
-    Category  
+    Category
 from .tasks import *
 from cacheback.jobs import QuerySetGetJob, QuerySetFilterJob
 from mpesa.mpesa import Mpesa
@@ -516,7 +516,7 @@ class ItemDisplayView(DetailView):
 
 class ItemReview(FormView):
     form_class = AddReviewForm
-    template_name = 'ratings.html'
+    template_name = 'product.html'
 
     def form_valid(self, form):
         form.instance.user = self.request.user

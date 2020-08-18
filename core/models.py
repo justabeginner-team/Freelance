@@ -5,6 +5,7 @@ from django.db import models
 from django.shortcuts import reverse
 from django.template.defaultfilters import slugify
 from django.utils import timezone
+from allauth.account.models import EmailAddress
 from django_countries.fields import CountryField
 
 import random
@@ -65,6 +66,11 @@ class UserProfile(models.Model):
     one_click_purchasing = models.BooleanField(default=False)
     is_retailer = models.BooleanField(default=False)
     company_name = models.CharField(max_length=50, null=True, blank=True)
+
+    def add_email_address(self, request, new_email):
+        # Add a new email address for the user, and send email confirmation.
+        # Old email will remain the primary until the new one is confirmed.
+        return EmailAddress.objects.add_email(request, self.user, new_email, confirm=True)
 
     def __str__(self):
         return self.user.username
