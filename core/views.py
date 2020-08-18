@@ -516,7 +516,7 @@ class ItemDisplayView(DetailView):
 
 class ItemReview(FormView):
     form_class = AddReviewForm
-    template_name = 'ratings.html'
+    template_name = 'product.html'
 
     def form_valid(self, form):
         form.instance.user = self.request.user

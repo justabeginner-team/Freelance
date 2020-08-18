@@ -575,12 +575,11 @@
 
                 <!-- Card footer -->
                 <div class="card-footer links-light">
-                  <span class="float-left pt-2">
-                    <a><i class="fas fa-share-alt mr-2"></i></a>
-                    <a><i class="fas fa-heart-o mr-2"></i>10</a>
+                  <span class="float-left ">
+                    <a href="{% url 'account_email' %}" class="waves-effect p-2">Reset Email <i class="fas fa-envelope-square ml-1"></i></a>
                   </span>
                   <span class="float-right">
-                    <a href="" class="waves-effect p-2">Live Preview <i class="far fa-image ml-1"></i></a>
+                    <a href="{% url 'account_reset_password' %}" class="waves-effect p-2">Reset Password <i class="fas fa-key ml-1"></i></a>
                   </span>
                 </div>
 
