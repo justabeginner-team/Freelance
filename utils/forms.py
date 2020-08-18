@@ -2,6 +2,9 @@ from django.contrib.auth import get_user_model
 from django.forms import ModelForm
 from django import forms
 
+from core.models import UserProfile
+
+
 class SignupForm(forms.ModelForm):
     retailer = forms.BooleanField(required=False)
     company = forms.CharField(max_length=50, required=False)

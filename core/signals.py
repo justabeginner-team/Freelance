@@ -1,5 +1,6 @@
-# from django.db.models.signals import post_save
-from django.db.models.signals import post_save
+from allauth.account.signals import email_confirmed
+from allauth.account.models import EmailAddress
+from django.db.models.signals import post_save, pre_save
 
 from .models import LoggedInUser, Item
 from django.contrib.auth.models import User
@@ -16,17 +17,19 @@ def on_user_logged_in(sender, **kwargs):
 def on_user_logged_out(sender, **kwargs):
     LoggedInUser.objects.filter(user=kwargs.get('user')).delete()
 
-# def userprofile_receiver(sender, instance, created, *args, **kwargs):
-#     if created:
-#         userprofile = UserProfile.objects.create(user=instance)
-#         print('user created')
-#
-#
-# post_save.connect(userprofile_receiver, sender=settings.AUTH_USER_MODEL)
+
+# @receiver(pre_save, sender=Item)
+# def item_receiver(sender, instance, *args, **kwargs):
+#     Item.objects.create(user=instance)
+#     print('item created')
 
 
-# def item_receiver(sender, instance, created, *args, **kwargs):
-#     if created:
-#         Item.objects.create(user=instance)
-#
-#  post_save.connect(item_receiver, sender=Item)
+@receiver(email_confirmed)
+def update_user_email(sender, request, email_address, **kwargs):
+    # Once the email address is confirmed, make new email_address primary.
+    # This also sets user.email to the new email address.
+    # email_address is an instance of allauth.account.models.EmailAddress
+    email_address.set_as_primary()
+    # Get rid of old email addresses
+    stale_addresses = EmailAddress.objects.filter(
+        user=email_address.user).exclude(primary=True).delete()

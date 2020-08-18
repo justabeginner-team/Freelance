@@ -10,7 +10,6 @@ from .forms import AddItemForm
 from core.models import Item, Order, Rating
 from core.filters import ItemFilter, CategoryFilter
 
-
 from django.http.response import JsonResponse, HttpResponse
 from django.views.decorators.http import require_GET, require_POST
 from django.shortcuts import get_object_or_404
@@ -51,8 +50,10 @@ def admin(request):
     print(request.user)
     items_table = Item.objects.filter(user=request.user)
     recents = items_table.order_by('-created_on')[:3]
+
     obj = Order.objects.filter(items__item__user__exact=request.user)
     orders = obj.order_by('-start_date')[:3]
+
     rev = Rating.objects.filter(item__user=request.user).order_by('-created_on')
     print(obj.count())
     for k in obj:
@@ -86,11 +87,8 @@ def admin(request):
 def item_create(request):
     data = dict()
     if request.method == 'POST':
-        # this enables the form to be saved only in this instance
         form = AddItemForm(request.POST, request.FILES)
-        # not as a new form
         if form.is_valid():
-            # form.instance.user = request.user
             form.save()
             data['form_is_valid'] = True
             items_table = Item.objects.filter(user=request.user)
@@ -119,6 +117,7 @@ def update_item(request, slug):
         # this enables the form to be saved only in this instance
         form = AddItemForm(request.POST, request.FILES, instance=item)
         # not as a new form
+        print(data)
         if form.is_valid():
             form.save()
             data['form_is_valid'] = True
@@ -163,6 +162,7 @@ def delete_item(request, slug):
                                              request=request
                                              )
     return JsonResponse(data)
+
 
 # @require_GET
 def retailer_dash(request):

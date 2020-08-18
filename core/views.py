@@ -21,8 +21,11 @@ from django.views.generic import DetailView, View, FormView
 from .filters import CategoryFilter
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddReviewForm
 from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating, \
-    Category  
+    Category
 from .tasks import *
+
+from cacheback.jobs import QuerySetGetJob, QuerySetFilterJob
+from mpesa.mpesa import Mpesa
 
 
 
@@ -436,10 +439,11 @@ class PaymentView(View):
 #     paginate_by = 10
 #     template_name = "home.html"
 def HomeView(request):
-    #Mpesa.c2b_register_url()
-    #Mpesa.stk_push(phone=254715112499, amount=1, account_reference='test')
-    items = Item.objects.all().order_by('-created_on')
-    paginator = Paginator(items, 9)  # Show 3 items per page.
+    # Mpesa.c2b_register_url()
+    # Mpesa.stk_push(phone=254715112499, amount=1, account_reference='test')
+    items = QuerySetFilterJob(Item).get()
+    # items = Item.objects.all().order_by('-created_on')
+    paginator = Paginator(items.order_by('-created_on'), 9)  # Show 3 items per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     laptop_count = items.filter(category__name__contains='Laptops').count()
@@ -475,7 +479,7 @@ def HomeView(request):
 def getitems(request):
     if request.method == "GET":  # and request.is_ajax():
         try:
-            items = Item.objects.all()
+            items = QuerySetFilterJob(Item).get()
         except:
             return JsonResponse({"success": False}, status=400)
 
@@ -488,7 +492,8 @@ def getitems(request):
 class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         try:
-            order = Order.objects.get(user=self.request.user, ordered=False)
+            order = QuerySetGetJob(Order).get(user=self.request.user, ordered=False)
+            # order = Order.objects.get(user=self.request.user, ordered=False)
             context = {
                 'object': order
             }
@@ -513,7 +518,7 @@ class ItemDisplayView(DetailView):
 
 class ItemReview(FormView):
     form_class = AddReviewForm
-    template_name = 'products.html'
+    template_name = 'product.html'
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -689,14 +694,22 @@ class RequestRefundView(View):
 
 
 def account_settings(request):
+    # customer = request.user.customer  # gets current logged in customer
+    # form = CustomerForm(instance=customer)
+    #
+    # if request.method == 'POST':
+    #     form = CustomerForm(request.POST, request.FILES, instance=customer)
+    #     if form.is_valid():
+    #         form.save()
+    # return redirect('account')
     context_dict = {
-
+        # 'form': form,
     }
-    return render(request, 'profile/basic-1.html', context=context_dict)
+    return render(request, 'profile/extended.html', context=context_dict)
 
 
 def category_view(request, category):
-    items = Item.objects.filter(
+    items = QuerySetFilterJob(Item).get(
         category__name__contains=category
     )
     context_dict = {
