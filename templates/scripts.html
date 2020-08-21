@@ -17,7 +17,7 @@
 <script type="text/javascript">
  $().ready(function () {
 
-    
+    setTimeout(function () {
       $('#ctn-preloader').addClass('loaded');
       // Una vez haya terminado el preloader aparezca el scroll
       $('body').removeClass('no-scroll-y');
@@ -28,7 +28,7 @@
           $(this).remove();
         });
       }
-   
+    }, 1000);
 
   });
   // Animations initialization

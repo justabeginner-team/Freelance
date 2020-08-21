@@ -1,0 +1,1518 @@
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <title>Label - Premium Responsive Bootstrap 4 Admin &amp; Dashboard Template</title><!-- plugins:css -->
+    <link rel="stylesheet" href="../assets/vendors/iconfonts/mdi/css/materialdesignicons.css">
+    <link rel="stylesheet" href="../assets/vendors/css/vendor.addons.css"><!-- endinject -->
+    <!-- vendor css for this page -->
+    <!-- End vendor css for this page -->
+    <!-- Layout style -->
+    <link rel="stylesheet" href="../assets/css/demo_2/style.css"><!-- Layout style -->
+    <link rel="shortcut icon" href="../asssets/images/favicon.ico">
+    <style type="text/css">
+        .apexcharts-canvas {
+            position: relative;
+            user-select: none;
+            /* cannot give overflow: hidden as it will crop tooltips which overflow outside chart area */
+        }
+
+        /* scrollbar is not visible by default for legend, hence forcing the visibility */
+        .apexcharts-canvas ::-webkit-scrollbar {
+            -webkit-appearance: none;
+            width: 6px;
+        }
+
+        .apexcharts-canvas ::-webkit-scrollbar-thumb {
+            border-radius: 4px;
+            background-color: rgba(0, 0, 0, .5);
+            box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+            -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+        }
+
+        .apexcharts-inner {
+            position: relative;
+        }
+
+        .legend-mouseover-inactive {
+            transition: 0.15s ease all;
+            opacity: 0.20;
+        }
+
+        .apexcharts-series-collapsed {
+            opacity: 0;
+        }
+
+        .apexcharts-gridline,
+        .apexcharts-text {
+            pointer-events: none;
+        }
+
+        .apexcharts-tooltip {
+            border-radius: 5px;
+            box-shadow: 2px 2px 6px -4px #999;
+            cursor: default;
+            font-size: 14px;
+            left: 62px;
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 20px;
+            overflow: hidden;
+            white-space: nowrap;
+            z-index: 12;
+            transition: 0.15s ease all;
+        }
+
+        .apexcharts-tooltip.light {
+            border: 1px solid #e3e3e3;
+            background: rgba(255, 255, 255, 0.96);
+        }
+
+        .apexcharts-tooltip.dark {
+            color: #fff;
+            background: rgba(30, 30, 30, 0.8);
+        }
+
+        .apexcharts-tooltip .apexcharts-marker,
+        .apexcharts-area-series .apexcharts-area,
+        .apexcharts-line {
+            pointer-events: none;
+        }
+
+        .apexcharts-tooltip.active {
+            opacity: 1;
+            transition: 0.15s ease all;
+        }
+
+        .apexcharts-tooltip-title {
+            padding: 6px;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .apexcharts-tooltip.light .apexcharts-tooltip-title {
+            background: #ECEFF1;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .apexcharts-tooltip.dark .apexcharts-tooltip-title {
+            background: rgba(0, 0, 0, 0.7);
+            border-bottom: 1px solid #222;
+        }
+
+        .apexcharts-tooltip-text-value,
+        .apexcharts-tooltip-text-z-value {
+            display: inline-block;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+
+        .apexcharts-tooltip-text-z-label:empty,
+        .apexcharts-tooltip-text-z-value:empty {
+            display: none;
+        }
+
+        .apexcharts-tooltip-text-value,
+        .apexcharts-tooltip-text-z-value {
+            font-weight: 600;
+        }
+
+        .apexcharts-tooltip-marker {
+            width: 12px;
+            height: 12px;
+            position: relative;
+            top: 0px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .apexcharts-tooltip-series-group {
+            padding: 0 10px;
+            display: none;
+            text-align: left;
+            justify-content: left;
+            align-items: center;
+        }
+
+        .apexcharts-tooltip-series-group.active .apexcharts-tooltip-marker {
+            opacity: 1;
+        }
+
+        .apexcharts-tooltip-series-group.active,
+        .apexcharts-tooltip-series-group:last-child {
+            padding-bottom: 4px;
+        }
+
+        .apexcharts-tooltip-y-group {
+            padding: 6px 0 5px;
+        }
+
+        .apexcharts-tooltip-candlestick {
+            padding: 4px 8px;
+        }
+
+        .apexcharts-tooltip-candlestick>div {
+            margin: 4px 0;
+        }
+
+        .apexcharts-tooltip-candlestick span.value {
+            font-weight: bold;
+        }
+
+        .apexcharts-xaxistooltip {
+            opacity: 0;
+            padding: 9px 10px;
+            pointer-events: none;
+            color: #373d3f;
+            font-size: 13px;
+            text-align: center;
+            border-radius: 2px;
+            position: absolute;
+            z-index: 10;
+            background: #ECEFF1;
+            border: 1px solid #90A4AE;
+            transition: 0.15s ease all;
+        }
+
+        .apexcharts-xaxistooltip:after,
+        .apexcharts-xaxistooltip:before {
+            left: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .apexcharts-xaxistooltip:after {
+            border-color: rgba(236, 239, 241, 0);
+            border-width: 6px;
+            margin-left: -6px;
+        }
+
+        .apexcharts-xaxistooltip:before {
+            border-color: rgba(144, 164, 174, 0);
+            border-width: 7px;
+            margin-left: -7px;
+        }
+
+        .apexcharts-xaxistooltip-bottom:after,
+        .apexcharts-xaxistooltip-bottom:before {
+            bottom: 100%;
+        }
+
+        .apexcharts-xaxistooltip-bottom:after {
+            border-bottom-color: #ECEFF1;
+        }
+
+        .apexcharts-xaxistooltip-bottom:before {
+            border-bottom-color: #90A4AE;
+        }
+
+        .apexcharts-xaxistooltip-top:after,
+        .apexcharts-xaxistooltip-top:before {
+            top: 100%;
+        }
+
+        .apexcharts-xaxistooltip-top:after {
+            border-top-color: #ECEFF1;
+        }
+
+        .apexcharts-xaxistooltip-top:before {
+            border-top-color: #90A4AE;
+        }
+
+        .apexcharts-xaxistooltip.active {
+            opacity: 1;
+            transition: 0.15s ease all;
+        }
+
+        .apexcharts-yaxistooltip {
+            opacity: 0;
+            padding: 4px 10px;
+            pointer-events: none;
+            color: #373d3f;
+            font-size: 13px;
+            text-align: center;
+            border-radius: 2px;
+            position: absolute;
+            z-index: 10;
+            background: #ECEFF1;
+            border: 1px solid #90A4AE;
+        }
+
+        .apexcharts-yaxistooltip:after,
+        .apexcharts-yaxistooltip:before {
+            top: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .apexcharts-yaxistooltip:after {
+            border-color: rgba(236, 239, 241, 0);
+            border-width: 6px;
+            margin-top: -6px;
+        }
+
+        .apexcharts-yaxistooltip:before {
+            border-color: rgba(144, 164, 174, 0);
+            border-width: 7px;
+            margin-top: -7px;
+        }
+
+        .apexcharts-yaxistooltip-left:after,
+        .apexcharts-yaxistooltip-left:before {
+            left: 100%;
+        }
+
+        .apexcharts-yaxistooltip-left:after {
+            border-left-color: #ECEFF1;
+        }
+
+        .apexcharts-yaxistooltip-left:before {
+            border-left-color: #90A4AE;
+        }
+
+        .apexcharts-yaxistooltip-right:after,
+        .apexcharts-yaxistooltip-right:before {
+            right: 100%;
+        }
+
+        .apexcharts-yaxistooltip-right:after {
+            border-right-color: #ECEFF1;
+        }
+
+        .apexcharts-yaxistooltip-right:before {
+            border-right-color: #90A4AE;
+        }
+
+        .apexcharts-yaxistooltip.active {
+            opacity: 1;
+        }
+
+        .apexcharts-xcrosshairs,
+        .apexcharts-ycrosshairs {
+            pointer-events: none;
+            opacity: 0;
+            transition: 0.15s ease all;
+        }
+
+        .apexcharts-xcrosshairs.active,
+        .apexcharts-ycrosshairs.active {
+            opacity: 1;
+            transition: 0.15s ease all;
+        }
+
+        .apexcharts-ycrosshairs-hidden {
+            opacity: 0;
+        }
+
+        .apexcharts-zoom-rect {
+            pointer-events: none;
+        }
+
+        .apexcharts-selection-rect {
+            cursor: move;
+        }
+
+        .svg_select_points,
+        .svg_select_points_rot {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .svg_select_points_l,
+        .svg_select_points_r {
+            cursor: ew-resize;
+            opacity: 1;
+            visibility: visible;
+            fill: #888;
+        }
+
+        .apexcharts-canvas.zoomable .hovering-zoom {
+            cursor: crosshair
+        }
+
+        .apexcharts-canvas.zoomable .hovering-pan {
+            cursor: move
+        }
+
+        .apexcharts-xaxis,
+        .apexcharts-yaxis {
+            pointer-events: none;
+        }
+
+        .apexcharts-zoom-icon,
+        .apexcharts-zoom-in-icon,
+        .apexcharts-zoom-out-icon,
+        .apexcharts-reset-zoom-icon,
+        .apexcharts-pan-icon,
+        .apexcharts-selection-icon,
+        .apexcharts-menu-icon {
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+        }
+
+
+        .apexcharts-zoom-icon svg,
+        .apexcharts-zoom-in-icon svg,
+        .apexcharts-zoom-out-icon svg,
+        .apexcharts-reset-zoom-icon svg,
+        .apexcharts-menu-icon svg {
+            fill: #6E8192;
+        }
+
+        .apexcharts-selection-icon svg {
+            fill: #444;
+            transform: scale(0.86)
+        }
+
+        .apexcharts-zoom-icon.selected svg,
+        .apexcharts-selection-icon.selected svg,
+        .apexcharts-reset-zoom-icon.selected svg {
+            fill: #008FFB;
+        }
+
+        .apexcharts-selection-icon:not(.selected):hover svg,
+        .apexcharts-zoom-icon:not(.selected):hover svg,
+        .apexcharts-zoom-in-icon:hover svg,
+        .apexcharts-zoom-out-icon:hover svg,
+        .apexcharts-reset-zoom-icon:hover svg,
+        .apexcharts-menu-icon:hover svg {
+            fill: #333;
+        }
+
+        .apexcharts-selection-icon,
+        .apexcharts-menu-icon {
+            margin-right: 3px;
+            margin-left: 5px;
+            position: relative;
+            top: 1px;
+        }
+
+        .apexcharts-reset-zoom-icon {
+            margin-left: 7px;
+        }
+
+        .apexcharts-zoom-icon {
+            transform: scale(1);
+        }
+
+        .apexcharts-zoom-in-icon,
+        .apexcharts-zoom-out-icon {
+            transform: scale(0.8)
+        }
+
+        .apexcharts-zoom-out-icon {
+            margin-right: 3px;
+        }
+
+        .apexcharts-pan-icon {
+            transform: scale(0.72);
+            position: relative;
+            left: 1px;
+            top: 0px;
+        }
+
+        .apexcharts-pan-icon svg {
+            fill: #fff;
+            stroke: #6E8192;
+            stroke-width: 2;
+        }
+
+        .apexcharts-pan-icon.selected svg {
+            stroke: #008FFB;
+        }
+
+        .apexcharts-pan-icon:not(.selected):hover svg {
+            stroke: #333;
+        }
+
+        .apexcharts-toolbar {
+            position: absolute;
+            z-index: 11;
+            top: 0px;
+            right: 3px;
+            max-width: 176px;
+            text-align: right;
+            border-radius: 3px;
+            padding: 0px 6px 2px 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .apexcharts-toolbar svg {
+            pointer-events: none;
+        }
+
+        .apexcharts-menu {
+            background: #fff;
+            position: absolute;
+            top: 100%;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 3px;
+            right: 10px;
+            opacity: 0;
+            min-width: 110px;
+            transition: 0.15s ease all;
+            pointer-events: none;
+        }
+
+        .apexcharts-menu.open {
+            opacity: 1;
+            pointer-events: all;
+            transition: 0.15s ease all;
+        }
+
+        .apexcharts-menu-item {
+            padding: 6px 7px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .apexcharts-menu-item:hover {
+            background: #eee;
+        }
+
+        @media screen and (min-width: 768px) {
+            .apexcharts-toolbar {
+                /*opacity: 0;*/
+            }
+
+            .apexcharts-canvas:hover .apexcharts-toolbar {
+                opacity: 1;
+            }
+        }
+
+        .apexcharts-datalabel.hidden {
+            opacity: 0;
+        }
+
+        .apexcharts-pie-label,
+        .apexcharts-datalabel,
+        .apexcharts-datalabel-label,
+        .apexcharts-datalabel-value {
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .apexcharts-pie-label-delay {
+            opacity: 0;
+            animation-name: opaque;
+            animation-duration: 0.3s;
+            animation-fill-mode: forwards;
+            animation-timing-function: ease;
+        }
+
+        .apexcharts-canvas .hidden {
+            opacity: 0;
+        }
+
+        .apexcharts-hide .apexcharts-series-points {
+            opacity: 0;
+        }
+
+        .apexcharts-area-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+        .apexcharts-line-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+        .apexcharts-radar-series path,
+        .apexcharts-radar-series polygon {
+            pointer-events: none;
+        }
+
+        /* markers */
+
+        .apexcharts-marker {
+            transition: 0.15s ease all;
+        }
+
+        @keyframes opaque {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+    <style type="text/css">
+        .jqstooltip {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            visibility: hidden;
+            background: rgb(0, 0, 0) transparent;
+            background-color: rgba(0, 0, 0, 0.6);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+            -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+            color: white;
+            font: 10px arial, san serif;
+            text-align: left;
+            white-space: nowrap;
+            padding: 5px;
+            border: 1px solid white;
+            box-sizing: content-box;
+            z-index: 10000;
+        }
+
+        .jqsfield {
+            color: white;
+            font: 10px arial, san serif;
+            text-align: left;
+        }
+    </style>
+    <style type="text/css">
+        /* Chart.js */
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: .99
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            animation: chartjs-render-animation 1ms
+        }
+
+        .chartjs-size-monitor,
+        .chartjs-size-monitor-expand,
+        .chartjs-size-monitor-shrink {
+            position: absolute;
+            direction: ltr;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            pointer-events: none;
+            visibility: hidden;
+            z-index: -1
+        }
+
+        .chartjs-size-monitor-expand>div {
+            position: absolute;
+            width: 1000000px;
+            height: 1000000px;
+            left: 0;
+            top: 0
+        }
+
+        .chartjs-size-monitor-shrink>div {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            left: 0;
+            top: 0
+        }
+    </style>
+    <style type="text/css">
+        @keyframes resizeanim {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        .resize-triggers {
+            animation: 1ms resizeanim;
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        .resize-triggers,
+        .resize-triggers>div,
+        .contract-trigger:before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .resize-triggers>div {
+            background: #eee;
+            overflow: auto;
+        }
+
+        .contract-trigger:before {
+            width: 200%;
+            height: 200%;
+        }
+    </style>
+</head>
+
+<body class="header-fixed dark-theme">
+    <!-- partial:partials/_header.html -->
+    <nav class="t-header">
+        <div class="t-header-brand-wrapper"><a href="index.html"><img class="logo" src="../assets/images/logo.svg"
+                    alt=""> <img class="logo-mini" src="../assets/images/logo_mini.svg" alt=""> </a><button
+                class="t-header-toggler t-header-desk-toggler d-none d-lg-block"><svg class="logo"
+                    viewBox="0 0 200 200">
+                    <path class="top" d="
+                M 40, 80
+                C 40, 80 120, 80 140, 80
+                C180, 80 180, 20  90, 80
+                C 60,100  30,120  30,120
+              "></path>
+                    <path class="middle" d="
+                M 40,100
+                L140,100
+              "></path>
+                    <path class="bottom" d="
+                M 40,120
+                C 40,120 120,120 140,120
+                C180,120 180,180  90,120
+                C 60,100  30, 80  30, 80
+              "></path>
+                </svg></button></div>
+        <div class="t-header-content-wrapper">
+            <div class="t-header-content"><button class="t-header-toggler t-header-mobile-toggler d-block d-lg-none"><i
+                        class="mdi mdi-menu"></i></button>
+                <form action="#" class="t-header-search-box">
+                    <div class="input-group"><input type="text" class="form-control" id="inlineFormInputGroup"
+                            placeholder="Search" autocomplete="off"> <button class="btn btn-primary" type="submit"><i
+                                class="mdi mdi-arrow-right-thick"></i></button></div>
+                </form>
+                <ul class="nav ml-auto">
+                    <li class="nav-item dropdown"><a class="nav-link" href="#" id="notificationDropdown"
+                            data-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-bell-outline mdi-1x"></i></a>
+                        <div class="dropdown-menu navbar-dropdown dropdown-menu-right"
+                            aria-labelledby="notificationDropdown">
+                            <div class="dropdown-header">
+                                <h6 class="dropdown-title">Notifications</h6>
+                                <p class="dropdown-title-text">You have 4 unread notification</p>
+                            </div>
+                            <div class="dropdown-body">
+                                <div class="dropdown-list">
+                                    <div class="icon-wrapper rounded-circle bg-inverse-primary text-primary"><i
+                                            class="mdi mdi-alert"></i></div>
+                                    <div class="content-wrapper"><small class="name">Storage Full</small> <small
+                                            class="content-text">Server storage almost full</small></div>
+                                </div>
+                                <div class="dropdown-list">
+                                    <div class="icon-wrapper rounded-circle bg-inverse-success text-success"><i
+                                            class="mdi mdi-cloud-upload"></i></div>
+                                    <div class="content-wrapper"><small class="name">Upload Completed</small> <small
+                                            class="content-text">3 Files uploded successfully</small></div>
+                                </div>
+                                <div class="dropdown-list">
+                                    <div class="icon-wrapper rounded-circle bg-inverse-warning text-warning"><i
+                                            class="mdi mdi-security"></i></div>
+                                    <div class="content-wrapper"><small class="name">Authentication Required</small>
+                                        <small class="content-text">Please verify your password to continue using cloud
+                                            services</small></div>
+                                </div>
+                            </div>
+                            <div class="dropdown-footer"><a href="#">View All</a></div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown"><a class="nav-link" href="#" id="messageDropdown"
+                            data-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-message-outline mdi-1x"></i>
+                            <span
+                                class="notification-indicator notification-indicator-primary notification-indicator-ripple"></span></a>
+                        <div class="dropdown-menu navbar-dropdown dropdown-menu-right"
+                            aria-labelledby="messageDropdown">
+                            <div class="dropdown-header">
+                                <h6 class="dropdown-title">Messages</h6>
+                                <p class="dropdown-title-text">You have 4 unread messages</p>
+                            </div>
+                            <div class="dropdown-body">
+                                <div class="dropdown-list">
+                                    <div class="image-wrapper"><img class="profile-img"
+                                            src="../assets/images/profile/male/image_1.png" alt="profile image">
+                                        <div class="status-indicator rounded-indicator bg-success"></div>
+                                    </div>
+                                    <div class="content-wrapper"><small class="name">Clifford Gordon</small> <small
+                                            class="content-text">Lorem ipsum dolor sit amet.</small></div>
+                                </div>
+                                <div class="dropdown-list">
+                                    <div class="image-wrapper"><img class="profile-img"
+                                            src="../assets/images/profile/female/image_2.png" alt="profile image">
+                                        <div class="status-indicator rounded-indicator bg-success"></div>
+                                    </div>
+                                    <div class="content-wrapper"><small class="name">Rachel Doyle</small> <small
+                                            class="content-text">Lorem ipsum dolor sit amet.</small></div>
+                                </div>
+                                <div class="dropdown-list">
+                                    <div class="image-wrapper"><img class="profile-img"
+                                            src="../assets/images/profile/male/image_3.png" alt="profile image">
+                                        <div class="status-indicator rounded-indicator bg-warning"></div>
+                                    </div>
+                                    <div class="content-wrapper"><small class="name">Lewis Guzman</small> <small
+                                            class="content-text">Lorem ipsum dolor sit amet.</small></div>
+                                </div>
+                            </div>
+                            <div class="dropdown-footer"><a href="#">View All</a></div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown"><a class="nav-link" href="#" id="appsDropdown" data-toggle="dropdown"
+                            aria-expanded="false"><i class="mdi mdi-apps mdi-1x"></i></a>
+                        <div class="dropdown-menu navbar-dropdown dropdown-menu-right" aria-labelledby="appsDropdown">
+                            <div class="dropdown-header">
+                                <h6 class="dropdown-title">Apps</h6>
+                                <p class="dropdown-title-text mt-2">Authentication required for 3 apps</p>
+                            </div>
+                            <div class="dropdown-body border-top pt-0"><a class="dropdown-grid"><i
+                                        class="grid-icon mdi mdi-jira mdi-2x"></i> <span class="grid-tittle">Jira</span>
+                                </a><a class="dropdown-grid"><i class="grid-icon mdi mdi-trello mdi-2x"></i> <span
+                                        class="grid-tittle">Trello</span> </a><a class="dropdown-grid"><i
+                                        class="grid-icon mdi mdi-artstation mdi-2x"></i> <span
+                                        class="grid-tittle">Artstation</span> </a><a class="dropdown-grid"><i
+                                        class="grid-icon mdi mdi-bitbucket mdi-2x"></i> <span
+                                        class="grid-tittle">Bitbucket</span></a></div>
+                            <div class="dropdown-footer"><a href="#">View All</a></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav><!-- partial -->
+    <div class="page-body">
+        <!-- partial:partials/_sidebar.html -->
+        <div class="sidebar">
+            <div class="user-profile">
+                <div class="display-avatar animated-avatar"><img class="profile-img img-lg rounded-circle"
+                        src="../assets/images/profile/male/image_1.png" alt="profile image"></div>
+                <div class="info-wrapper">
+                    <p class="user-name">Allen Clerk</p>
+                    <h6 class="display-income">$3,400,00</h6>
+                </div>
+            </div>
+            <ul class="navigation-menu">
+                <li class="nav-category-divider">MAIN</li>
+                <li class="active"><a href="index.html"><span class="link-title">Dashboard</span> <i
+                            class="mdi mdi-gauge link-icon"></i></a></li>
+                <li><a href="#sample-pages" data-toggle="collapse" aria-expanded="false"><span class="link-title">Sample
+                            Pages</span> <i class="mdi mdi-flask link-icon"></i></a>
+                    <ul class="collapse navigation-submenu" id="sample-pages">
+                        <li><a href="#authentication-pages" data-toggle="collapse" aria-expanded="false"><span
+                                    class="link-title">Auth Pages</span></a>
+                            <ul class="collapse navigation-submenu" id="authentication-pages">
+                                <li><a href="pages/sample-pages/login_1.html" target="_blank">Login 1</a></li>
+                                <li><a href="pages/sample-pages/login_2.html" target="_blank">Login 2</a></li>
+                                <li><a href="pages/sample-pages/login_3.html" target="_blank">Login 3</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#error-pages" data-toggle="collapse" aria-expanded="false"><span
+                                    class="link-title">Error Pages</span></a>
+                            <ul class="collapse navigation-submenu" id="error-pages">
+                                <li><a href="pages/sample-pages/error_1.html" target="_blank">Error 1</a></li>
+                                <li><a href="pages/sample-pages/error_2.html" target="_blank">Error 2</a></li>
+                                <li><a href="pages/sample-pages/error_3.html" target="_blank">Error 3</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#ui-elements" data-toggle="collapse" aria-expanded="false"><span class="link-title">UI
+                            Elements</span> <i class="mdi mdi-bullseye link-icon"></i></a>
+                    <ul class="collapse navigation-submenu" id="ui-elements">
+                        <li><a href="pages/ui-components/buttons.html">Buttons</a></li>
+                        <li><a href="pages/ui-components/dropdowns.html">Dropdowns</a></li>
+                        <li><a href="pages/ui-components/badges.html">Badges</a></li>
+                        <li><a href="pages/ui-components/progress.html">Progress</a></li>
+                        <li><a href="pages/ui-components/accordions.html">Accordion</a></li>
+                        <li><a href="pages/ui-components/breadcrumbs.html">Breadcrumbs</a></li>
+                        <li><a href="pages/ui-components/modals.html">Modals</a></li>
+                        <li><a href="pages/ui-components/notifications.html">Notifications</a></li>
+                        <li><a href="pages/ui-components/tables.html">Tables</a></li>
+                        <li><a href="pages/ui-components/tabs.html">Tabs</a></li>
+                        <li><a href="pages/ui-components/typography.html">Typography</a></li>
+                    </ul>
+                </li>
+                <li><a href="#forms" data-toggle="collapse" aria-expanded="false"><span class="link-title">Forms</span>
+                        <i class="mdi mdi-clipboard-outline link-icon"></i></a>
+                    <ul class="collapse navigation-submenu" id="forms">
+                        <li><a href="pages/forms/form-elements.html">Form Inputs</a></li>
+                        <li><a href="pages/forms/form-validation.html">Validation</a></li>
+                        <li><a href="pages/forms/editors.html">Editors</a></li>
+                        <li><a href="pages/forms/wizard.html">Wizard</a></li>
+                    </ul>
+                </li>
+                <li><a href="#tables" data-toggle="collapse" aria-expanded="false"><span class="link-title">Advanced
+                            Tables</span> <i class="mdi mdi-table-merge-cells link-icon"></i></a>
+                    <ul class="collapse navigation-submenu" id="tables">
+                        <li><a href="pages/data-tables/basic-table.html">Basic Table</a></li>
+                        <li><a href="pages/data-tables/complex-header.html">Complex Header</a></li>
+                        <li><a href="pages/data-tables/scrolling-table.html">Scrolling Table</a></li>
+                        <li><a href="pages/data-tables/ajax-table.html">Ajax Source</a></li>
+                    </ul>
+                </li>
+                <li><a href="#charts" data-toggle="collapse" aria-expanded="false"><span
+                            class="link-title">Charts</span> <i class="mdi mdi-chart-donut link-icon"></i></a>
+                    <ul class="collapse navigation-submenu" id="charts">
+                        <li><a href="pages/charts/apex-charts.html">Apex Chart</a></li>
+                        <li><a href="pages/charts/c3.html">C3 Chart</a></li>
+                        <li><a href="pages/charts/chartist.html">Chartist</a></li>
+                        <li><a href="pages/charts/chartjs.html">Chart js</a></li>
+                        <li><a href="pages/charts/morris.html">Morris</a></li>
+                    </ul>
+                </li>
+                <li><a href="#icons" data-toggle="collapse" aria-expanded="false"><span class="link-title">Icons</span>
+                        <i class="mdi mdi-flower-tulip-outline link-icon"></i></a>
+                    <ul class="collapse navigation-submenu" id="icons">
+                        <li><a href="pages/icons/font-awesome.html">Font Awesome</a></li>
+                        <li><a href="pages/icons/simple-line.html">Simple Line</a></li>
+                        <li><a href="pages/icons/material-icons.html">Material Icons</a></li>
+                        <li><a href="pages/icons/flag-icons.html">Flag Icons</a></li>
+                        <li><a href="pages/icons/themify-icons.html">Themify</a></li>
+                    </ul>
+                </li>
+                <li class="nav-category-divider">APPS</li>
+                <li><a href="pages/apps/email.html"><span class="link-title">Email</span> <i
+                            class="mdi mdi-email-outline link-icon"></i></a></li>
+                <li><a href="pages/apps/kanban-board.html"><span class="link-title">Kanban Board</span> <i
+                            class="mdi mdi-folder-multiple-outline link-icon"></i></a></li>
+                <li><a href="#calendar-menu" data-toggle="collapse" aria-expanded="false"><span
+                            class="link-title">Calendar</span> <i
+                            class="mdi mdi-calendar-check-outline link-icon"></i></a>
+                    <ul class="collapse navigation-submenu" id="calendar-menu">
+                        <li><a href="pages/apps/calendar.html">List View</a></li>
+                        <li><a href="pages/apps/calendar_2.html">Grid View</a></li>
+                    </ul>
+                </li>
+                <li class="nav-category-divider">DOCS</li>
+                <li><a href="../docs/docs.html"><span class="link-title">Documentation</span> <i
+                            class="mdi mdi-asterisk link-icon"></i></a></li>
+            </ul>
+        </div>
+        <div class="right-sidebar">
+            <div class="sidebar-inner">
+                <div class="right-sidebar-toggler"><i class="mdi mdi-format-color-fill"></i></div>
+                <div class="theme-mode-wrapper"><a id="light-theme-active" class="preview-image"
+                        href="../demo_1/index.html"><img src="../assets/images/screenshots/light.png" alt="Light Theme">
+                        <p>Light</p>
+                    </a><a id="dark-theme-active" class="preview-image active" href="../demo_2/index.html"><img
+                            src="../assets/images/screenshots/dark.png" alt="Dark Theme">
+                        <p>Dark</p>
+                    </a></div>
+            </div>
+        </div><!-- partial -->
+        <div class="page-content-wrapper">
+            <div class="page-content-wrapper-inner">
+                <div class="content-viewport">
+                    <div class="row">
+                        <div class="col-12 py-5">
+                            <h4>Dashboard</h4>
+                            <p class="text-gray">Welcome aboard, Allen Clerk</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 col-6 equel-grid">
+                            <div class="grid">
+                                <div class="grid-body text-gray">
+                                    <div class="d-flex justify-content-between">
+                                        <p>30%</p>
+                                        <p>+06.2%</p>
+                                    </div>
+                                    <p class="text-black">Traffic</p>
+                                    <div class="wrapper w-50 mt-4">
+                                        <div class="chartjs-size-monitor">
+                                            <div class="chartjs-size-monitor-expand">
+                                                <div class=""></div>
+                                            </div>
+                                            <div class="chartjs-size-monitor-shrink">
+                                                <div class=""></div>
+                                            </div>
+                                        </div><canvas class="chartjs-chart chartjs-render-monitor" height="12"
+                                            id="stat-line_1" style="display: block; width: 80px; height: 12px;"
+                                            width="80"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-6 equel-grid">
+                            <div class="grid">
+                                <div class="grid-body text-gray">
+                                    <div class="d-flex justify-content-between">
+                                        <p>43%</p>
+                                        <p>+15.7%</p>
+                                    </div>
+                                    <p class="text-black">Conversion</p>
+                                    <div class="wrapper w-50 mt-4">
+                                        <div class="chartjs-size-monitor">
+                                            <div class="chartjs-size-monitor-expand">
+                                                <div class=""></div>
+                                            </div>
+                                            <div class="chartjs-size-monitor-shrink">
+                                                <div class=""></div>
+                                            </div>
+                                        </div><canvas class="chartjs-chart chartjs-render-monitor" height="12"
+                                            id="stat-line_2" width="80"
+                                            style="display: block; width: 80px; height: 12px;"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-6 equel-grid">
+                            <div class="grid">
+                                <div class="grid-body text-gray">
+                                    <div class="d-flex justify-content-between">
+                                        <p>23%</p>
+                                        <p>+02.7%</p>
+                                    </div>
+                                    <p class="text-black">Bounce Rate</p>
+                                    <div class="wrapper w-50 mt-4">
+                                        <div class="chartjs-size-monitor">
+                                            <div class="chartjs-size-monitor-expand">
+                                                <div class=""></div>
+                                            </div>
+                                            <div class="chartjs-size-monitor-shrink">
+                                                <div class=""></div>
+                                            </div>
+                                        </div><canvas class="chartjs-chart chartjs-render-monitor" height="12"
+                                            id="stat-line_3" width="80"
+                                            style="display: block; width: 80px; height: 12px;"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-6 equel-grid">
+                            <div class="grid">
+                                <div class="grid-body text-gray">
+                                    <div class="d-flex justify-content-between">
+                                        <p>75%</p>
+                                        <p>- 53.34%</p>
+                                    </div>
+                                    <p class="text-black">Marketing</p>
+                                    <div class="wrapper w-50 mt-4">
+                                        <div class="chartjs-size-monitor">
+                                            <div class="chartjs-size-monitor-expand">
+                                                <div class=""></div>
+                                            </div>
+                                            <div class="chartjs-size-monitor-shrink">
+                                                <div class=""></div>
+                                            </div>
+                                        </div><canvas class="chartjs-chart chartjs-render-monitor" height="12"
+                                            id="stat-line_4" width="80"
+                                            style="display: block; width: 80px; height: 12px;"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 equel-grid">
+                            <div class="grid">
+                                <div class="grid-body d-flex flex-column h-100">
+                                    <div class="wrapper">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="split-header"><img class="img-ss mt-1 mb-1 mr-2"
+                                                    src="../assets/images/social-icons/instagram.svg" alt="instagram">
+                                                <p class="card-title">Followers Growth</p>
+                                            </div>
+                                            <div class="wrapper"><button
+                                                    class="btn action-btn btn-xs component-flat pr-0" type="button"><i
+                                                        class="mdi mdi-access-point text-muted mdi-2x"></i></button>
+                                                <button class="btn action-btn btn-xs component-flat pr-0"
+                                                    type="button"><i
+                                                        class="mdi mdi-cloud-download-outline text-muted mdi-2x"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-end pt-2 mb-4">
+                                            <h4>16.2K</h4>
+                                            <p class="ml-2 text-muted">New Followers</p>
+                                        </div>
+                                    </div>
+                                    <div class="mt-auto">
+                                        <div class="chartjs-size-monitor">
+                                            <div class="chartjs-size-monitor-expand">
+                                                <div class=""></div>
+                                            </div>
+                                            <div class="chartjs-size-monitor-shrink">
+                                                <div class=""></div>
+                                            </div>
+                                        </div><canvas class="chartjs-chart curved-mode chartjs-render-monitor"
+                                            id="followers-bar-chart" height="283" width="386"
+                                            style="display: block; width: 386px; height: 283px;"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 equel-grid">
+                            <div class="grid">
+                                <div class="grid-body" style="position: relative;">
+                                    <p class="card-title">Campaign</p>
+                                    <div id="radial-chart" style="min-height: 235px;">
+                                        <div id="apexchartsk803ccw2" class="apexcharts-canvas apexchartsk803ccw2"
+                                            style="width: 386px; height: 230px;"><svg id="SvgjsSvg1046" width="386"
+                                                height="230" xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                xmlns:svgjs="http://svgjs.com/svgjs" class="apexcharts-svg"
+                                                xmlns:data="ApexChartsNS" transform="translate(0, 0)"
+                                                style="background: transparent;">
+                                                <g id="SvgjsG1048" class="apexcharts-inner apexcharts-graphical"
+                                                    transform="translate(105.5, 20)">
+                                                    <defs id="SvgjsDefs1047">
+                                                        <clipPath id="gridRectMaskk803ccw2">
+                                                            <rect id="SvgjsRect1049" width="177" height="177" x="-1"
+                                                                y="-1" rx="0" ry="0" fill="#ffffff" opacity="1"
+                                                                stroke-width="0" stroke="none" stroke-dasharray="0">
+                                                            </rect>
+                                                        </clipPath>
+                                                        <clipPath id="gridRectMarkerMaskk803ccw2">
+                                                            <rect id="SvgjsRect1050" width="183" height="183" x="-4"
+                                                                y="-4" rx="0" ry="0" fill="#ffffff" opacity="1"
+                                                                stroke-width="0" stroke="none" stroke-dasharray="0">
+                                                            </rect>
+                                                        </clipPath>
+                                                        <linearGradient id="SvgjsLinearGradient1056" x1="0" y1="0"
+                                                            x2="0" y2="1">
+                                                            <stop id="SvgjsStop1057" stop-opacity="1"
+                                                                stop-color="rgba(242,242,242,1)" offset="0"></stop>
+                                                            <stop id="SvgjsStop1058" stop-opacity="1"
+                                                                stop-color="rgba(135,212,249,1)" offset="1"></stop>
+                                                            <stop id="SvgjsStop1059" stop-opacity="1"
+                                                                stop-color="rgba(135,212,249,1)" offset="1"></stop>
+                                                        </linearGradient>
+                                                        <filter id="SvgjsFilter1062" filterUnits="userSpaceOnUse">
+                                                            <feFlood id="SvgjsFeFlood1063" flood-color="black"
+                                                                flood-opacity="0.02" result="SvgjsFeFlood1063Out"
+                                                                in="SourceGraphic"></feFlood>
+                                                            <feComposite id="SvgjsFeComposite1064"
+                                                                in="SvgjsFeFlood1063Out" in2="SourceAlpha" operator="in"
+                                                                result="SvgjsFeComposite1064Out"></feComposite>
+                                                            <feOffset id="SvgjsFeOffset1065" dx="0" dy="2"
+                                                                result="SvgjsFeOffset1065Out"
+                                                                in="SvgjsFeComposite1064Out"></feOffset>
+                                                            <feGaussianBlur id="SvgjsFeGaussianBlur1066"
+                                                                stdDeviation="4 " result="SvgjsFeGaussianBlur1066Out"
+                                                                in="SvgjsFeOffset1065Out"></feGaussianBlur>
+                                                            <feMerge id="SvgjsFeMerge1067" result="SvgjsFeMerge1067Out"
+                                                                in="SourceGraphic">
+                                                                <feMergeNode id="SvgjsFeMergeNode1068"
+                                                                    in="SvgjsFeGaussianBlur1066Out"></feMergeNode>
+                                                                <feMergeNode id="SvgjsFeMergeNode1069"
+                                                                    in="[object Arguments]"></feMergeNode>
+                                                            </feMerge>
+                                                            <feBlend id="SvgjsFeBlend1070" in="SourceGraphic"
+                                                                in2="SvgjsFeMerge1067Out" mode="normal"
+                                                                result="SvgjsFeBlend1070Out"></feBlend>
+                                                        </filter>
+                                                        <linearGradient id="SvgjsLinearGradient1077" x1="0" y1="0"
+                                                            x2="0" y2="1">
+                                                            <stop id="SvgjsStop1078" stop-opacity="1"
+                                                                stop-color="rgba(105,111,251,1)" offset="0"></stop>
+                                                            <stop id="SvgjsStop1079" stop-opacity="1"
+                                                                stop-color="rgba(135,212,249,1)" offset="1"></stop>
+                                                            <stop id="SvgjsStop1080" stop-opacity="1"
+                                                                stop-color="rgba(135,212,249,1)" offset="1"></stop>
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <g id="SvgjsG1052" class="apexcharts-radialbar">
+                                                        <g id="SvgjsG1053">
+                                                            <g id="SvgjsG1054">
+                                                                <g id="apexcharts-track-0"
+                                                                    class="apexcharts-radialbar-track apexcharts-track"
+                                                                    rel="1">
+                                                                    <path id="apexcharts-radialbarTrack-0"
+                                                                        d="M 87.5 25.930487804878055 A 71.56951219512194 71.56951219512194 0 1 1 87.37508770023234 25.930596811451082"
+                                                                        fill="none" fill-opacity="1"
+                                                                        stroke="rgba(242,242,242,0.85)"
+                                                                        stroke-opacity="1" stroke-linecap="round"
+                                                                        stroke-width="8.117243902439025"
+                                                                        stroke-dasharray="0"
+                                                                        class="apexcharts-radialbar-area"
+                                                                        filter="url(#SvgjsFilter1062)"
+                                                                        data:pathOrig="M 87.5 25.930487804878055 A 71.56951219512194 71.56951219512194 0 1 1 87.37508770023234 25.930596811451082">
+                                                                    </path>
+                                                                </g>
+                                                            </g>
+                                                            <g id="SvgjsG1071">
+                                                                <g id="apexcharts-series-0"
+                                                                    class="apexcharts-series apexcharts-radial-series Progress"
+                                                                    rel="1">
+                                                                    <path id="apexcharts-radialArc-0"
+                                                                        d="M 87.5 25.930487804878055 A 71.56951219512194 71.56951219512194 0 1 1 24.90389420379303 132.19758802853266"
+                                                                        fill="none" fill-opacity="0.85"
+                                                                        stroke="url(#SvgjsLinearGradient1077)"
+                                                                        stroke-opacity="1" stroke-linecap="round"
+                                                                        stroke-width="8.36829268292683"
+                                                                        stroke-dasharray="0"
+                                                                        class="apexcharts-radialbar-area"
+                                                                        data:angle="241" data:value="67"
+                                                                        data:pathOrig="M 87.5 25.930487804878055 A 71.56951219512194 71.56951219512194 0 1 1 24.90389420379303 132.19758802853266">
+                                                                    </path>
+                                                                </g>
+                                                                <circle id="SvgjsCircle1072" r="67.51089024390244"
+                                                                    cx="87.5" cy="97.5"
+                                                                    class="apexcharts-radialbar-hollow"
+                                                                    fill="rgba(255,255,255,0)"></circle>
+                                                                <g id="SvgjsG1073" class="apexcharts-datalabels-group"
+                                                                    transform="translate(0, 0)" style="opacity: 1;">
+                                                                    <text id="SvgjsText1074"
+                                                                        font-family="Helvetica, Arial, sans-serif"
+                                                                        x="87.5" y="87.5" text-anchor="middle"
+                                                                        dominate-baseline="central" font-size="13px"
+                                                                        fill="#adb5bd"
+                                                                        class="apexcharts-datalabel-label"
+                                                                        style="font-family: Helvetica, Arial, sans-serif;">Progress</text><text
+                                                                        id="SvgjsText1075"
+                                                                        font-family="Helvetica, Arial, sans-serif"
+                                                                        x="87.5" y="118.5" text-anchor="middle"
+                                                                        dominate-baseline="central" font-size="20px"
+                                                                        fill="#b9c0d3"
+                                                                        class="apexcharts-datalabel-value"
+                                                                        style="font-family: Helvetica, Arial, sans-serif;">67%</text>
+                                                                </g>
+                                                            </g>
+                                                        </g>
+                                                    </g>
+                                                    <line id="SvgjsLine1082" x1="0" y1="0" x2="175" y2="0"
+                                                        stroke="#b6b6b6" stroke-dasharray="0" stroke-width="1"
+                                                        class="apexcharts-ycrosshairs"></line>
+                                                    <line id="SvgjsLine1083" x1="0" y1="0" x2="175" y2="0"
+                                                        stroke-dasharray="0" stroke-width="0"
+                                                        class="apexcharts-ycrosshairs-hidden"></line>
+                                                </g>
+                                            </svg>
+                                            <div class="apexcharts-legend"></div>
+                                        </div>
+                                    </div>
+                                    <h4 class="text-center">$23,350.00</h4>
+                                    <p class="text-center text-muted">Used balance this billing cycle</p>
+                                    <div class="resize-triggers">
+                                        <div class="expand-trigger">
+                                            <div style="width: 437px; height: 348px;"></div>
+                                        </div>
+                                        <div class="contract-trigger"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 equel-grid">
+                            <div class="grid table-responsive">
+                                <table class="table table-stretched">
+                                    <thead>
+                                        <tr>
+                                            <th>Symbol</th>
+                                            <th>Price</th>
+                                            <th>Change</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <p class="mb-n1 font-weight-medium">AAPL</p><small
+                                                    class="text-gray">Apple Inc.</small>
+                                            </td>
+                                            <td class="font-weight-medium">198.18</td>
+                                            <td class="text-danger font-weight-medium">
+                                                <div class="badge badge-success">-1.39%</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="mb-n1 font-weight-medium">NKE</p><small
+                                                    class="text-gray">Nike,Inc.</small>
+                                            </td>
+                                            <td class="font-weight-medium">03.95</td>
+                                            <td class="text-danger font-weight-medium">
+                                                <div class="badge badge-danger">-1.17%</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="mb-n1 font-weight-medium">NSEI</p><small
+                                                    class="text-gray">Nifty 50</small>
+                                            </td>
+                                            <td class="font-weight-medium">11,278</td>
+                                            <td class="text-danger font-weight-medium">
+                                                <div class="badge badge-success">-0.24%</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="mb-n1 font-weight-medium">BA</p><small class="text-gray">The
+                                                    Boeing Company</small>
+                                            </td>
+                                            <td class="font-weight-medium">354.67</td>
+                                            <td class="text-success font-weight-medium">
+                                                <div class="badge badge-success">+0.15%</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="mb-n1 font-weight-medium">SBUX</p><small
+                                                    class="text-gray">Starbucks Corporation</small>
+                                            </td>
+                                            <td class="font-weight-medium">08.42</td>
+                                            <td class="text-success font-weight-medium">
+                                                <div class="badge badge-success">+0.67%</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-md-6 col-sm-12 equel-grid">
+                            <div class="grid">
+                                <div class="grid-body">
+                                    <div class="split-header">
+                                        <p class="card-title">Available Balance</p><span
+                                            class="btn action-btn btn-xs component-flat" data-toggle="tooltip"
+                                            data-placement="left" title=""
+                                            data-original-title="Available balance since the last week"><i
+                                                class="mdi mdi-information-outline text-muted mdi-2x"></i></span>
+                                    </div>
+                                    <div class="d-flex align-items-end mt-2">
+                                        <h3>26.00453100</h3>
+                                        <p class="ml-1 font-weight-bold">BTC</p>
+                                    </div>
+                                    <div class="d-flex mt-2">
+                                        <div class="wrapper d-flex pr-4"><small
+                                                class="text-success font-weight-medium mr-2">USD</small> <small
+                                                class="text-gray">$103,342.50</small></div>
+                                        <div class="wrapper d-flex"><small
+                                                class="text-primary font-weight-medium mr-2">EUR</small> <small
+                                                class="text-gray">$91,105.00</small></div>
+                                    </div>
+                                    <div class="d-flex flex-row mt-4 mb-4"><button
+                                            class="btn btn-outline-light text-gray component-flat w-50 mr-2"
+                                            type="button">SEND</button> <button class="btn btn-primary w-50 ml-2"
+                                            type="button">RECEIVE</button></div>
+                                    <div class="d-flex mt-5 mb-3"><small class="mb-0 text-primary">Recent Transaction
+                                            (3)</small></div>
+                                    <div class="d-flex justify-content-between border-bottom py-2">
+                                        <p class="text-black">Received Bitcoin</p>
+                                        <p class="text-gray">+0.00005462 BTC</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between border-bottom py-2">
+                                        <p class="text-black">Sent Bitcoin</p>
+                                        <p class="text-gray">-0.00001446 BTC</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between pt-2">
+                                        <p class="text-black">Sent Bitcoin</p>
+                                        <p class="text-gray">-0.00003573 BTC</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-md-12 equel-grid">
+                            <div class="grid widget-revenue-card">
+                                <div class="grid-body d-flex flex-column h-100">
+                                    <div class="split-header">
+                                        <p class="card-title">Server Load</p>
+                                        <div class="content-wrapper v-centered"><small class="text-muted">2h ago</small>
+                                            <span class="btn action-btn btn-refresh btn-xs component-flat"><i
+                                                    class="mdi mdi-autorenew text-muted mdi-2x"></i></span></div>
+                                    </div>
+                                    <div class="mt-auto">
+                                        <div class="chartjs-size-monitor">
+                                            <div class="chartjs-size-monitor-expand">
+                                                <div class=""></div>
+                                            </div>
+                                            <div class="chartjs-size-monitor-shrink">
+                                                <div class=""></div>
+                                            </div>
+                                        </div><canvas class="chartjs-chart chartjs-render-monitor" id="cpu-performance"
+                                            height="223" width="839"
+                                            style="display: block; width: 839px; height: 223px;"></canvas>
+                                        <h3 class="font-weight-medium mt-4">69.05%</h3>
+                                        <p class="text-gray">Storage is getting full</p>
+                                        <div class="w-50">
+                                            <div class="d-flex justify-content-between text-muted mt-3">
+                                                <small>Usage</small> <small>35.62 GB / 2TB</small></div>
+                                            <div class="progress progress-slim mt-2">
+                                                <div class="progress-bar bg-primary" role="progressbar"
+                                                    style="width: 68%" aria-valuenow="68" aria-valuemin="0"
+                                                    aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8 equel-grid">
+                            <div class="grid">
+                                <div class="grid-body py-3">
+                                    <p class="card-title ml-n1">Order History</p>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-sm">
+                                        <thead>
+                                            <tr class="solid-header">
+                                                <th colspan="2" class="pl-4">Customer</th>
+                                                <th>Order No</th>
+                                                <th>Purchased On</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="pr-0 pl-4"><img class="profile-img img-sm"
+                                                        src="../assets/images/profile/male/image_4.png"
+                                                        alt="profile image"></td>
+                                                <td class="pl-md-0"><small
+                                                        class="text-black font-weight-medium d-block">Barbara
+                                                        Curtis</small> <span class="text-gray"><span
+                                                            class="status-indicator rounded-indicator small bg-primary"></span>Account
+                                                        Deactivated</span></td>
+                                                <td><small>8523537435</small></td>
+                                                <td>Just Now</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pr-0 pl-4"><img class="profile-img img-sm"
+                                                        src="../assets/images/profile/male/image_3.png"
+                                                        alt="profile image"></td>
+                                                <td class="pl-md-0"><small
+                                                        class="text-black font-weight-medium d-block">Charlie
+                                                        Hawkins</small> <span class="text-gray"><span
+                                                            class="status-indicator rounded-indicator small bg-success"></span>Email
+                                                        Verified</span></td>
+                                                <td><small>9537537436</small></td>
+                                                <td>Mar 04, 2018 11:37am</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pr-0 pl-4"><img class="profile-img img-sm"
+                                                        src="../assets/images/profile/female/image_2.png"
+                                                        alt="profile image"></td>
+                                                <td class="pl-md-0"><small
+                                                        class="text-black font-weight-medium d-block">Nina Bates</small>
+                                                    <span class="text-gray"><span
+                                                            class="status-indicator rounded-indicator small bg-warning"></span>Payment
+                                                        On Hold</span></td>
+                                                <td><small>7533567437</small></td>
+                                                <td>Mar 13, 2018 9:41am</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pr-0 pl-4"><img class="profile-img img-sm"
+                                                        src="../assets/images/profile/male/image_10.png"
+                                                        alt="profile image"></td>
+                                                <td class="pl-md-0"><small
+                                                        class="text-black font-weight-medium d-block">Hester
+                                                        Richards</small> <span class="text-gray"><span
+                                                            class="status-indicator rounded-indicator small bg-success"></span>Email
+                                                        Verified</span></td>
+                                                <td><small>5673467743</small></td>
+                                                <td>Feb 21, 2018 8:34am</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div><a class="border-top px-3 py-2 d-block text-gray" href="#"><small
+                                        class="font-weight-medium"><i class="mdi mdi-chevron-down mr-2"></i>View All
+                                        Order History</small></a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 equel-grid">
+                            <div class="grid">
+                                <div class="grid-body">
+                                    <div class="split-header">
+                                        <p class="card-title">Activity Log</p>
+                                        <div class="btn-group"><button type="button"
+                                                class="btn btn-trasnparent action-btn btn-xs component-flat pr-0"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                                    class="mdi mdi-dots-vertical"></i></button>
+                                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item"
+                                                    href="#">Expand View</a> <a class="dropdown-item" href="#">Edit</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="vertical-timeline-wrapper">
+                                        <div class="timeline-vertical dashboard-timeline">
+                                            <div class="activity-log">
+                                                <p class="log-name">Agnes Holt</p>
+                                                <div class="log-details">Analytics dashboard has been created<span
+                                                        class="text-primary ml-1">#Slack</span></div><small
+                                                    class="log-time">8 mins Ago</small>
+                                            </div>
+                                            <div class="activity-log">
+                                                <p class="log-name">Ronald Edwards</p>
+                                                <div class="log-details">Report has been updated<div
+                                                        class="grouped-images mt-2"><img class="img-sm"
+                                                            src="../assets/images/profile/male/image_4.png"
+                                                            alt="Profile Image" data-toggle="tooltip" title=""
+                                                            data-original-title="Gerald Pierce"> <img class="img-sm"
+                                                            src="../assets/images/profile/male/image_5.png"
+                                                            alt="Profile Image" data-toggle="tooltip" title=""
+                                                            data-original-title="Edward Wilson"> <img class="img-sm"
+                                                            src="../assets/images/profile/female/image_6.png"
+                                                            alt="Profile Image" data-toggle="tooltip" title=""
+                                                            data-original-title="Billy Williams"> <img class="img-sm"
+                                                            src="../assets/images/profile/male/image_6.png"
+                                                            alt="Profile Image" data-toggle="tooltip" title=""
+                                                            data-original-title="Lelia Hampton"> <span
+                                                            class="plus-text img-sm">+3</span></div>
+                                                </div><small class="log-time">3 Hours Ago</small>
+                                            </div>
+                                            <div class="activity-log">
+                                                <p class="log-name">Charlie Newton</p>
+                                                <div class="log-details">Approved your request<div class="wrapper mt-2">
+                                                        <button type="button"
+                                                            class="btn btn-xs btn-primary">Approve</button> <button
+                                                            type="button"
+                                                            class="btn btn-xs btn-inverse-primary">Reject</button></div>
+                                                </div><small class="log-time">2 Hours Ago</small>
+                                            </div>
+                                            <div class="activity-log">
+                                                <p class="log-name">Gussie Page</p>
+                                                <div class="log-details">Added new task: Slack home page</div><small
+                                                    class="log-time">4 Hours Ago</small>
+                                            </div>
+                                            <div class="activity-log">
+                                                <p class="log-name">Ina Mendoza</p>
+                                                <div class="log-details">Added new images</div><small class="log-time">8
+                                                    Hours Ago</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><a class="border-top px-3 py-2 d-block text-gray" href="#"><small
+                                        class="font-weight-medium"><i class="mdi mdi-chevron-down mr-2"></i> View
+                                        All</small></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- content viewport ends -->
+            <!-- partial:partials/_footer.html -->
+            <footer class="footer">
+                <div class="row">
+                    <div class="col-sm-6 text-center text-sm-right order-sm-1">
+                        <ul class="text-gray">
+                            <li><a href="#">Terms of use</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 text-center text-sm-left mt-3 mt-sm-0"><small
+                            class="text-muted d-block">Copyright © 2019 <a href="http://www.uxcandy.co"
+                                target="_blank">UXCANDY</a>. All rights reserved</small> <small
+                            class="text-gray mt-2">Handcrafted With <i class="mdi mdi-heart text-danger"></i></small>
+                    </div>
+                </div>
+            </footer><!-- partial -->
+        </div><!-- page content ends -->
+    </div>
+    <!--page body ends -->
+    <!-- SCRIPT LOADING START FORM HERE /////////////-->
+    <!-- plugins:js -->
+    <script src="../assets/vendors/js/core.js"></script>
+    <script src="../assets/vendors/js/vendor.addons.js"></script><!-- endinject -->
+    <!-- Vendor Js For This Page Ends-->
+    <script src="../assets/vendors/apexcharts/apexcharts.min.js"></script>
+    <script src="../assets/vendors/chartjs/Chart.min.js"></script>
+    <script src="../assets/js/charts/chartjs.addon.js"></script><!-- Vendor Js For This Page Ends-->
+    <script src="../assets/js/script.js"></script><svg id="SvgjsSvg1001" width="2" height="0"
+        xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns:svgjs="http://svgjs.com/svgjs"
+        style="overflow: hidden; top: -100%; left: -100%; position: absolute; opacity: 0;">
+        <defs id="SvgjsDefs1002"></defs>
+        <polyline id="SvgjsPolyline1003" points="0,0"></polyline>
+        <path id="SvgjsPath1004" d="M0 0 "></path>
+    </svg>
+</body>
