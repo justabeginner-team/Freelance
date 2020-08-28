@@ -1,23 +1,13 @@
 from django.template.loader import render_to_string
-from requests.auth import HTTPBasicAuth
-import requests
-from django.http import HttpResponse
 from django.contrib import messages
 from django.shortcuts import render, redirect, reverse
-from django.views.generic import FormView, View
-from .decorators import retailer_required
-from .forms import AddItemForm
-from core.models import Item, Order, Rating
-from core.filters import ItemFilter, CategoryFilter
-
-from django.http.response import JsonResponse, HttpResponse
-from django.views.decorators.http import require_GET, require_POST
+from django.http.response import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.models import User
-from django.views.decorators.csrf import csrf_exempt
-# from webpush import send_user_notification
-import json
-from django.conf import settings
+from django.forms import modelformset_factory
+
+from .forms import AddItemForm, ItemImageForm
+from core.models import Item, ItemImage, Order, Rating
+from core.filters import ItemFilter
 
 
 # Create your views here.
@@ -41,9 +31,9 @@ from django.conf import settings
 #     }
 #     return render(request, 'add_item.html', context=context_dict)
 
-def mpesa(request):
-    response = lipa_na_mpesa_online(request, amount=1, phonenumber=254711521508)
-    return HttpResponse(response.text)
+# def mpesa(request):
+#     response = lipa_na_mpesa_online(request, amount=1, phonenumber=254711521508)
+#     return HttpResponse(response.text)
 
 
 def admin(request):
@@ -58,7 +48,7 @@ def admin(request):
     print(obj.count())
     for k in obj:
         print(k.items)
-       
+
     return render(request, 'admin-dash/index.html', {
         'items': items_table,
         'recents': recents,
@@ -85,11 +75,22 @@ def admin(request):
 
 
 def item_create(request):
+    imageformset = modelformset_factory(ItemImage, form=ItemImageForm, extra=3)
     data = dict()
     if request.method == 'POST':
-        form = AddItemForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
+        itemForm = AddItemForm(request.POST, request.FILES)
+        formset = imageformset(request.POST, request.FILES, queryset=ItemImage.objects.none())
+        if itemForm.is_valid() and formset.is_valid():
+            item_form = itemForm.save(commit=False)
+            item_form.user = request.user
+            item_form.save()
+            for form in formset.cleaned_data:
+                # this helps to not crash if the user
+                # do not upload all the photos
+                if form:
+                    image = form['image']
+                    photo = ItemImage(item=item_form, image=image)
+                    photo.save()
             data['form_is_valid'] = True
             items_table = Item.objects.filter(user=request.user)
             data['html_item_list'] = render_to_string('admin-dash/partial_item_list.html', {
@@ -99,10 +100,12 @@ def item_create(request):
                              ' Your product has been created successfully.')
         else:
             data['form_is_valid'] = False
+            print(itemForm.errors, formset.errors)
     else:
-        form = AddItemForm()
+        itemForm = AddItemForm()
+        formset = imageformset(queryset=ItemImage.objects.none())
 
-    context = {'form': form}
+    context = {'form': itemForm, 'formset': formset}
     data['html_form'] = render_to_string('admin-dash/partial_item_create.html',
                                          context,
                                          request=request)
@@ -166,21 +169,20 @@ def delete_item(request, slug):
 
 # @require_GET
 def retailer_dash(request):
-    
     items = Item.objects.all().order_by('-created_on')[:3]
     orders = Order.objects.all()
 
     myfilter = ItemFilter(request.GET, queryset=items)
     items = myfilter.qs
 
-   
     context_dict = {
         'items': items,
         'myfilter': myfilter,
         'orders': orders,
-       
+
     }
     return render(request, 'retailer_dash.html', context=context_dict)
+
 
 # @require_POST
 # @csrf_exempt
@@ -207,7 +209,7 @@ def retailer_dash(request):
 
 def more_items(request):
     items = Item.objects.all()
-    return render(request,"admin-dash/items.html",{'items': items,})
+    return render(request, "admin-dash/items.html", {'items': items, })
 
 
 def more_orders(request):

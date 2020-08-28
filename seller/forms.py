@@ -1,14 +1,17 @@
-from django.forms import ModelForm
 from django import forms
-from core.models import Item
-from allauth.account.forms import SetPasswordField, PasswordField
-from django.contrib.auth import get_user_model
-from django.conf import settings
+from core.models import Item, ItemImage
 
 
-class AddItemForm(ModelForm):
+class AddItemForm(forms.ModelForm):
     class Meta:
         model = Item
         fields = '__all__'  # [takes in a list of fields to use]
         exclude = ['slug', 'user']
 
+
+class ItemImageForm(forms.ModelForm):
+    image = forms.ImageField(label='image')
+
+    class Meta:
+        model = ItemImage
+        fields = ['image', ]

@@ -9,7 +9,7 @@ from .views import (
     # RetailerSignupView
     # send_push,
     admin,
-    mpesa,
+    # mpesa,
     more_items,
     more_orders,
 
@@ -23,7 +23,7 @@ urlpatterns = [
     path('update_item/<slug>', update_item, name='update_item'),
     path('delete_item/<slug>', delete_item, name='delete_item'),
     path('template/', admin, name='admin_view'),
-    path('mpesa/', mpesa),
+    # path('mpesa/', mpesa),
     path('items/',more_items,name='items'),
     path('orders/', more_orders, name='orders'),
 ]
