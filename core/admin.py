@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import Item, OrderItem, Order, Payment, Coupon, Refund, Address, UserProfile, Rating, Category, Label
+from .models import Item, OrderItem, Order, Payment, Coupon, Refund, Address, UserProfile, Rating, Category, Label, \
+    ItemImage
 
 
 def make_refund_accepted(modeladmin, request, queryset):
@@ -55,28 +56,35 @@ class AddressAdmin(admin.ModelAdmin):
     search_fields = ['user', 'street_address', 'apartment_address', 'zip']
 
 
+class ItemImageAdmin(admin.StackedInline):
+    model = ItemImage
+
+
 class ItemAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
+    inlines = [ItemImageAdmin]
+
+    class Meta:
+        model = Item
 
 
 class RatingAdmin(admin.ModelAdmin):
     list_display = ['subject', 'review', 'status', 'created_on']
     list_filter = ['status', 'created_on']
     readonly_fields = ('subject', 'review', 'user', 'item', 'rate', 'created_on')
-    actions = ['approve_comments']
+    # actions = ['approve_comments']
+    #
+    # def approve_comments(self, request, queryset):
+    #     queryset.update(status=True)
 
-    def approve_comments(self, request, queryset):
-        queryset.update(status=True)
 
 class UserProfileAdmin(admin.ModelAdmin):
     readonly_fields = ('one_click_purchasing', 'stripe_customer_id', 'user',
-                        'is_retailer', 'company_name')
-
-
-
+                       'is_retailer', 'company_name')
 
 
 admin.site.register(Item, ItemAdmin)
+admin.site.register(ItemImage)
 admin.site.register(Category)
 admin.site.register(Label)
 admin.site.register(OrderItem)
@@ -85,5 +93,5 @@ admin.site.register(Payment)
 admin.site.register(Coupon)
 admin.site.register(Refund)
 admin.site.register(Address, AddressAdmin)
-admin.site.register(UserProfile,UserProfileAdmin)
+admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Rating, RatingAdmin)

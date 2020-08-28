@@ -102,7 +102,7 @@ class Item(models.Model):
     label = models.ManyToManyField('Label', related_name='items')
     slug = models.SlugField(null=False, unique=True)
     description = models.TextField()
-    image = models.ImageField(upload_to='media_root')
+    image = models.ImageField(blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     quantity = models.IntegerField(null=False)
 
@@ -142,6 +142,14 @@ class Item(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
+
+
+class ItemImage(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='media_root')
+
+    def __str__(self):
+        return self.item.title
 
 
 class Rating(models.Model):

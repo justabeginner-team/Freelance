@@ -20,13 +20,11 @@ from django.views.generic import DetailView, View, FormView
 
 from .filters import CategoryFilter
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, AddReviewForm
-from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating, \
-    Category
+from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Rating, Category, ItemImage
 from .tasks import *
 
 from cacheback.jobs import QuerySetGetJob, QuerySetFilterJob
 from mpesa.mpesa import Mpesa
-
 
 
 # stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -45,13 +43,6 @@ def user_logged_in(request, user, **kwargs):
 
 def create_ref_code():
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
-
-
-def products(request):
-    context = {
-        'items': Item.objects.all()
-    }
-    return render(request, "products.html", context)
 
 
 def is_valid_form(values):
@@ -509,6 +500,7 @@ class ItemDisplayView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ItemDisplayView, self).get_context_data(**kwargs)
+        context['photos'] = ItemImage.objects.filter(item=self.get_object())
         context['reviews'] = Rating.objects.filter(item=self.get_object())
         # context['related'] = Category.objects.filter(name=self.get_object())
         # print(context['related'])
