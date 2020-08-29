@@ -10,7 +10,7 @@ class AddItemForm(forms.ModelForm):
 
 
 class ItemImageForm(forms.ModelForm):
-    image = forms.ImageField(label='image')
+    image = forms.ImageField(label='Image')
 
     class Meta:
         model = ItemImage

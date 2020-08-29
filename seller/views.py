@@ -115,14 +115,17 @@ def item_create(request):
 
 def update_item(request, slug):
     item = get_object_or_404(Item, slug=slug)
+    imageformset = modelformset_factory(ItemImage, form=ItemImageForm, extra=3)
     data = dict()
     if request.method == 'POST':
         # this enables the form to be saved only in this instance
         form = AddItemForm(request.POST, request.FILES, instance=item)
+        formset = imageformset(request.POST, request.FILES or None, instance=item)
         # not as a new form
         print(data)
-        if form.is_valid():
+        if form.is_valid() and formset.is_valid():
             form.save()
+            formset.save()
             data['form_is_valid'] = True
             items_table = Item.objects.filter(user=request.user)
             data['html_item_list'] = render_to_string('admin-dash/partial_item_list.html', {
@@ -132,10 +135,13 @@ def update_item(request, slug):
                              ' Your product has been updated successfully.')
         else:
             data['form_is_valid'] = False
+            print(form.errors, formset.errors)
     else:
-        form = AddItemForm(instance=item)
+        form = AddItemForm(request.POST or None, request.FILES or None, instance=item)
+        formset = imageformset(queryset=ItemImage.objects.none(), instance=item)
 
-    context = {'form': form}
+    context = {'form': form,
+               'formset': formset}
     data['html_form'] = render_to_string('admin-dash/partial_item_update.html',
                                          context,
                                          request=request)

@@ -172,17 +172,17 @@ class Rating(models.Model):
         now = timezone.now()
         duration = now - self.created_on
         seconds = duration.total_seconds()
-        mins = int((seconds % 3600) // 60)
-        hors = int(seconds // 3600)
+        minutes = int((seconds % 3600) // 60)
+        hours = int(seconds // 3600)
 
-        if hors > 24:
+        if hours > 24:
             return f"{duration.days} days ago"
-        elif hors < 24:
+        elif hours < 24:
             if seconds > 60:
-                if hors > 0:
-                    return f"{hors} hrs {mins} mins ago"
+                if hours > 0:
+                    return f"{hours} hrs {minutes} mins ago"
                 else:
-                    return f"{mins} mins ago"
+                    return f"{minutes} mins ago"
             elif seconds < 60:
                 return "just now"
 
