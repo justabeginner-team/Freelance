@@ -102,7 +102,7 @@ class Item(models.Model):
     label = models.ManyToManyField('Label', related_name='items')
     slug = models.SlugField(null=False, unique=True)
     description = models.TextField()
-    image = models.ImageField(blank=True)
+    image = models.ImageField(upload_to='media_root', blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     quantity = models.IntegerField(null=False)
 

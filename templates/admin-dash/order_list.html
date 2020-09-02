@@ -1,0 +1,32 @@
+{% load static %}
+{% for order in orders %}
+    <tr>
+      <td class="pr-0 pl-4">
+        <img class="profile-img img-sm" src="{% static 'assets/images/profile/male/image_4.png' %}" alt="profile image">
+      </td>
+      <td class="pl-md-0">
+        <small class="text-black font-weight-medium d-block">{{order.user.first_name}} {{order.user.last_name}}</small>
+        <span class="text-gray">
+          <span class="status-indicator rounded-indicator small bg-primary"></span>Account Deactivated </span>
+      </td>
+      <td>
+        {% for order in order.items.all %}
+          {{ order.item.title }}<br>
+        {% endfor %}
+      </td>
+      <td>
+        {% for order in order.items.all %}
+            {{ order.quantity }}<br>
+        {% endfor %}
+      </td>
+      <td>
+        <small>{{order.ref_code}}</small>
+      </td>
+      <td>{{order.ordered_date}}</td>
+
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="6" class="text-center bg-warning">No orders yet</td>
+    </tr>
+{% endfor %}

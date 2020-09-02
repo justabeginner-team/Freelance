@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect, reverse
 from django.http.response import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
-from django.forms import modelformset_factory
+from django.forms import modelformset_factory, inlineformset_factory
 
 from .forms import AddItemForm, ItemImageForm
 from core.models import Item, ItemImage, Order, Rating
@@ -75,11 +75,11 @@ def admin(request):
 
 
 def item_create(request):
-    imageformset = modelformset_factory(ItemImage, form=ItemImageForm, extra=3)
+    ImageFormSet = inlineformset_factory(Item, ItemImage, fields=('image',), extra=3)
     data = dict()
     if request.method == 'POST':
         itemForm = AddItemForm(request.POST, request.FILES)
-        formset = imageformset(request.POST, request.FILES, queryset=ItemImage.objects.none())
+        formset = ImageFormSet(request.POST, request.FILES, queryset=ItemImage.objects.none())
         if itemForm.is_valid() and formset.is_valid():
             item_form = itemForm.save(commit=False)
             item_form.user = request.user
@@ -103,7 +103,7 @@ def item_create(request):
             print(itemForm.errors, formset.errors)
     else:
         itemForm = AddItemForm()
-        formset = imageformset(queryset=ItemImage.objects.none())
+        formset = ImageFormSet(queryset=ItemImage.objects.none())
 
     context = {'form': itemForm, 'formset': formset}
     data['html_form'] = render_to_string('admin-dash/partial_item_create.html',
@@ -115,14 +115,13 @@ def item_create(request):
 
 def update_item(request, slug):
     item = get_object_or_404(Item, slug=slug)
-    imageformset = modelformset_factory(ItemImage, form=ItemImageForm, extra=3)
+    ImageFormSet = inlineformset_factory(Item, ItemImage, fields=('image',), extra=3)
     data = dict()
     if request.method == 'POST':
         # this enables the form to be saved only in this instance
         form = AddItemForm(request.POST, request.FILES, instance=item)
-        formset = imageformset(request.POST, request.FILES or None, instance=item)
+        formset = ImageFormSet(request.POST, request.FILES or None, instance=item)
         # not as a new form
-        print(data)
         if form.is_valid() and formset.is_valid():
             form.save()
             formset.save()
@@ -138,7 +137,7 @@ def update_item(request, slug):
             print(form.errors, formset.errors)
     else:
         form = AddItemForm(request.POST or None, request.FILES or None, instance=item)
-        formset = imageformset(queryset=ItemImage.objects.none(), instance=item)
+        formset = ImageFormSet(instance=item)
 
     context = {'form': form,
                'formset': formset}
