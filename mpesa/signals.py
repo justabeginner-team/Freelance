@@ -19,11 +19,6 @@ def handle_online_checkout_post_save(sender, instance, **Kwargs):
     :param Kwargs:
     :return:
     """
-    print(instance.phone)
-    print(instance.amount)
-    print(instance.account_reference)
-    print(instance.transaction_description)
-    print(instance.is_paybill)
 
     # online checkout
     chain(
