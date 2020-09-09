@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, reverse
 from django.http.response import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.forms import modelformset_factory, inlineformset_factory
+from django.views import View
 
 from .forms import AddItemForm, ItemImageForm
 from core.models import Item, ItemImage, Order, Rating
@@ -38,8 +39,9 @@ from core.filters import ItemFilter
 
 def admin(request):
     print(request.user)
-    items_table = Item.objects.filter(user=request.user)
-    recents = items_table.order_by('-created_on')[:3]
+    items = Item.objects.filter(user=request.user)
+    items_table = items.order_by('-created_on')[:3]
+    recents = items.order_by('-created_on')[:3]
 
     obj = Order.objects.filter(items__item__user__exact=request.user)
     orders = obj.order_by('-start_date')[:3]
@@ -75,22 +77,25 @@ def admin(request):
 
 
 def item_create(request):
-    ImageFormSet = inlineformset_factory(Item, ItemImage, fields=('image',), extra=3)
+    ImageFormSet = modelformset_factory(ItemImage, form=ItemImageForm, extra=3)
     data = dict()
     if request.method == 'POST':
         itemForm = AddItemForm(request.POST, request.FILES)
-        formset = ImageFormSet(request.POST, request.FILES, queryset=ItemImage.objects.none())
-        if itemForm.is_valid() and formset.is_valid():
+        # formset = ImageFormSet(request.POST, request.FILES, queryset=ItemImage.objects.none())
+
+        if itemForm.is_valid():  # and formset.is_valid():
             item_form = itemForm.save(commit=False)
             item_form.user = request.user
             item_form.save()
-            for form in formset.cleaned_data:
-                # this helps to not crash if the user
-                # do not upload all the photos
-                if form:
-                    image = form['image']
-                    photo = ItemImage(item=item_form, image=image)
-                    photo.save()
+
+            # for form in formset.cleaned_data:
+            #     # this helps to not crash if the user
+            #     # do not upload all the photos
+            #     if form:
+            #         image = form['image']
+            #         photo = ItemImage(item=item_form, image=image)
+            #         photo.save()
+
             data['form_is_valid'] = True
             items_table = Item.objects.filter(user=request.user)
             data['html_item_list'] = render_to_string('admin-dash/partial_item_list.html', {
@@ -100,17 +105,34 @@ def item_create(request):
                              ' Your product has been created successfully.')
         else:
             data['form_is_valid'] = False
-            print(itemForm.errors, formset.errors)
+            # print(itemForm.errors, formset.errors)
     else:
         itemForm = AddItemForm()
-        formset = ImageFormSet(queryset=ItemImage.objects.none())
+        # formset = ImageFormSet(queryset=ItemImage.objects.none())
 
-    context = {'form': itemForm, 'formset': formset}
+    context = {'form': itemForm,
+               # 'formset': formset,
+               }
     data['html_form'] = render_to_string('admin-dash/partial_item_create.html',
                                          context,
                                          request=request)
 
     return JsonResponse(data)
+
+
+class BasicUploadView(View):
+    def get(self, request):
+        photos_list = ItemImage.objects.all()
+        return render(self.request, 'admin-dash/images.html', {'photos': photos_list})
+
+    def post(self, request):
+        form = ItemImageForm(self.request.POST, self.request.FILES)
+        if form.is_valid():
+            photo = form.save()
+            data = {'is_valid': True, 'name': photo.file.name, 'url': photo.file.url}
+        else:
+            data = {'is_valid': False}
+        return JsonResponse(data)
 
 
 def update_item(request, slug):

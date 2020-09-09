@@ -22,6 +22,11 @@ def randomslug():
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
 
 
+def photo_directory_path(instance, filename):
+    """file will be saved to MEDIA_ROOT/photos/2018/01/2"""
+    return 'photos/%Y/%m/%d/'
+
+
 CATEGORY_CHOICES = (
 
     ('Laptops', 'Laptops'),
@@ -102,7 +107,7 @@ class Item(models.Model):
     label = models.ManyToManyField('Label', related_name='items')
     slug = models.SlugField(null=False, unique=True)
     description = models.TextField()
-    image = models.ImageField(upload_to='media_root', blank=True)
+    image = models.ImageField(upload_to=photo_directory_path, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     quantity = models.IntegerField(null=False)
 
@@ -146,7 +151,7 @@ class Item(models.Model):
 
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='media_root')
+    image = models.ImageField(upload_to=photo_directory_path)
 
     def __str__(self):
         return self.item.title

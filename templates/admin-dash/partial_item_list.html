@@ -11,15 +11,27 @@
           {% endfor %}
         </td>
         <td>
+            <button class="btn btn-outline-info btn-sm js-upload-photos"
+                    data-url="{% url 'seller:basic_upload' %}"
+                    type="button">
+                    <i class="mdi mdi-collage"></i>
+                          Add Images
+            </button>
+        </td>
+        <td>
             <button type="button"
                     class="btn btn-warning btn-sm js-update-item"
-                    data-url="{% url 'seller:update_item' item.slug %}"><i class="mdi mdi-border-color"></i> Update
+                    data-url="{% url 'seller:update_item' item.slug %}">
+                    <i class="mdi mdi-border-color"></i>
+                    Update
             </button>
         </td>
         <td>
             <button type="button"
                     class="btn btn-danger btn-sm js-delete-item"
-                    data-url="{% url 'seller:delete_item' item.slug %}"><i class="mdi mdi-delete"></i> Delete
+                    data-url="{% url 'seller:delete_item' item.slug %}">
+                <i class="mdi mdi-delete"></i>
+                Delete
             </button>
         </td>
     </tr>

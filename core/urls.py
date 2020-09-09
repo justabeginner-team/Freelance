@@ -34,5 +34,5 @@ urlpatterns = [
     path('account_settings/', account_settings, name='account_settings'),
 
     path('category/<str:category>', category_view, name='category_view'),
-     path('username/validation.',validate_username,name='validate_username'),
+    path('username/validation.', validate_username, name='validate_username'),
 ]
